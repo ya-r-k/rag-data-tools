@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Sample.Chunkers.Benchmarks.ChunkersBenchmarks-20251102-163941</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.13.12, Windows 11 (10.0.26200.7019)
+AMD Ryzen 7 4800H with Radeon Graphics, 1 CPU, 16 logical and 8 physical cores
+.NET SDK 10.0.100-rc.2.25502.107
+  [Host]   : .NET 9.0.10 (9.0.1025.47515), X64 RyuJIT AVX2
+  .NET 9.0 : .NET 9.0.10 (9.0.1025.47515), X64 RyuJIT AVX2
+</code></pre>
+<pre><code>Job=.NET 9.0  Runtime=.NET 9.0  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                                  </th><th>Mean     </th><th>Error    </th><th>StdDev   </th><th>Median   </th><th>Ratio</th><th>RatioSD</th><th>Gen0</th><th>Gen1</th><th>Gen2</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>ExtractSemanticChunksFromText_Small</td><td>16,738.1 ns</td><td>542.81 ns</td><td>1,583.41 ns</td><td>16,191.0 ns</td><td>1.00</td><td>0.00</td><td>8.1177</td><td>-</td><td>-</td><td>17026 B</td><td>1.00</td>
+</tr><tr><td>ExtractSemanticChunksFromText_Medium_Sentence</td><td>153,914.6 ns</td><td>2,836.61 ns</td><td>2,514.58 ns</td><td>153,789.2 ns</td><td>8.76</td><td>0.59</td><td>65.1855</td><td>-</td><td>-</td><td>136544 B</td><td>8.02</td>
+</tr><tr><td>ExtractSemanticChunksFromText_Medium_Paragraph</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>ExtractSemanticChunksFromText_Large_Sentence</td><td>2,010,894.1 ns</td><td>40,111.72 ns</td><td>115,731.48 ns</td><td>1,968,519.7 ns</td><td>120.97</td><td>11.72</td><td>230.4688</td><td>195.3125</td><td>-</td><td>1301853 B</td><td>76.46</td>
+</tr><tr><td>ExtractSemanticChunksFromText_Large_Paragraph</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>ExtractSemanticChunksFromText_VeryLarge</td><td>64,584,473.9 ns</td><td>1,287,146.12 ns</td><td>2,825,316.94 ns</td><td>64,555,962.5 ns</td><td>3,811.72</td><td>413.24</td><td>2500.0000</td><td>1125.0000</td><td>375.0000</td><td>14046859 B</td><td>825.02</td>
+</tr><tr><td>PreprocessNaturalTextForChunking_Small</td><td>219.1 ns</td><td>2.72 ns</td><td>2.41 ns</td><td>218.3 ns</td><td>0.01</td><td>0.00</td><td>-</td><td>-</td><td>-</td><td>-</td><td>0.00</td>
+</tr><tr><td>PreprocessNaturalTextForChunking_Medium</td><td>1,301.0 ns</td><td>19.66 ns</td><td>21.03 ns</td><td>1,302.5 ns</td><td>0.07</td><td>0.01</td><td>-</td><td>-</td><td>-</td><td>-</td><td>0.00</td>
+</tr><tr><td>PreprocessNaturalTextForChunking_Large</td><td>14,565.3 ns</td><td>289.41 ns</td><td>529.20 ns</td><td>14,488.7 ns</td><td>0.85</td><td>0.08</td><td>-</td><td>-</td><td>-</td><td>-</td><td>0.00</td>
+</tr><tr><td>GetWords_Small</td><td>2,055.5 ns</td><td>40.40 ns</td><td>62.90 ns</td><td>2,031.9 ns</td><td>0.12</td><td>0.01</td><td>1.9798</td><td>-</td><td>-</td><td>4144 B</td><td>0.24</td>
+</tr><tr><td>GetWords_Large</td><td>316,795.9 ns</td><td>6,179.53 ns</td><td>6,345.92 ns</td><td>315,588.2 ns</td><td>18.24</td><td>1.22</td><td>94.2383</td><td>42.4805</td><td>-</td><td>405968 B</td><td>23.84</td>
+</tr><tr><td>ExtractSentenceStartIndices</td><td>132,826.9 ns</td><td>2,598.35 ns</td><td>2,888.06 ns</td><td>131,451.0 ns</td><td>7.55</td><td>0.61</td><td>29.2969</td><td>-</td><td>-</td><td>61480 B</td><td>3.61</td>
+</tr><tr><td>ExtractParagraphStartIndexes</td><td>24,375.4 ns</td><td>474.33 ns</td><td>1,041.16 ns</td><td>24,262.6 ns</td><td>1.44</td><td>0.15</td><td>19.4092</td><td>-</td><td>-</td><td>40608 B</td><td>2.39</td>
+</tr><tr><td>ExtractSemanticChunksDeeply_PlainText</td><td>210,955.1 ns</td><td>4,155.00 ns</td><td>6,826.78 ns</td><td>209,938.7 ns</td><td>12.05</td><td>1.24</td><td>121.5820</td><td>-</td><td>-</td><td>259031 B</td><td>15.21</td>
+</tr><tr><td>ExtractSemanticChunksDeeply_MarkdownSimple</td><td>265,567.8 ns</td><td>5,123.80 ns</td><td>6,840.13 ns</td><td>263,199.6 ns</td><td>14.66</td><td>1.32</td><td>173.8281</td><td>21.4844</td><td>-</td><td>393692 B</td><td>23.12</td>
+</tr><tr><td>ExtractSemanticChunksDeeply_MarkdownComplex</td><td>1,714,621.1 ns</td><td>30,981.20 ns</td><td>27,464.02 ns</td><td>1,703,830.9 ns</td><td>97.54</td><td>6.68</td><td>427.7344</td><td>236.3281</td><td>1.9531</td><td>1989717 B</td><td>116.86</td>
+</tr><tr><td>RetrieveChunksFromText_SimpleMarkdown</td><td>19,954.4 ns</td><td>396.35 ns</td><td>628.65 ns</td><td>19,844.7 ns</td><td>1.13</td><td>0.11</td><td>47.0581</td><td>-</td><td>-</td><td>98544 B</td><td>5.79</td>
+</tr><tr><td>RetrieveChunksFromText_ComplexMarkdown</td><td>181,386.3 ns</td><td>3,534.78 ns</td><td>3,471.62 ns</td><td>180,673.6 ns</td><td>10.40</td><td>0.72</td><td>133.5449</td><td>44.1895</td><td>0.2441</td><td>475968 B</td><td>27.96</td>
+</tr><tr><td>BuildRelationsGraph_Medium</td><td>218,149.9 ns</td><td>4,189.51 ns</td><td>6,397.82 ns</td><td>216,293.2 ns</td><td>12.30</td><td>1.14</td><td>155.0293</td><td>-</td><td>-</td><td>324711 B</td><td>19.07</td>
+</tr><tr><td>BuildRelationsGraph_Complex</td><td>1,754,827.8 ns</td><td>32,759.47 ns</td><td>29,040.42 ns</td><td>1,755,364.6 ns</td><td>99.84</td><td>6.97</td><td>435.5469</td><td>289.0625</td><td>1.9531</td><td>2011695 B</td><td>118.15</td>
+</tr><tr><td>FindRepeatedChunksWithUrls</td><td>2,060,841.2 ns</td><td>40,645.66 ns</td><td>46,807.60 ns</td><td>2,039,222.5 ns</td><td>116.32</td><td>9.54</td><td>550.7813</td><td>296.8750</td><td>3.9063</td><td>2386510 B</td><td>140.17</td>
+</tr></tbody></table>
+</body>
+</html>

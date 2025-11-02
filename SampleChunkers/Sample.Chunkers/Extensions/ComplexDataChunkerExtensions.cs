@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 
 namespace Sample.Chunkers.Extensions;
 
+/// <summary>
+/// Предоставляет методы расширения для извлечения структурированных элементов (код, таблицы, ссылки и т.д.) из текста.
+/// </summary>
 public static class ComplexDataChunkerExtensions
 {
     private static readonly Dictionary<string, ChunkType> labelsChunkTypesPairs = new()
@@ -19,6 +22,20 @@ public static class ComplexDataChunkerExtensions
         ["External-Link"] = ChunkType.AdditionalLink,
     };
 
+    /// <summary>
+    /// Обрабатывает коллекцию документов с автоматической нумерацией чанков.
+    /// </summary>
+    /// <typeparam name="T">Тип ключа словаря (должен быть unmanaged типом: int, long, Guid и т.д.).</typeparam>
+    /// <param name="texts">Словарь документов: ключ → текст.</param>
+    /// <param name="chunkWordsCount">Максимальное количество слов в текстовом чанке.</param>
+    /// <param name="semanticsType">Тип семантической единицы: предложение или параграф.</param>
+    /// <param name="overlapPercentage">Процент перекрытия между чанками (от 0.0 до 1.0). По умолчанию 0.0.</param>
+    /// <param name="withTables">Извлекать HTML таблицы. По умолчанию true.</param>
+    /// <param name="withInfoBlocks">Извлекать информационные блоки (blockquotes). По умолчанию true.</param>
+    /// <param name="withCodeBlocks">Извлекать блоки кода. По умолчанию true.</param>
+    /// <param name="withImages">Извлекать изображения. По умолчанию true.</param>
+    /// <param name="withLinks">Извлекать внешние ссылки. По умолчанию true.</param>
+    /// <returns>Словарь документов → типы чанков → списки чанков. Индексы чанков накапливаются между документами.</returns>
     public static Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> ExtractSemanticChunksDeeply<T>(this Dictionary<T, string> texts, 
         int chunkWordsCount, 
         SemanticsType semanticsType, 
@@ -45,6 +62,30 @@ public static class ComplexDataChunkerExtensions
         return result;
     }
 
+    /// <summary>
+    /// Извлекает все типы чанков из одного текста: структурированные элементы (код, таблицы, ссылки) и текстовые чанки.
+    /// </summary>
+    /// <param name="text">Текст для обработки (Markdown или HTML).</param>
+    /// <param name="chunkWordsCount">Максимальное количество слов в текстовом чанке.</param>
+    /// <param name="semanticsType">Тип семантической единицы: предложение или параграф.</param>
+    /// <param name="overlapPercentage">Процент перекрытия между чанками (от 0.0 до 1.0). По умолчанию 0.0.</param>
+    /// <param name="withTables">Извлекать HTML таблицы. По умолчанию true.</param>
+    /// <param name="withInfoBlocks">Извлекать информационные блоки (blockquotes). По умолчанию true.</param>
+    /// <param name="withCodeBlocks">Извлекать блоки кода. По умолчанию true.</param>
+    /// <param name="withImages">Извлекать изображения. По умолчанию true.</param>
+    /// <param name="withLinks">Извлекать внешние ссылки. По умолчанию true.</param>
+    /// <param name="lastUsedIndex">Последний использованный индекс (для продолжения нумерации). По умолчанию 0.</param>
+    /// <returns>Словарь типов чанков → списки чанков.</returns>
+    /// <remarks>
+    /// Порядок обработки:
+    /// <list type="number">
+    /// <item>Извлекаются структурированные элементы (код, таблицы, ссылки и т.д.)</item>
+    /// <item>Элементы заменяются на плейсхолдеры в тексте</item>
+    /// <item>Текст предобрабатывается</item>
+    /// <item>Извлекаются текстовые чанки</item>
+    /// <item>В текстовых чанках обнаруживаются ссылки на извлеченные элементы</item>
+    /// </list>
+    /// </remarks>
     public static Dictionary<ChunkType, List<ChunkModel>> ExtractSemanticChunksDeeply(this string text,
         int chunkWordsCount, 
         SemanticsType semanticsType, 
@@ -76,6 +117,21 @@ public static class ComplexDataChunkerExtensions
         return dataChunks;
     }
 
+    /// <summary>
+    /// Извлекает только структурированные элементы из текста без текстовых чанков.
+    /// </summary>
+    /// <param name="text">Текст для обработки (Markdown или HTML).</param>
+    /// <param name="withTables">Извлекать HTML таблицы.</param>
+    /// <param name="withInfoBlocks">Извлекать информационные блоки (blockquotes).</param>
+    /// <param name="withCodeBlocks">Извлекать блоки кода.</param>
+    /// <param name="withImages">Извлекать изображения.</param>
+    /// <param name="withLinks">Извлекать внешние ссылки.</param>
+    /// <param name="lastUsedIndex">Последний использованный индекс (для продолжения нумерации). По умолчанию 0.</param>
+    /// <returns>Словарь типов чанков → списки чанков. Текстовые чанки (TextChunk) не извлекаются.</returns>
+    /// <remarks>
+    /// Используется когда нужны только структурированные элементы без текстовых чанков.
+    /// Порядок извлечения: блоки кода → таблицы → info blocks → изображения → ссылки → заголовки.
+    /// </remarks>
     public static Dictionary<ChunkType, List<ChunkModel>> RetrieveChunksFromText(this string text, bool withTables, bool withInfoBlocks, bool withCodeBlocks, bool withImages, bool withLinks, int lastUsedIndex = 0)
     {
         var currentText = new StringBuilder(text);

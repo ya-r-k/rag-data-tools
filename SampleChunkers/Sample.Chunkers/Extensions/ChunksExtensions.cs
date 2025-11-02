@@ -3,6 +3,9 @@ using Sample.Chunkers.Models;
 
 namespace Sample.Chunkers.Extensions;
 
+/// <summary>
+/// Предоставляет методы расширения для работы с коллекциями чанков: построение графа связей и поиск дубликатов.
+/// </summary>
 public static class ChunksExtensions
 {
     private static readonly Dictionary<ChunkType, RelationshipType> RelatedChunkRelationshipType = new()
@@ -31,6 +34,22 @@ public static class ChunksExtensions
         ChunkType.AdditionalLink,
     ];
 
+    /// <summary>
+    /// Находит дубликаты чанков с одинаковыми URL (изображения и ссылки).
+    /// </summary>
+    /// <typeparam name="T">Тип ключа словаря (должен быть unmanaged типом).</typeparam>
+    /// <param name="chunks">Словарь документов → типы чанков → списки чанков.</param>
+    /// <returns>Словарь повторяющийся_индекс → уникальный_индекс. Первый найденный чанк с URL считается уникальным.</returns>
+    /// <remarks>
+    /// Работает только с чанками типа ImageLink и AdditionalLink.
+    /// Алгоритм:
+    /// <list type="number">
+    /// <item>Находит все чанки с URL (ImageLink, AdditionalLink)</item>
+    /// <item>Группирует по URL</item>
+    /// <item>Для каждого URL оставляет первый индекс как уникальный</item>
+    /// <item>Остальные индексы добавляет в результат как повторяющиеся</item>
+    /// </list>
+    /// </remarks>
     public static Dictionary<int, int> FindRepeatedChunksWithUrls<T>(this Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> chunks)
         where T : unmanaged
     {
@@ -62,6 +81,20 @@ public static class ChunksExtensions
         return result;
     }
 
+    /// <summary>
+    /// Строит граф связей для коллекции документов.
+    /// </summary>
+    /// <typeparam name="T">Тип ключа словаря (должен быть unmanaged типом).</typeparam>
+    /// <param name="chunks">Словарь документов → типы чанков → списки чанков.</param>
+    /// <returns>Массив связей между чанками различных типов.</returns>
+    /// <remarks>
+    /// Создает следующие типы связей:
+    /// <list type="bullet">
+    /// <item>HasNextChunk - между последовательными текстовыми чанками</item>
+    /// <item>HasNextTopic, HasFirstSubtopic - иерархия заголовков</item>
+    /// <item>RelatedCodeBlock, RelatedTable, RelatedImage, RelatedInfoBlock, AdditionalLink - связи из RelatedChunksIndexes</item>
+    /// </list>
+    /// </remarks>
     public static RelationshipModel[] BuildRelationsGraph<T>(this Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> chunks)
         where T : unmanaged
     {
@@ -75,6 +108,20 @@ public static class ChunksExtensions
         return [.. result];
     }
 
+    /// <summary>
+    /// Строит граф связей для одного документа.
+    /// </summary>
+    /// <param name="chunks">Словарь типов чанков → списки чанков.</param>
+    /// <returns>Массив связей между чанками.</returns>
+    /// <remarks>
+    /// Создает следующие типы связей:
+    /// <list type="bullet">
+    /// <item>HasNextChunk - между последовательными текстовыми чанками (индексы идут подряд)</item>
+    /// <item>HasNextTopic - следующий заголовок того же или более высокого уровня</item>
+    /// <item>HasFirstSubtopic - первый подзаголовок (более низкого уровня)</item>
+    /// <item>RelatedCodeBlock, RelatedTable, RelatedImage, RelatedInfoBlock, AdditionalLink, StartsWith - из RelatedChunksIndexes каждого чанка</item>
+    /// </list>
+    /// </remarks>
     public static RelationshipModel[] BuildRelationsGraph(this Dictionary<ChunkType, List<ChunkModel>> chunks)
     {
         var result = new List<RelationshipModel>();

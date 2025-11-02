@@ -47,10 +47,10 @@ public class ChunksExtensionsTests
 
         // Act
         var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
-        var relationsips = chunks.BuildRelationsGraph();
+        var relationships = chunks.BuildRelationsGraph();
 
         // Assert
-        relationsips.Should().BeEquivalentTo(expectedResult);
+        relationships.Should().BeEquivalentTo(expectedResult);
     }
 
     [Test]
@@ -100,10 +100,10 @@ public class ChunksExtensionsTests
 
         // Act
         var chunks = texts.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
-        var relationsips = chunks.BuildRelationsGraph();
+        var relationships = chunks.BuildRelationsGraph();
 
         // Assert
-        relationsips.Should().BeEquivalentTo(expectedResult);
+        relationships.Should().BeEquivalentTo(expectedResult);
     }
 
     [Test]

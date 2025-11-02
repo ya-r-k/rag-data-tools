@@ -701,7 +701,7 @@ MERGE
 
         var imageLinks = chunks.Values.SelectMany(x => x[ChunkType.ImageLink])
                                       .ToArray();
-        imageLinks.Should().BeEquivalentTo(imageLinks);
+        imageLinks.Should().BeEquivalentTo(expectedImageLinks);
 
         var headers = chunks.Values.SelectMany(x => x[ChunkType.Topic])
                                    .ToArray();
