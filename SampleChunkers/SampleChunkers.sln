@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11123.170 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{72E3898D-8592-4FFB-9F9E-BE2E7FE91EE1}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Chunkers.UnitTests", "Sample.Chunkers.UnitTests\Sample.Chunkers.UnitTests.csproj", "{69C8E90F-C13C-02B0-1938-50DBD2708B78}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Chunkers.Benchmarks", "Sample.Chunkers.Benchmarks\Sample.Chunkers.Benchmarks.csproj", "{5246867C-3029-4F26-A877-6E04BF4A22D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{58B1D929-138C-4F09-AB1D-9464E579F44A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,7 +70,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{BE063111-1232-CEAF-0B89-FBA273D4EC60} = {58B1D929-138C-4F09-AB1D-9464E579F44A}
 		{69C8E90F-C13C-02B0-1938-50DBD2708B78} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{5246867C-3029-4F26-A877-6E04BF4A22D1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4EB803D-7EF3-4DBA-A14E-E86075D28499}
