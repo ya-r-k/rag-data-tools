@@ -16,7 +16,7 @@ internal static class ImageLinksTestData
             RawContent = "!\\[News\\](https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
+                ["url"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
                 ["alterText"] = "News\\",
             },
         },
@@ -28,7 +28,7 @@ internal static class ImageLinksTestData
             RawContent = "![Data-Modeling-in-Analysis](https://media.geeksforgeeks.org/wp-content/uploads/20240215112547/Data-Modeling-in-Analysis.webp)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://media.geeksforgeeks.org/wp-content/uploads/20240215112547/Data-Modeling-in-Analysis.webp",
+                ["url"] = "https://media.geeksforgeeks.org/wp-content/uploads/20240215112547/Data-Modeling-in-Analysis.webp",
                 ["alterText"] = "Data-Modeling-in-Analysis",
             },
         },
@@ -40,7 +40,7 @@ internal static class ImageLinksTestData
             RawContent = "![modeling](https://media.geeksforgeeks.org/wp-content/uploads/20240215113046/modeling.webp)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://media.geeksforgeeks.org/wp-content/uploads/20240215113046/modeling.webp",
+                ["url"] = "https://media.geeksforgeeks.org/wp-content/uploads/20240215113046/modeling.webp",
                 ["alterText"] = "modeling",
             },
         },
@@ -52,7 +52,7 @@ internal static class ImageLinksTestData
             RawContent = "![daat](https://media.geeksforgeeks.org/wp-content/uploads/20240215113207/daat.webp)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://media.geeksforgeeks.org/wp-content/uploads/20240215113207/daat.webp",
+                ["url"] = "https://media.geeksforgeeks.org/wp-content/uploads/20240215113207/daat.webp",
                 ["alterText"] = "daat",
             },
         },
@@ -64,7 +64,7 @@ internal static class ImageLinksTestData
             RawContent = "!\\[News\\](https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
+                ["url"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
                 ["alterText"] = "News\\",
             },
         },
@@ -81,7 +81,7 @@ internal static class ImageLinksTestData
             RawContent = "!\\[News\\](https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
+                ["url"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
                 ["alterText"] = "News\\",
             },
         },
@@ -93,7 +93,7 @@ internal static class ImageLinksTestData
             RawContent = "![https://media.geeksforgeeks.org/auth/avatar.png](https://media.geeksforgeeks.org/wp-content/uploads/20200717172614/authPreLogo.png)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://media.geeksforgeeks.org/wp-content/uploads/20200717172614/authPreLogo.png",
+                ["url"] = "https://media.geeksforgeeks.org/wp-content/uploads/20200717172614/authPreLogo.png",
                 ["alterText"] = "https://media.geeksforgeeks.org/auth/avatar.png",
             },
         },
@@ -105,7 +105,7 @@ internal static class ImageLinksTestData
             RawContent = "!\\[News\\](https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
+                ["url"] = "https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg",
                 ["alterText"] = "News\\",
             },
         },

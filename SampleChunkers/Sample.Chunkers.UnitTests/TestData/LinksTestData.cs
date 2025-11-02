@@ -16,7 +16,7 @@ internal class LinksTestData
             RawContent = "[Alex.omegapy - Medium](https://medium.com/@alex.omegapy)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://medium.com/@alex.omegapy",
+                ["url"] = "https://medium.com/@alex.omegapy",
                 ["alterText"] = "Alex.omegapy - Medium",
             },
         },
@@ -33,7 +33,7 @@ internal class LinksTestData
             RawContent = "[[RELATEDCHUNK]Image-Link-14[/RELATEDCHUNK]\r\n                                                    Follow](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
+                ["url"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
                 ["alterText"] = "[RELATEDCHUNK]Image-Link-14[/RELATEDCHUNK]\r\n                                                    Follow",
             },
         },
@@ -45,7 +45,7 @@ internal class LinksTestData
             RawContent = "[data structure.](https://www.geeksforgeeks.org/data-structures/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/data-structures/",
+                ["url"] = "https://www.geeksforgeeks.org/data-structures/",
                 ["alterText"] = "data structure.",
             },
         },
@@ -57,7 +57,7 @@ internal class LinksTestData
             RawContent = "[development](https://www.geeksforgeeks.org/class-10-social-science-economics-chapter-1-development/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/class-10-social-science-economics-chapter-1-development/",
+                ["url"] = "https://www.geeksforgeeks.org/class-10-social-science-economics-chapter-1-development/",
                 ["alterText"] = "development",
             },
         },
@@ -69,7 +69,7 @@ internal class LinksTestData
             RawContent = "[database schema.](https://www.geeksforgeeks.org/database-schemas/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/database-schemas/",
+                ["url"] = "https://www.geeksforgeeks.org/database-schemas/",
                 ["alterText"] = "database schema.",
             },
         },
@@ -81,7 +81,7 @@ internal class LinksTestData
             RawContent = "[tree.](https://www.geeksforgeeks.org/introduction-to-tree-data-structure-and-algorithm-tutorials/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/introduction-to-tree-data-structure-and-algorithm-tutorials/",
+                ["url"] = "https://www.geeksforgeeks.org/introduction-to-tree-data-structure-and-algorithm-tutorials/",
                 ["alterText"] = "tree.",
             },
         },
@@ -93,7 +93,7 @@ internal class LinksTestData
             RawContent = "[database design](https://www.geeksforgeeks.org/significance-of-database-design/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/significance-of-database-design/",
+                ["url"] = "https://www.geeksforgeeks.org/significance-of-database-design/",
                 ["alterText"] = "database design",
             },
         },
@@ -105,7 +105,7 @@ internal class LinksTestData
             RawContent = "[relational model](https://www.geeksforgeeks.org/relational-model-in-dbms/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/relational-model-in-dbms/",
+                ["url"] = "https://www.geeksforgeeks.org/relational-model-in-dbms/",
                 ["alterText"] = "relational model",
             },
         },
@@ -117,7 +117,7 @@ internal class LinksTestData
             RawContent = "[entity-relationship model (ER model)](https://www.geeksforgeeks.org/introduction-of-er-model/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/introduction-of-er-model/",
+                ["url"] = "https://www.geeksforgeeks.org/introduction-of-er-model/",
                 ["alterText"] = "entity-relationship model (ER model)",
             },
         },
@@ -129,7 +129,7 @@ internal class LinksTestData
             RawContent = "[integrity](https://www.geeksforgeeks.org/integrity-importance-and-challenges/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/integrity-importance-and-challenges/",
+                ["url"] = "https://www.geeksforgeeks.org/integrity-importance-and-challenges/",
                 ["alterText"] = "integrity",
             },
         },
@@ -141,7 +141,7 @@ internal class LinksTestData
             RawContent = "[normalization.](https://www.geeksforgeeks.org/introduction-of-database-normalization/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/introduction-of-database-normalization/",
+                ["url"] = "https://www.geeksforgeeks.org/introduction-of-database-normalization/",
                 ["alterText"] = "normalization.",
             },
         },
@@ -153,7 +153,7 @@ internal class LinksTestData
             RawContent = "[data analysis](https://www.geeksforgeeks.org/data-analysis-tutorial/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/data-analysis-tutorial/",
+                ["url"] = "https://www.geeksforgeeks.org/data-analysis-tutorial/",
                 ["alterText"] = "data analysis",
             },
         },
@@ -165,7 +165,7 @@ internal class LinksTestData
             RawContent = "[Advertise with us](https://www.geeksforgeeks.org/about/contact-us/?listicles)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/about/contact-us/?listicles",
+                ["url"] = "https://www.geeksforgeeks.org/about/contact-us/?listicles",
                 ["alterText"] = "Advertise with us",
             },
         },
@@ -177,7 +177,7 @@ internal class LinksTestData
             RawContent = "[Next Article](https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article",
+                ["url"] = "https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article",
                 ["alterText"] = "Next Article",
             },
         },
@@ -189,7 +189,7 @@ internal class LinksTestData
             RawContent = "[What are the Advantages and Disadvantages of Random Forest?](https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article",
+                ["url"] = "https://www.geeksforgeeks.org/what-are-the-advantages-and-disadvantages-of-random-forest/?ref=next_article",
                 ["alterText"] = "What are the Advantages and Disadvantages of Random Forest?",
             },
         },
@@ -201,7 +201,7 @@ internal class LinksTestData
             RawContent = "[R](https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user",
+                ["url"] = "https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user",
                 ["alterText"] = "R",
             },
         },
@@ -213,7 +213,7 @@ internal class LinksTestData
             RawContent = "[rahulpawar_7](https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user",
+                ["url"] = "https://www.geeksforgeeks.org/user/rahulpawar_7/contributions/?itm_source=geeksforgeeks&amp;itm_medium=article_author&amp;itm_campaign=auth_user",
                 ["alterText"] = "rahulpawar_7",
             },
         },
@@ -225,7 +225,7 @@ internal class LinksTestData
             RawContent = "[[RELATEDCHUNK]Image-Link-14[/RELATEDCHUNK]](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
+                ["url"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
                 ["alterText"] = "[RELATEDCHUNK]Image-Link-14[/RELATEDCHUNK]",
             },
         },
@@ -237,7 +237,7 @@ internal class LinksTestData
             RawContent = "[Data Analysis](https://www.geeksforgeeks.org/category/ai-ml-ds/r-data-analysis/?ref=article_category)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/category/ai-ml-ds/r-data-analysis/?ref=article_category",
+                ["url"] = "https://www.geeksforgeeks.org/category/ai-ml-ds/r-data-analysis/?ref=article_category",
                 ["alterText"] = "Data Analysis",
             },
         },
@@ -249,7 +249,7 @@ internal class LinksTestData
             RawContent = "[AI-ML-DS](https://www.geeksforgeeks.org/category/ai-ml-ds/?ref=article_category)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/category/ai-ml-ds/?ref=article_category",
+                ["url"] = "https://www.geeksforgeeks.org/category/ai-ml-ds/?ref=article_category",
                 ["alterText"] = "AI-ML-DS",
             },
         },
@@ -266,7 +266,7 @@ internal class LinksTestData
             RawContent = "[[RELATEDCHUNK]Image-Link-82[/RELATEDCHUNK]\r\n                                                    Follow](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
+                ["url"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
                 ["alterText"] = "[RELATEDCHUNK]Image-Link-82[/RELATEDCHUNK]\r\n                                                    Follow",
             },
         },
@@ -278,7 +278,7 @@ internal class LinksTestData
             RawContent = "[Note:** [SELECT operation](https://www.geeksforgeeks.org/select-operation-in-relational-algebra/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/select-operation-in-relational-algebra/",
+                ["url"] = "https://www.geeksforgeeks.org/select-operation-in-relational-algebra/",
                 ["alterText"] = "Note:** [SELECT operation",
             },
         },
@@ -290,7 +290,7 @@ internal class LinksTestData
             RawContent = "[Rename operator](https://www.geeksforgeeks.org/rename-operation-in-relational-algebra/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/rename-operation-in-relational-algebra/",
+                ["url"] = "https://www.geeksforgeeks.org/rename-operation-in-relational-algebra/",
                 ["alterText"] = "Rename operator",
             },
         },
@@ -302,7 +302,7 @@ internal class LinksTestData
             RawContent = "[Natural Join](https://www.geeksforgeeks.org/sql-natural-join/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/sql-natural-join/",
+                ["url"] = "https://www.geeksforgeeks.org/sql-natural-join/",
                 ["alterText"] = "Natural Join",
             },
         },
@@ -314,7 +314,7 @@ internal class LinksTestData
             RawContent = "[Relational Algebra](https://www.geeksforgeeks.org/introduction-of-relational-algebra-in-dbms/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/introduction-of-relational-algebra-in-dbms/",
+                ["url"] = "https://www.geeksforgeeks.org/introduction-of-relational-algebra-in-dbms/",
                 ["alterText"] = "Relational Algebra",
             },
         },
@@ -326,7 +326,7 @@ internal class LinksTestData
             RawContent = "[database](https://www.geeksforgeeks.org/what-is-database/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/what-is-database/",
+                ["url"] = "https://www.geeksforgeeks.org/what-is-database/",
                 ["alterText"] = "database",
             },
         },
@@ -338,7 +338,7 @@ internal class LinksTestData
             RawContent = "[SQL](https://www.geeksforgeeks.org/what-is-sql/)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/what-is-sql/",
+                ["url"] = "https://www.geeksforgeeks.org/what-is-sql/",
                 ["alterText"] = "SQL",
             },
         },
@@ -350,7 +350,7 @@ internal class LinksTestData
             RawContent = "[Advertise with us](https://www.geeksforgeeks.org/about/contact-us/?listicles)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/about/contact-us/?listicles",
+                ["url"] = "https://www.geeksforgeeks.org/about/contact-us/?listicles",
                 ["alterText"] = "Advertise with us",
             },
         },
@@ -362,7 +362,7 @@ internal class LinksTestData
             RawContent = "[Next Article](https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article",
+                ["url"] = "https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article",
                 ["alterText"] = "Next Article",
             },
         },
@@ -374,7 +374,7 @@ internal class LinksTestData
             RawContent = "[Extended Operators in Relational Algebra](https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article",
+                ["url"] = "https://www.geeksforgeeks.org/extended-operators-in-relational-algebra/?ref=next_article",
                 ["alterText"] = "Extended Operators in Relational Algebra",
             },
         },
@@ -386,7 +386,7 @@ internal class LinksTestData
             RawContent = "[[RELATEDCHUNK]Image-Link-82[/RELATEDCHUNK]](https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
+                ["url"] = "https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen",
                 ["alterText"] = "[RELATEDCHUNK]Image-Link-82[/RELATEDCHUNK]",
             },
         },
@@ -398,7 +398,7 @@ internal class LinksTestData
             RawContent = "[DBMS](https://www.geeksforgeeks.org/category/computer-subject/dbms/?ref=article_category)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/category/computer-subject/dbms/?ref=article_category",
+                ["url"] = "https://www.geeksforgeeks.org/category/computer-subject/dbms/?ref=article_category",
                 ["alterText"] = "DBMS",
             },
         },
@@ -410,7 +410,7 @@ internal class LinksTestData
             RawContent = "[DBMS-Relational Algebra](https://www.geeksforgeeks.org/tag/dbms-relational-algebra/?ref=article_tag)",
             Data = new Dictionary<string, object>
             {
-                ["url1"] = "https://www.geeksforgeeks.org/tag/dbms-relational-algebra/?ref=article_tag",
+                ["url"] = "https://www.geeksforgeeks.org/tag/dbms-relational-algebra/?ref=article_tag",
                 ["alterText"] = "DBMS-Relational Algebra",
             },
         },

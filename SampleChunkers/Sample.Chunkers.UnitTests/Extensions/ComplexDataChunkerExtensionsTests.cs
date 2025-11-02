@@ -156,7 +156,7 @@ public class Test
                 RawContent = @"![Image Alt](https://example.com/image.jpg)",
                 Data = new Dictionary<string, object>()
                 {
-                    ["url1"] = "https://example.com/image.jpg",
+                    ["url"] = "https://example.com/image.jpg",
                     ["alterText"] = "Image Alt",
                 },
             }
@@ -422,7 +422,7 @@ MERGE
                 RawContent = @"[link](https://example.com)",
                 Data = new Dictionary<string, object>()
                 {
-                    ["url1"] = "https://example.com",
+                    ["url"] = "https://example.com",
                     ["alterText"] = "link",
                 },
             }
