@@ -1,9 +1,9 @@
-﻿using Sample.Chunkers.Enums;
-using Sample.Chunkers.Interfaces;
+﻿using Sample.Chunkers.Interfaces;
 using Sample.Chunkers.Models;
+using Sample.Chunkers.Models.Enums;
 using System.Text;
 
-namespace Sample.Chunkers.MarkdownExtractors;
+namespace Sample.Chunkers.Strategies.MarkdownExtractors;
 
 public class MarkdownInfoBlockExtractor(IChunkTypesRegexProvider regexProvider) : MarkdownChunksExtractor, IMarkdownChunksExtractor
 {

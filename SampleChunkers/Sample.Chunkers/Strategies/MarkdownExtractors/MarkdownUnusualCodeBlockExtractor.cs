@@ -1,16 +1,16 @@
-﻿using Sample.Chunkers.Enums;
-using Sample.Chunkers.Interfaces;
+﻿using Sample.Chunkers.Interfaces;
 using Sample.Chunkers.Models;
+using Sample.Chunkers.Models.Enums;
 using System.Text;
 
-namespace Sample.Chunkers.MarkdownExtractors;
+namespace Sample.Chunkers.Strategies.MarkdownExtractors;
 
 public class MarkdownUnusualCodeBlockExtractor(IChunkTypesRegexProvider regexProvider) : MarkdownChunksExtractor, IMarkdownChunksExtractor
 {
     public override List<ChunkModel> ExtractChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
     {
         var result = new List<ChunkModel>();
-        var matches = regexProvider.GetUnusualCodeBlockRegex()
+        var matches = regexProvider.GetForRetrievingUnusualCodeBlockFromMarkdown()
             .Matches(builder.ToString())
             .ToArray();
 

@@ -1,8 +1,7 @@
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Running;
-using Sample.Chunkers.Enums;
 using Sample.Chunkers.Extensions;
+using Sample.Chunkers.Infrastructure;
 using System.Text;
 
 namespace Sample.Chunkers.Benchmarks;
@@ -50,37 +49,37 @@ public class ChunkersBenchmarks
     public void ExtractSemanticChunksFromText_Small()
     {
         var text = GenerateText(100);
-        _ = text.ExtractSemanticChunksFromText(50, SemanticsType.Sentence, 0.0);
+        _ = text.ExtractSemanticChunksFromText(50, PrimitivesExtractors.SentencesExtractor, 0.0);
     }
 
     [Benchmark]
     public void ExtractSemanticChunksFromText_Medium_Sentence()
     {
-        _ = _mediumText.ExtractSemanticChunksFromText(200, SemanticsType.Sentence, 0.5);
+        _ = _mediumText.ExtractSemanticChunksFromText(200, PrimitivesExtractors.SentencesExtractor, 0.5);
     }
 
     [Benchmark]
     public void ExtractSemanticChunksFromText_Medium_Paragraph()
     {
-        _ = _mediumText.ExtractSemanticChunksFromText(200, SemanticsType.Paragraph, 0.5);
+        _ = _mediumText.ExtractSemanticChunksFromText(200, PrimitivesExtractors.ParagraphsExtractor, 0.5);
     }
 
     [Benchmark]
     public void ExtractSemanticChunksFromText_Large_Sentence()
     {
-        _ = _largeText.ExtractSemanticChunksFromText(200, SemanticsType.Sentence, 0.3);
+        _ = _largeText.ExtractSemanticChunksFromText(200, PrimitivesExtractors.SentencesExtractor, 0.3);
     }
 
     [Benchmark]
     public void ExtractSemanticChunksFromText_Large_Paragraph()
     {
-        _ = _largeText.ExtractSemanticChunksFromText(200, SemanticsType.Paragraph, 0.3);
+        _ = _largeText.ExtractSemanticChunksFromText(200, PrimitivesExtractors.ParagraphsExtractor, 0.3);
     }
 
     [Benchmark]
     public void ExtractSemanticChunksFromText_VeryLarge()
     {
-        _ = _veryLargeText.ExtractSemanticChunksFromText(200, SemanticsType.Sentence, 0.5);
+        _ = _veryLargeText.ExtractSemanticChunksFromText(200, PrimitivesExtractors.SentencesExtractor, 0.5);
     }
 
     [Benchmark]
@@ -116,13 +115,13 @@ public class ChunkersBenchmarks
     [Benchmark]
     public void ExtractSentenceStartIndices()
     {
-        _ = _mediumText.ExtractSentenceStartIndices();
+        _ = PrimitivesExtractors.SentencesExtractor.ExtractIndexes(_mediumText);
     }
 
     [Benchmark]
     public void ExtractParagraphStartIndexes()
     {
-        _ = _mediumText.ExtractParagraphStartIndexes();
+        _ = PrimitivesExtractors.ParagraphsExtractor.ExtractIndexes(_mediumText);
     }
 
     #endregion
@@ -134,7 +133,7 @@ public class ChunkersBenchmarks
     {
         _ = _mediumText.ExtractSemanticChunksDeeply(
             200,
-            SemanticsType.Sentence,
+            PrimitivesExtractors.SentencesExtractor,
             0.5
         );
     }
@@ -144,7 +143,7 @@ public class ChunkersBenchmarks
     {
         _ = _markdownText.ExtractSemanticChunksDeeply(
             200,
-            SemanticsType.Sentence,
+            PrimitivesExtractors.SentencesExtractor,
             0.5
         );
     }
@@ -154,7 +153,7 @@ public class ChunkersBenchmarks
     {
         _ = _complexMarkdownText.ExtractSemanticChunksDeeply(
             200,
-            SemanticsType.Sentence,
+            PrimitivesExtractors.SentencesExtractor,
             0.5
         );
     }
@@ -178,14 +177,14 @@ public class ChunkersBenchmarks
     [Benchmark]
     public void BuildRelationsGraph_Medium()
     {
-        var chunks = _mediumText.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = _mediumText.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
         _ = chunks.BuildRelationsGraph();
     }
 
     [Benchmark]
     public void BuildRelationsGraph_Complex()
     {
-        var chunks = _complexMarkdownText.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = _complexMarkdownText.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
         _ = chunks.BuildRelationsGraph();
     }
 
@@ -198,7 +197,7 @@ public class ChunkersBenchmarks
             [1] = _complexMarkdownText
         };
 
-        var chunks = documents.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = documents.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
         _ = chunks.FindRepeatedChunksWithUrls();
     }
 

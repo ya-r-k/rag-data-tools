@@ -1,6 +1,5 @@
-﻿using Sample.Chunkers.Enums;
-using Sample.Chunkers.Helpers;
-using System.Text.RegularExpressions;
+﻿using Sample.Chunkers.Infrastructure;
+using Sample.Chunkers.Strategies.IndexesExtractors;
 
 namespace Sample.Chunkers.Extensions;
 
@@ -9,6 +8,8 @@ namespace Sample.Chunkers.Extensions;
 /// </summary>
 public static class SimpleTextChunkerExtensions
 {
+    private static readonly TextChunksRegexProvider regexProvider = new();
+
     /// <summary>
     /// Разбивает текст на слова, используя пробелы как разделитель.
     /// </summary>
@@ -17,49 +18,6 @@ public static class SimpleTextChunkerExtensions
     public static Span<string> GetWords(this string text)
     {
         return new Span<string>(text.Split([' '], StringSplitOptions.RemoveEmptyEntries));
-    }
-
-    /// <summary>
-    /// Находит индексы начала предложений в массиве слов.
-    /// Использует регулярное выражение для определения границ предложений (точка, восклицательный знак, вопросительный знак, двоеточие с переводом строки).
-    /// </summary>
-    /// <param name="text">Текст для анализа.</param>
-    /// <returns>Массив индексов слов, с которых начинаются предложения.</returns>
-    public static int[] ExtractSentenceStartIndices(this string text)
-    {
-        var indexes = new List<int>();
-        int wordIndex = 0;
-        var sentences = Regex.Split(text, @"(?<=[:]\n|\.|!|\?)\s+");
-
-        foreach (var sentence in sentences)
-        {
-            indexes.Add(wordIndex);
-            wordIndex += sentence.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
-        }
-
-        return [.. indexes];
-    }
-
-    /// <summary>
-    /// Находит индексы начала параграфов в массиве слов.
-    /// Параграфы определяются по разделителю "\n " (новая строка с пробелом).
-    /// </summary>
-    /// <param name="text">Текст для анализа.</param>
-    /// <returns>Массив индексов слов, с которых начинаются параграфы.</returns>
-    public static int[] ExtractParagraphStartIndexes(this string text)
-    {
-        var indexes = new List<int>();
-        int wordIndex = 0;
-
-        var paragraphs = text.Split("\n ", StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (var paragraph in paragraphs)
-        {
-            indexes.Add(wordIndex);
-            wordIndex += paragraph.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
-        }
-
-        return [.. indexes];
     }
 
     /// <summary>
@@ -87,9 +45,8 @@ public static class SimpleTextChunkerExtensions
                           .Replace("\r\n", "\n ")
                           .Replace("\u2014", "-");
 
-        cleaned = CommonRegexHelper.GetMultipleSpacesRegex().Replace(cleaned, " ");
-
-        return cleaned;
+        return regexProvider.GetMultipleSpacesRegex()
+            .Replace(cleaned, " ");
     }
 
     /// <summary>
@@ -121,16 +78,11 @@ public static class SimpleTextChunkerExtensions
     /// </list>
     /// Чанки не разрывают предложения или параграфы - они создаются только на границах семантических единиц.
     /// </remarks>
-    public static string[] ExtractSemanticChunksFromText(this string text, int chunkWordsCount, SemanticsType semanticsType, double overlapPercentage = 0.0)
+    public static string[] ExtractSemanticChunksFromText(this string text, int chunkWordsCount, IPrimitivesIndexesExtractor indexesExtractor, double overlapPercentage = 0.0)
     {
         var preprocessedText = PreprocessNaturalTextForChunking(text);
         var words = GetWords(preprocessedText);
-        var semanticsIndexes = semanticsType switch
-        {
-            SemanticsType.Sentence => ExtractSentenceStartIndices(preprocessedText),
-            SemanticsType.Paragraph => ExtractParagraphStartIndexes(preprocessedText),
-            _ => throw new InvalidOperationException(),
-        };
+        var semanticsIndexes = indexesExtractor.ExtractIndexes(preprocessedText);
 
         return GetChunks(words, semanticsIndexes, chunkWordsCount, text, overlapPercentage);
     }

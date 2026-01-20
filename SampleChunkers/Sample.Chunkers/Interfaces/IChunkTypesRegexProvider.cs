@@ -4,19 +4,19 @@ namespace Sample.Chunkers.Interfaces;
 
 public interface IChunkTypesRegexProvider
 {
-    Regex GetForRetrievingCodeBlocks();
+    Regex GetForRetrievingCodeBlockFromMarkdown();
 
-    Regex GetUnusualCodeBlockRegex();
+    Regex GetForRetrievingUnusualCodeBlockFromMarkdown();
 
     Regex GetForRetrievingInfoBlockFromMarkdown();
 
-    Regex GetForRetrievingHtmlTableTags();
+    Regex GetForRetrievingHtmlTableTagsFromMarkdown();
 
-    Regex GetExternalLinkRegex();
+    Regex GetForRetrievingExternalLinkFromMarkdown();
 
-    Regex GetHeadingRegex();
+    Regex GetForRetrievingHeadingFromMarkdown();
 
-    Regex GetImageLinkRegex();
+    Regex GetForRetrievingImageLinkFromMarkdown();
 
     Regex GetChunkLabelRegex();
 

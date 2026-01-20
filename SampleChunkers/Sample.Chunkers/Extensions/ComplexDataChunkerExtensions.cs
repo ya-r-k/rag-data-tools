@@ -1,7 +1,8 @@
-﻿using Sample.Chunkers.Enums;
-using Sample.Chunkers.Helpers;
-using Sample.Chunkers.MarkdownExtractors;
+﻿using Sample.Chunkers.Infrastructure;
+using Sample.Chunkers.Strategies.IndexesExtractors;
+using Sample.Chunkers.Strategies.MarkdownExtractors;
 using Sample.Chunkers.Models;
+using Sample.Chunkers.Models.Enums;
 using System.Text;
 
 namespace Sample.Chunkers.Extensions;
@@ -54,17 +55,12 @@ public static class ComplexDataChunkerExtensions
     /// <typeparam name="T">Тип ключа словаря (должен быть unmanaged типом: int, long, Guid и т.д.).</typeparam>
     /// <param name="texts">Словарь документов: ключ → текст.</param>
     /// <param name="chunkWordsCount">Максимальное количество слов в текстовом чанке.</param>
-    /// <param name="semanticsType">Тип семантической единицы: предложение или параграф.</param>
+    /// <param name="indexesExtractor">Тип семантической единицы: предложение или параграф.</param>
     /// <param name="overlapPercentage">Процент перекрытия между чанками (от 0.0 до 1.0). По умолчанию 0.0.</param>
-    /// <param name="withTables">Извлекать HTML таблицы. По умолчанию true.</param>
-    /// <param name="withInfoBlocks">Извлекать информационные блоки (blockquotes). По умолчанию true.</param>
-    /// <param name="withCodeBlocks">Извлекать блоки кода. По умолчанию true.</param>
-    /// <param name="withImages">Извлекать изображения. По умолчанию true.</param>
-    /// <param name="withLinks">Извлекать внешние ссылки. По умолчанию true.</param>
     /// <returns>Словарь документов → типы чанков → списки чанков. Индексы чанков накапливаются между документами.</returns>
     public static Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> ExtractSemanticChunksDeeply<T>(this Dictionary<T, string> texts, 
-        int chunkWordsCount, 
-        SemanticsType semanticsType, 
+        int chunkWordsCount,
+        IPrimitivesIndexesExtractor indexesExtractor, 
         double overlapPercentage = 0.0)
         where T : unmanaged
     {
@@ -74,7 +70,7 @@ public static class ComplexDataChunkerExtensions
 
         foreach (var text in texts)
         {
-            var chunks = text.Value.ExtractSemanticChunksDeeply(chunkWordsCount, semanticsType, overlapPercentage, lastUsedIndex);
+            var chunks = text.Value.ExtractSemanticChunksDeeply(chunkWordsCount, indexesExtractor, overlapPercentage, lastUsedIndex);
             lastUsedIndex += chunks.SelectMany(x => x.Value).Count();
 
             result[text.Key] = chunks;
@@ -88,7 +84,7 @@ public static class ComplexDataChunkerExtensions
     /// </summary>
     /// <param name="text">Текст для обработки (Markdown или HTML).</param>
     /// <param name="chunkWordsCount">Максимальное количество слов в текстовом чанке.</param>
-    /// <param name="semanticsType">Тип семантической единицы: предложение или параграф.</param>
+    /// <param name="indexesExtractor">Тип семантической единицы: предложение или параграф.</param>
     /// <param name="overlapPercentage">Процент перекрытия между чанками (от 0.0 до 1.0). По умолчанию 0.0.</param>
     /// <param name="lastUsedIndex">Последний использованный индекс (для продолжения нумерации). По умолчанию 0.</param>
     /// <returns>Словарь типов чанков → списки чанков.</returns>
@@ -103,8 +99,8 @@ public static class ComplexDataChunkerExtensions
     /// </list>
     /// </remarks>
     public static Dictionary<ChunkType, List<ChunkModel>> ExtractSemanticChunksDeeply(this string text,
-        int chunkWordsCount, 
-        SemanticsType semanticsType, 
+        int chunkWordsCount,
+        IPrimitivesIndexesExtractor indexesExtractor, 
         double overlapPercentage = 0.0,
         int lastUsedIndex = 0)
     {
@@ -123,7 +119,7 @@ public static class ComplexDataChunkerExtensions
             }
         }
 
-        dataChunks[ChunkType.TextChunk] = processedText.ExtractSemanticChunks(index, chunkWordsCount, semanticsType, overlapPercentage);
+        dataChunks[ChunkType.TextChunk] = processedText.ExtractSemanticChunks(index, chunkWordsCount, indexesExtractor, overlapPercentage);
 
         return dataChunks;
     }
@@ -162,10 +158,10 @@ public static class ComplexDataChunkerExtensions
         return result;
     }
 
-    private static List<ChunkModel> ExtractSemanticChunks(this string text, int lastUsedIndex, int chunkWordsCount, SemanticsType semanticsType, double overlapPercentage = 0.0)
+    private static List<ChunkModel> ExtractSemanticChunks(this string text, int lastUsedIndex, int chunkWordsCount, IPrimitivesIndexesExtractor indexesExtractor, double overlapPercentage = 0.0)
     {
         var result = new List<ChunkModel>();
-        var textChunks = text.ExtractSemanticChunksFromText(chunkWordsCount, semanticsType, overlapPercentage);
+        var textChunks = text.ExtractSemanticChunksFromText(chunkWordsCount, indexesExtractor, overlapPercentage);
 
         foreach (var item in textChunks)
         {

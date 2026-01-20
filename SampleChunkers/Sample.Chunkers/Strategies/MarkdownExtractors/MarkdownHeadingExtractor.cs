@@ -1,9 +1,9 @@
-﻿using Sample.Chunkers.Enums;
-using Sample.Chunkers.Interfaces;
+﻿using Sample.Chunkers.Interfaces;
 using Sample.Chunkers.Models;
+using Sample.Chunkers.Models.Enums;
 using System.Text;
 
-namespace Sample.Chunkers.MarkdownExtractors;
+namespace Sample.Chunkers.Strategies.MarkdownExtractors;
 
 public class MarkdownHeadingExtractor(
     IChunkTypesRegexProvider regexProvider) : MarkdownComplexChunksExtractorBase(regexProvider), IMarkdownChunksExtractor
@@ -11,7 +11,7 @@ public class MarkdownHeadingExtractor(
     public override List<ChunkModel> ExtractChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
     {
         var result = new List<ChunkModel>();
-        var matches = regexProvider.GetHeadingRegex()
+        var matches = regexProvider.GetForRetrievingHeadingFromMarkdown()
             .Matches(builder.ToString())
             .ToArray();
 

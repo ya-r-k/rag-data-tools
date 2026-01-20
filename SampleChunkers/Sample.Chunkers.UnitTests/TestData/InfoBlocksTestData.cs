@@ -1,5 +1,5 @@
-﻿using Sample.Chunkers.Enums;
-using Sample.Chunkers.Models;
+﻿using Sample.Chunkers.Models;
+using Sample.Chunkers.Models.Enums;
 
 namespace Sample.Chunkers.UnitTests.TestData;
 

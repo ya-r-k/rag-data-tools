@@ -1,4 +1,4 @@
-﻿namespace Sample.Chunkers.Enums;
+﻿namespace Sample.Chunkers.Models.Enums;
 
 public enum RelationshipType
 {

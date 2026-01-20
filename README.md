@@ -141,7 +141,7 @@ def hello():
 
 var chunks = complexText.ExtractSemanticChunksDeeply(
 chunkWordsCount: 100,
-semanticsType: SemanticsType.Paragraph,
+semanticsType: PrimitiveExtractors.ParagraphsExtractor,
 withCodeBlocks: true,
 withTables: true
 );

@@ -10,6 +10,9 @@
 # Visual Studio
 **/.vs
 
+# Bencharks artifacts
+**/BenchmarkDotNet.Artifacts
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using Sample.Chunkers.Enums;
 using Sample.Chunkers.Extensions;
+using Sample.Chunkers.Infrastructure;
 using Sample.Chunkers.Models;
 using Sample.Chunkers.UnitTests.TestData;
 
@@ -16,7 +16,7 @@ public class ChunksExtensionsTests
         var expectedTopicsRelations = RelationsTestData.ArticleWithMathInfoBlocks;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
         var relationships = chunks.BuildRelationsGraph();
 
         // Assert
@@ -31,7 +31,7 @@ public class ChunksExtensionsTests
         var expectedResult = RelationsTestData.DevToRealWorldArticleChunksRelations;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
         var relationships = chunks.BuildRelationsGraph();
 
         // Assert
@@ -46,7 +46,7 @@ public class ChunksExtensionsTests
         var expectedResult = RelationsTestData.GeeksForGeeksAboutDataModelingChunksRelations;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
         var relationships = chunks.BuildRelationsGraph();
 
         // Assert
@@ -99,7 +99,7 @@ public class ChunksExtensionsTests
         }).SelectMany(x => x.Value).ToArray();
 
         // Act
-        var chunks = texts.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = texts.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
         var relationships = chunks.BuildRelationsGraph();
 
         // Assert
@@ -180,7 +180,7 @@ public class ChunksExtensionsTests
         };
 
         // Act
-        var chunks = texts.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = texts.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
         var pairs = chunks.FindRepeatedChunksWithUrls();
 
         // Assert

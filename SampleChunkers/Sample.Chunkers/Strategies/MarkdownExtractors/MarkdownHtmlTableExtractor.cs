@@ -1,10 +1,10 @@
-﻿using Sample.Chunkers.Enums;
-using Sample.Chunkers.Interfaces;
+﻿using Sample.Chunkers.Interfaces;
 using Sample.Chunkers.Models;
+using Sample.Chunkers.Models.Enums;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Sample.Chunkers.MarkdownExtractors;
+namespace Sample.Chunkers.Strategies.MarkdownExtractors;
 
 public class MarkdownHtmlTableExtractor(IChunkTypesRegexProvider regexProvider) : MarkdownChunksExtractor, IMarkdownChunksExtractor
 {
@@ -12,7 +12,7 @@ public class MarkdownHtmlTableExtractor(IChunkTypesRegexProvider regexProvider) 
     {
         var rawText = builder.ToString();
         var result = new List<ChunkModel>();
-        var tagsMatches = regexProvider.GetForRetrievingHtmlTableTags()
+        var tagsMatches = regexProvider.GetForRetrievingHtmlTableTagsFromMarkdown()
             .Matches(rawText)
             .ToArray();
         var depth = 0;

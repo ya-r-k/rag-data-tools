@@ -1,7 +1,8 @@
 ﻿using FluentAssertions;
-using Sample.Chunkers.Enums;
 using Sample.Chunkers.Extensions;
+using Sample.Chunkers.Infrastructure;
 using Sample.Chunkers.Models;
+using Sample.Chunkers.Models.Enums;
 using Sample.Chunkers.UnitTests.TestData;
 
 namespace Sample.Chunkers.UnitTests.Extensions;
@@ -490,7 +491,7 @@ MERGE
         var expectedTexts = TextChunkTestData.DevToRealWorldArticleTextChunks;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
@@ -516,7 +517,7 @@ MERGE
         var expectedHeaders = HeadersTestData.ArticleWithMathInfoBlocksHeaders;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
@@ -537,7 +538,7 @@ MERGE
         var expectedCodeBlocks = CodeBlocksTestData.ArticleWithUnusualCodeBlocks;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
@@ -555,7 +556,7 @@ MERGE
         var expectedTables = TablesTestData.WikipediaArticleWithComplexNestedTables;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
@@ -681,7 +682,7 @@ MERGE
             }));
 
         // Act
-        var chunks = texts.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
+        var chunks = texts.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();

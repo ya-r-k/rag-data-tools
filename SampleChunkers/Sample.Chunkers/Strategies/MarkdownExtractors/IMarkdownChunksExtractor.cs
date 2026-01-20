@@ -1,7 +1,7 @@
 ﻿using Sample.Chunkers.Models;
 using System.Text;
 
-namespace Sample.Chunkers.MarkdownExtractors;
+namespace Sample.Chunkers.Strategies.MarkdownExtractors;
 
 public interface IMarkdownChunksExtractor
 {

@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using Sample.Chunkers.Enums;
 using Sample.Chunkers.Extensions;
+using Sample.Chunkers.Infrastructure;
 
 namespace Sample.Chunkers.UnitTests.Extensions;
 
@@ -48,56 +48,6 @@ public class SimpleTextChunkerExtensionsTests
     }
 
     [Test]
-    public void ExtractSentenceStartIndices()
-    {
-        // Arrange
-        var text = @"Now you know how Qdrant works. Getting started with Qdrant Cloud is just as easy. Create an account and use our SaaS completely free. We will take care of infrastructure maintenance and software updates.
-
-                    To move onto some more complex examples of vector search, read our Tutorials and create your own app with the help of our Examples.
-
-                    Note: There is another way of running Qdrant locally. If you are a Python developer, we recommend that you try Local Mode in Qdrant Client, as it only takes a few moments to get setup.
-
-
-                    ";
-
-        var expectedResult = new[]
-        {
-            0, 6, 15, 24, 34, 58, 67
-        };
-
-        // Act
-        var actualResult = text.PreprocessNaturalTextForChunking().ExtractSentenceStartIndices();
-
-        // Assert
-        actualResult.Should().BeEquivalentTo(expectedResult);
-    }
-
-    [Test]
-    public void ExtractParagraphsStartIndices()
-    {
-        // Arrange
-        var text = @"Now you know how Qdrant works. Getting started with Qdrant Cloud is just as easy. Create an account and use our SaaS completely free. We will take care of infrastructure maintenance and software updates.
-
-                    To move onto some more complex examples of vector search, read our Tutorials and create your own app with the help of our Examples.
-
-                    Note: There is another way of running Qdrant locally. If you are a Python developer, we recommend that you try Local Mode in Qdrant Client, as it only takes a few moments to get setup.
-
-
-                    ";
-
-        var expectedResult = new[]
-        {
-            0, 34, 58
-        };
-
-        // Act
-        var actualResult = text.PreprocessNaturalTextForChunking().ExtractParagraphStartIndexes();
-
-        // Assert
-        actualResult.Should().BeEquivalentTo(expectedResult);
-    }
-
-    [Test]
     public void ExtractSemanticChunksFromText_WhenSemanticTypeIsParagraphAndWithoutOverlap()
     {
         // Arrange
@@ -108,7 +58,7 @@ public class SimpleTextChunkerExtensionsTests
                     Note: There is another way of running Qdrant locally. If you are a Python developer, we recommend that you try Local Mode in Qdrant Client, as it only takes a few moments to get setup.";
 
         var chunkSize = 40;
-        var type = SemanticsType.Paragraph;
+        var type = PrimitivesExtractors.ParagraphsExtractor;
 
         var expectedChunks = new[]
         {
@@ -136,7 +86,7 @@ public class SimpleTextChunkerExtensionsTests
                     Note: There is another way of running Qdrant locally. If you are a Python developer, we recommend that you try Local Mode in Qdrant Client, as it only takes a few moments to get setup.";
 
         var chunkSize = 40;
-        var type = SemanticsType.Sentence;
+        var type = PrimitivesExtractors.SentencesExtractor;
 
         var expectedChunks = new[]
         {
@@ -182,7 +132,7 @@ This isn't that.
 This is about what elite developers do mentally and emotionally — and how to install those behaviors into your workflow, no matter what tools you use.";
 
         var chunkSize = 40;
-        var type = SemanticsType.Sentence;
+        var type = PrimitivesExtractors.SentencesExtractor;
         var overlap = 0.5;
 
         var expectedChunks = new[]
@@ -231,7 +181,7 @@ This isn't that.
 This is about what elite developers do mentally and emotionally — and how to install those behaviors into your workflow, no matter what tools you use.";
 
         var chunkSize = 40;
-        var type = SemanticsType.Paragraph;
+        var type = PrimitivesExtractors.ParagraphsExtractor;
         var overlap = 0.5;
 
         var expectedChunks = new[]
