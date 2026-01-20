@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Sample.Chunkers.MarkdownExtractors;
 
-public class MarkdownExternalLinksExtractor(IChunkTypesRegexProvider regexProvider) : IMarkdownChunksExtractor
+public class MarkdownExternalLinksExtractor(IChunkTypesRegexProvider regexProvider) : MarkdownChunksExtractor, IMarkdownChunksExtractor
 {
-    public List<ChunkModel> ExtractSematicChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
+    public override List<ChunkModel> ExtractChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
     {
         var result = new List<ChunkModel>();
         var matches = regexProvider.GetExternalLinkRegex()
@@ -33,6 +33,6 @@ public class MarkdownExternalLinksExtractor(IChunkTypesRegexProvider regexProvid
             builder.Replace(match.Value, altText + string.Format(ChunksConsts.ExternalLinkTemplate, lastUsedIndex));
         }
 
-        return [.. result];
+        return ExecuteNextExtractor(builder, result, lastUsedIndex);
     }
 }

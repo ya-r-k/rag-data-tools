@@ -5,5 +5,7 @@ namespace Sample.Chunkers.MarkdownExtractors;
 
 public interface IMarkdownChunksExtractor
 {
-    public List<ChunkModel> ExtractSematicChunksFromText(StringBuilder builder, int lastUsedIndex = 0);
+    public List<ChunkModel> ExtractChunksFromText(StringBuilder builder, int lastUsedIndex = 0);
+
+    IMarkdownChunksExtractor SetNext(IMarkdownChunksExtractor next);
 }

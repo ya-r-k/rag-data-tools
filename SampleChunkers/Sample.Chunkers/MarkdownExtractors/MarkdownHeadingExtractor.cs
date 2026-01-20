@@ -8,7 +8,7 @@ namespace Sample.Chunkers.MarkdownExtractors;
 public class MarkdownHeadingExtractor(
     IChunkTypesRegexProvider regexProvider) : MarkdownComplexChunksExtractorBase(regexProvider), IMarkdownChunksExtractor
 {
-    public List<ChunkModel> ExtractSematicChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
+    public override List<ChunkModel> ExtractChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
     {
         var result = new List<ChunkModel>();
         var matches = regexProvider.GetHeadingRegex()
@@ -36,6 +36,6 @@ public class MarkdownHeadingExtractor(
             builder.Replace(match.Value, string.Format(ChunksConsts.HeaderTemplate, lastUsedIndex));
         }
 
-        return [.. result];
+        return ExecuteNextExtractor(builder, result, lastUsedIndex);
     }
 }

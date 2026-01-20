@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 
 namespace Sample.Chunkers.MarkdownExtractors;
 
-public class MarkdownHtmlTableExtractor(IChunkTypesRegexProvider regexProvider) : IMarkdownChunksExtractor
+public class MarkdownHtmlTableExtractor(IChunkTypesRegexProvider regexProvider) : MarkdownChunksExtractor, IMarkdownChunksExtractor
 {
-    public List<ChunkModel> ExtractSematicChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
+    public override List<ChunkModel> ExtractChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
     {
         var rawText = builder.ToString();
         var result = new List<ChunkModel>();
@@ -58,6 +58,6 @@ public class MarkdownHtmlTableExtractor(IChunkTypesRegexProvider regexProvider) 
             }
         }
 
-        return [.. result];
+        return ExecuteNextExtractor(builder, result, lastUsedIndex);
     }
 }

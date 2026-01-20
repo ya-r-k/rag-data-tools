@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Sample.Chunkers.MarkdownExtractors;
 
-public class MarkdownInfoBlockExtractor(IChunkTypesRegexProvider regexProvider) : IMarkdownChunksExtractor
+public class MarkdownInfoBlockExtractor(IChunkTypesRegexProvider regexProvider) : MarkdownChunksExtractor, IMarkdownChunksExtractor
 {
-    public List<ChunkModel> ExtractSematicChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
+    public override List<ChunkModel> ExtractChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
     {
         var result = new List<ChunkModel>();
         var matches = regexProvider.GetForRetrievingInfoBlockFromMarkdown()
@@ -33,6 +33,6 @@ public class MarkdownInfoBlockExtractor(IChunkTypesRegexProvider regexProvider) 
             builder.Replace(match.Value, string.Format(ChunksConsts.InfoBlockTemplate, lastUsedIndex));
         }
 
-        return [.. result];
+        return ExecuteNextExtractor(builder, result, lastUsedIndex);
     }
 }

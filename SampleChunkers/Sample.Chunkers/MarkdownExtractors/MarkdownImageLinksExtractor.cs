@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Sample.Chunkers.MarkdownExtractors;
 
-public class MarkdownImageLinksExtractor(IChunkTypesRegexProvider regexProvider) : IMarkdownChunksExtractor
+public class MarkdownImageLinksExtractor(IChunkTypesRegexProvider regexProvider) : MarkdownChunksExtractor, IMarkdownChunksExtractor
 {
-    public List<ChunkModel> ExtractSematicChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
+    public override List<ChunkModel> ExtractChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
     {
         var result = new List<ChunkModel>();
         var matches = regexProvider.GetImageLinkRegex()
@@ -32,6 +32,6 @@ public class MarkdownImageLinksExtractor(IChunkTypesRegexProvider regexProvider)
             builder.Replace(match.Value, string.Format(ChunksConsts.ImageLinkTemplate, lastUsedIndex));
         }
 
-        return [.. result];
+        return ExecuteNextExtractor(builder, result, lastUsedIndex);
     }
 }

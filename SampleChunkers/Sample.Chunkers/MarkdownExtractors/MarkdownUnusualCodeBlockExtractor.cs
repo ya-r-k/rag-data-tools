@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Sample.Chunkers.MarkdownExtractors;
 
-public class MarkdownUnusualCodeBlockExtractor(IChunkTypesRegexProvider regexProvider) : IMarkdownChunksExtractor
+public class MarkdownUnusualCodeBlockExtractor(IChunkTypesRegexProvider regexProvider) : MarkdownChunksExtractor, IMarkdownChunksExtractor
 {
-    public List<ChunkModel> ExtractSematicChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
+    public override List<ChunkModel> ExtractChunksFromText(StringBuilder builder, int lastUsedIndex = 0)
     {
         var result = new List<ChunkModel>();
         var matches = regexProvider.GetUnusualCodeBlockRegex()
@@ -34,6 +34,6 @@ public class MarkdownUnusualCodeBlockExtractor(IChunkTypesRegexProvider regexPro
             builder.Replace(codeBlockContent, string.Format(ChunksConsts.CodeBlockTemplate, lastUsedIndex));
         }
 
-        return [.. result];
+        return ExecuteNextExtractor(builder, result, lastUsedIndex);
     }
 }

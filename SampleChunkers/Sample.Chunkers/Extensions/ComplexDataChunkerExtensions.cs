@@ -23,6 +23,8 @@ public static class ComplexDataChunkerExtensions
         ["External-Link"] = ChunkType.AdditionalLink,
     };
 
+    private static readonly IMarkdownChunksExtractor ChunksExtractorsChain;
+
     private static readonly Dictionary<string, IMarkdownChunksExtractor> ChunkTypesExtractorsPairs = new()
     {
         ["Heading"] = new MarkdownHeadingExtractor(regexProvider),
@@ -33,6 +35,18 @@ public static class ComplexDataChunkerExtensions
         ["ExternalLink"] = new MarkdownExternalLinksExtractor(regexProvider),
         ["ImageLink"] = new MarkdownImageLinksExtractor(regexProvider),
     };
+
+    static ComplexDataChunkerExtensions()
+    {
+        ChunksExtractorsChain = ChunkTypesExtractorsPairs["CodeBlock"];
+
+        ChunksExtractorsChain.SetNext(ChunkTypesExtractorsPairs["UnusualBlock"])
+            .SetNext(ChunkTypesExtractorsPairs["HtmlTable"])
+            .SetNext(ChunkTypesExtractorsPairs["InfoBlock"])
+            .SetNext(ChunkTypesExtractorsPairs["ImageLink"])
+            .SetNext(ChunkTypesExtractorsPairs["ExternalLink"])
+            .SetNext(ChunkTypesExtractorsPairs["Heading"]);
+    }
 
     /// <summary>
     /// Обрабатывает коллекцию документов с автоматической нумерацией чанков.
@@ -51,12 +65,7 @@ public static class ComplexDataChunkerExtensions
     public static Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> ExtractSemanticChunksDeeply<T>(this Dictionary<T, string> texts, 
         int chunkWordsCount, 
         SemanticsType semanticsType, 
-        double overlapPercentage = 0.0, 
-        bool withTables = true,
-        bool withInfoBlocks = true,
-        bool withCodeBlocks = true, 
-        bool withImages = true, 
-        bool withLinks = true)
+        double overlapPercentage = 0.0)
         where T : unmanaged
     {
         var result = new Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>>();
@@ -65,7 +74,7 @@ public static class ComplexDataChunkerExtensions
 
         foreach (var text in texts)
         {
-            var chunks = text.Value.ExtractSemanticChunksDeeply(chunkWordsCount, semanticsType, overlapPercentage, withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks, lastUsedIndex);
+            var chunks = text.Value.ExtractSemanticChunksDeeply(chunkWordsCount, semanticsType, overlapPercentage, lastUsedIndex);
             lastUsedIndex += chunks.SelectMany(x => x.Value).Count();
 
             result[text.Key] = chunks;
@@ -81,11 +90,6 @@ public static class ComplexDataChunkerExtensions
     /// <param name="chunkWordsCount">Максимальное количество слов в текстовом чанке.</param>
     /// <param name="semanticsType">Тип семантической единицы: предложение или параграф.</param>
     /// <param name="overlapPercentage">Процент перекрытия между чанками (от 0.0 до 1.0). По умолчанию 0.0.</param>
-    /// <param name="withTables">Извлекать HTML таблицы. По умолчанию true.</param>
-    /// <param name="withInfoBlocks">Извлекать информационные блоки (blockquotes). По умолчанию true.</param>
-    /// <param name="withCodeBlocks">Извлекать блоки кода. По умолчанию true.</param>
-    /// <param name="withImages">Извлекать изображения. По умолчанию true.</param>
-    /// <param name="withLinks">Извлекать внешние ссылки. По умолчанию true.</param>
     /// <param name="lastUsedIndex">Последний использованный индекс (для продолжения нумерации). По умолчанию 0.</param>
     /// <returns>Словарь типов чанков → списки чанков.</returns>
     /// <remarks>
@@ -101,17 +105,12 @@ public static class ComplexDataChunkerExtensions
     public static Dictionary<ChunkType, List<ChunkModel>> ExtractSemanticChunksDeeply(this string text,
         int chunkWordsCount, 
         SemanticsType semanticsType, 
-        double overlapPercentage = 0.0, 
-        bool withTables = true,
-        bool withInfoBlocks = true,
-        bool withCodeBlocks = true, 
-        bool withImages = true, 
-        bool withLinks = true, 
+        double overlapPercentage = 0.0,
         int lastUsedIndex = 0)
     {
         var textBuilder = new StringBuilder(text);
 
-        var dataChunks = textBuilder.RetrieveChunksFromText(withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks, lastUsedIndex);
+        var dataChunks = textBuilder.RetrieveChunksFromText(lastUsedIndex);
         var processedText = textBuilder.SquashLabelsIntoWords()
                                        .PreprocessNaturalTextForChunking();
 
@@ -133,71 +132,33 @@ public static class ComplexDataChunkerExtensions
     /// Извлекает только структурированные элементы из текста без текстовых чанков.
     /// </summary>
     /// <param name="text">Текст для обработки (Markdown или HTML).</param>
-    /// <param name="withTables">Извлекать HTML таблицы.</param>
-    /// <param name="withInfoBlocks">Извлекать информационные блоки (blockquotes).</param>
-    /// <param name="withCodeBlocks">Извлекать блоки кода.</param>
-    /// <param name="withImages">Извлекать изображения.</param>
-    /// <param name="withLinks">Извлекать внешние ссылки.</param>
     /// <param name="lastUsedIndex">Последний использованный индекс (для продолжения нумерации). По умолчанию 0.</param>
     /// <returns>Словарь типов чанков → списки чанков. Текстовые чанки (TextChunk) не извлекаются.</returns>
     /// <remarks>
     /// Используется когда нужны только структурированные элементы без текстовых чанков.
     /// Порядок извлечения: блоки кода → таблицы → info blocks → изображения → ссылки → заголовки.
     /// </remarks>
-    public static Dictionary<ChunkType, List<ChunkModel>> RetrieveChunksFromText(this string text, bool withTables, bool withInfoBlocks, bool withCodeBlocks, bool withImages, bool withLinks, int lastUsedIndex = 0)
+    public static Dictionary<ChunkType, List<ChunkModel>> RetrieveChunksFromText(this string text, int lastUsedIndex = 0)
     {
         var currentText = new StringBuilder(text);
 
-        return currentText.RetrieveChunksFromText(withTables, withInfoBlocks, withCodeBlocks, withImages, withLinks, lastUsedIndex);
+        return currentText.RetrieveChunksFromText(lastUsedIndex);
     }
 
-    private static Dictionary<ChunkType, List<ChunkModel>> RetrieveChunksFromText(this StringBuilder text, bool withTables, bool withInfoBlocks, bool withCodeBlocks, bool withImages, bool withLinks, int lastUsedIndex = 0)
+    private static Dictionary<ChunkType, List<ChunkModel>> RetrieveChunksFromText(this StringBuilder text, int lastUsedIndex = 0)
     {
-        var result = new Dictionary<ChunkType, List<ChunkModel>>();
-        var index = lastUsedIndex;
+        var result = ChunksExtractorsChain.ExtractChunksFromText(text, lastUsedIndex)
+            .GroupBy(x => x.ChunkType)
+            .ToDictionary(x => x.Key, x => x.ToList());
 
-        if (withCodeBlocks)
+        foreach (var pair in labelsChunkTypesPairs)
         {
-            var items = ChunkTypesExtractorsPairs["CodeBlock"].ExtractSematicChunksFromText(text, index);
-            items.AddRange(ChunkTypesExtractorsPairs["UnusualBlock"].ExtractSematicChunksFromText(text, index + items.Count));
-
-            result.Add(ChunkType.CodeBlock, items);
-            index += items.Count;
+            if (!result.ContainsKey(pair.Value))
+            {
+                result[pair.Value] = [];
+            }
         }
 
-        if (withTables)
-        {
-            var items = ChunkTypesExtractorsPairs["HtmlTable"].ExtractSematicChunksFromText(text, index);
-
-            result.Add(ChunkType.Table, items);
-            index += items.Count;
-        }
-
-        if (withInfoBlocks)
-        {
-            var items = ChunkTypesExtractorsPairs["InfoBlock"].ExtractSematicChunksFromText(text, index);
-
-            result.Add(ChunkType.InfoBlock, items);
-            index += items.Count;
-        }
-
-        if (withImages)
-        {
-            var items = ChunkTypesExtractorsPairs["ImageLink"].ExtractSematicChunksFromText(text, index);
-
-            result.Add(ChunkType.ImageLink, items);
-            index += items.Count;
-        }
-
-        if (withLinks)
-        {
-            var items = ChunkTypesExtractorsPairs["ExternalLink"].ExtractSematicChunksFromText(text, index);
-
-            result.Add(ChunkType.AdditionalLink, items);
-            index += items.Count;
-        }
-
-        result.Add(ChunkType.Topic, ChunkTypesExtractorsPairs["Heading"].ExtractSematicChunksFromText(text, index));
         return result;
     }
 

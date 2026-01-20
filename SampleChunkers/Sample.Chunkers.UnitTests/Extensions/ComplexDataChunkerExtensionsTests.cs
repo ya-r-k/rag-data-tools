@@ -163,7 +163,7 @@ public class Test
         };
         
         // Act
-        var chunks = text.RetrieveChunksFromText(withTables: true, withInfoBlocks: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = text.RetrieveChunksFromText();
 
         // Assert
         var chunksList = chunks.SelectMany(x => x.Value).ToArray();
@@ -458,7 +458,7 @@ MERGE
 
 
         // Act
-        var chunks = text.RetrieveChunksFromText(withTables: true, withInfoBlocks: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = text.RetrieveChunksFromText();
 
         // Assert
         var chunksList = chunks.SelectMany(x => x.Value).ToArray();
@@ -490,7 +490,7 @@ MERGE
         var expectedTexts = TextChunkTestData.DevToRealWorldArticleTextChunks;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
@@ -516,7 +516,7 @@ MERGE
         var expectedHeaders = HeadersTestData.ArticleWithMathInfoBlocksHeaders;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
@@ -537,7 +537,7 @@ MERGE
         var expectedCodeBlocks = CodeBlocksTestData.ArticleWithUnusualCodeBlocks;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
@@ -555,7 +555,7 @@ MERGE
         var expectedTables = TablesTestData.WikipediaArticleWithComplexNestedTables;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
@@ -681,7 +681,7 @@ MERGE
             }));
 
         // Act
-        var chunks = texts.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = texts.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
 
         // Assert
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();

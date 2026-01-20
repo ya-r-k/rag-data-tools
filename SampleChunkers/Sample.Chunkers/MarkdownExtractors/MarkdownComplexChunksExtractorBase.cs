@@ -1,10 +1,11 @@
 ﻿using Sample.Chunkers.Enums;
 using Sample.Chunkers.Interfaces;
+using Sample.Chunkers.Models;
 using System.Text;
 
 namespace Sample.Chunkers.MarkdownExtractors;
 
-public class MarkdownComplexChunksExtractorBase(IChunkTypesRegexProvider regexProvider)
+public abstract class MarkdownComplexChunksExtractorBase(IChunkTypesRegexProvider regexProvider) : MarkdownChunksExtractor
 {
     private static readonly Dictionary<string, ChunkType> labelsChunkTypesPairs = new()
     {
@@ -18,6 +19,8 @@ public class MarkdownComplexChunksExtractorBase(IChunkTypesRegexProvider regexPr
     };
 
     protected readonly IChunkTypesRegexProvider regexProvider = regexProvider;
+
+    public override abstract List<ChunkModel> ExtractChunksFromText(StringBuilder builder, int lastUsedIndex = 0);
 
     protected Dictionary<ChunkType, List<int>> ExtractRelatedChunksIndexes(StringBuilder chunkValue)
     {

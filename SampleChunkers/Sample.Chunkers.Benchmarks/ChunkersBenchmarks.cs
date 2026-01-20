@@ -135,12 +135,7 @@ public class ChunkersBenchmarks
         _ = _mediumText.ExtractSemanticChunksDeeply(
             200,
             SemanticsType.Sentence,
-            0.5,
-            withTables: false,
-            withInfoBlocks: false,
-            withCodeBlocks: false,
-            withImages: false,
-            withLinks: false
+            0.5
         );
     }
 
@@ -167,25 +162,13 @@ public class ChunkersBenchmarks
     [Benchmark]
     public void RetrieveChunksFromText_SimpleMarkdown()
     {
-        _ = _markdownText.RetrieveChunksFromText(
-            withTables: true,
-            withInfoBlocks: true,
-            withCodeBlocks: true,
-            withImages: true,
-            withLinks: true
-        );
+        _ = _markdownText.RetrieveChunksFromText();
     }
 
     [Benchmark]
     public void RetrieveChunksFromText_ComplexMarkdown()
     {
-        _ = _complexMarkdownText.RetrieveChunksFromText(
-            withTables: true,
-            withInfoBlocks: true,
-            withCodeBlocks: true,
-            withImages: true,
-            withLinks: true
-        );
+        _ = _complexMarkdownText.RetrieveChunksFromText();
     }
 
     #endregion

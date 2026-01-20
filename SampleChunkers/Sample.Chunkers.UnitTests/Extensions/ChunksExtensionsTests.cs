@@ -16,7 +16,7 @@ public class ChunksExtensionsTests
         var expectedTopicsRelations = RelationsTestData.ArticleWithMathInfoBlocks;
 
         // Act
-        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5, withTables: true, withCodeBlocks: true, withImages: true, withLinks: true);
+        var chunks = text.ExtractSemanticChunksDeeply(200, SemanticsType.Sentence, 0.5);
         var relationships = chunks.BuildRelationsGraph();
 
         // Assert
