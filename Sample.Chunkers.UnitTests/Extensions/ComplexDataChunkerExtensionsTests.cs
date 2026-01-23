@@ -12,7 +12,7 @@ public class ComplexDataChunkerExtensionsTests
     // TODO: Need to add tests where chunks text without codeblocks, tables, links and other related chunks only plain text
 
     [Test]
-    public void RetrieveChunksFromText_WithMixedContent_ShouldExtractAllChunks()
+    public void ExtractSemanticChunksDeeply_WithMixedContent_ShouldExtractAllChunks()
     {
         // Arrange
         var text = @"# Main Title
@@ -171,32 +171,22 @@ public class Test
                 },
             }
         };
-        
+
+        var expectedResult = expectedCodeBlocks.Concat(expectedTables)
+            .Concat(expectedImages)
+            .Concat(expectedHeaders)
+            .ToArray();
+
         // Act
-        var chunks = text.RetrieveChunksFromText();
+        var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
-        var chunksList = chunks.SelectMany(x => x.Value).ToArray();
-        chunksList.Should().HaveCount(6); // 3 headers, 1 code block, 1 table, 1 image
-
-        var headers = chunks[ChunkType.Topic];
-        headers.Should().BeEquivalentTo(expectedHeaders);
-
-        var codeBlocks = chunks[ChunkType.CodeBlock];
-        codeBlocks.Should().BeEquivalentTo(expectedCodeBlocks, options => options
-            .Excluding(x => x.Index));
-
-        var tables = chunks[ChunkType.Table];
-        tables.Should().BeEquivalentTo(expectedTables, options => options
-            .Excluding(x => x.Index));
-
-        var images = chunks[ChunkType.ImageLink];
-        images.Should().BeEquivalentTo(expectedImages, options => options
-            .Excluding(x => x.Index));
+        chunks.Where(x => x.ChunkType != ChunkType.TextChunk).Should().BeEquivalentTo(expectedResult, options => 
+            options.Excluding(x => x.Index));
     }
 
     [Test]
-    public void RetrieveChunksFromText_WithNestedContent_ShouldExtractCorrectly()
+    public void ExtractSemanticChunksDeeply_WithNestedContent_ShouldExtractCorrectly()
     {
         // Arrange
         var text = @"# Title with `inline code`
@@ -470,27 +460,17 @@ MERGE
             },
         };
 
+        var expectedResult = expectedCodeBlocks.Concat(expectedTables)
+            .Concat(expectedLinks)
+            .Concat(expectedHeaders)
+            .ToArray();
+
 
         // Act
-        var chunks = text.RetrieveChunksFromText();
+        var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
-        var chunksList = chunks.SelectMany(x => x.Value).ToArray();
-        chunksList.Should().HaveCount(6); // 2 headers, 2 code block, 1 table, 1 link
-
-        var headers = chunks[ChunkType.Topic];
-        headers.Should().BeEquivalentTo(expectedHeaders);
-
-        var codeBlocks = chunks[ChunkType.CodeBlock];
-        codeBlocks.Should().BeEquivalentTo(expectedCodeBlocks, options => options
-            .Excluding(x => x.Index));
-
-        var tables = chunks[ChunkType.Table];
-        tables.Should().BeEquivalentTo(expectedTables, options => options
-            .Excluding(x => x.Index));
-
-        var links = chunks[ChunkType.AdditionalLink];
-        links.Should().BeEquivalentTo(expectedLinks);
+        chunks.Where(x => x.ChunkType != ChunkType.TextChunk).Should().BeEquivalentTo(expectedResult);
     }
 
     [Test]
@@ -498,48 +478,33 @@ MERGE
     {
         // Arrange
         var text = ArticlesTestData.DevToRealWorldArticleText;
-        var expectedCodeBlocks = CodeBlocksTestData.DevToRealWorldArticleCodeBlocks;
-        var expectedLinks = LinksTestData.DevToRealWorldArticleLinks;
-        var expectedTexts = TextChunkTestData.DevToRealWorldArticleTextChunks;
+        var expectedResult = CodeBlocksTestData.DevToRealWorldArticleCodeBlocks
+            .Concat(LinksTestData.DevToRealWorldArticleLinks)
+            .Concat(TextChunkTestData.DevToRealWorldArticleTextChunks)
+            .ToArray();
 
         // Act
         var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
-        var chunkList = chunks.SelectMany(x => x.Value).ToArray();
-        chunkList.Should().NotBeEmpty();
-
-        var codeBlocks = chunks[ChunkType.CodeBlock];
-        codeBlocks.Should().BeEquivalentTo(expectedCodeBlocks);
-
-        var textsChunks = chunks[ChunkType.TextChunk];
-        textsChunks.Should().BeEquivalentTo(expectedTexts, options => options
-            .Excluding(x => x.Index));
-
-        var links = chunks[ChunkType.AdditionalLink];
-        links.Should().BeEquivalentTo(expectedLinks);
+        chunks.Should().BeEquivalentTo(expectedResult);
     }
 
     [Test]
     public void ExtractSemanticChunksDeeply_WithRealWorldTextWithInfoBlocks_ShouldReturnCorrectChunks()
     {
         // Arrange
+        var types = new[] { ChunkType.InfoBlock, ChunkType.Topic };
         var text = ArticlesTestData.ArticleWithMathInfoBlocks;
-        var expectedInfoBlocks = InfoBlocksTestData.ArticleWithMathInfoBlocks;
-        var expectedHeaders = HeadersTestData.ArticleWithMathInfoBlocksHeaders;
+        var expectedResult = InfoBlocksTestData.ArticleWithMathInfoBlocks
+            .Concat(HeadersTestData.ArticleWithMathInfoBlocksHeaders)
+            .ToArray();
 
         // Act
         var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
-        var chunkList = chunks.SelectMany(x => x.Value).ToArray();
-        chunkList.Should().NotBeEmpty();
-
-        var infoBlocks = chunks[ChunkType.InfoBlock];
-        infoBlocks.Should().BeEquivalentTo(expectedInfoBlocks);
-
-        var headers = chunks[ChunkType.Topic];
-        headers.Should().BeEquivalentTo(expectedHeaders);
+        chunks.Where(x => types.Contains(x.ChunkType)).Should().BeEquivalentTo(expectedResult);
     }
 
     [Test]
@@ -553,11 +518,7 @@ MERGE
         var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
-        var chunkList = chunks.SelectMany(x => x.Value).ToArray();
-        chunkList.Should().NotBeEmpty();
-
-        var codeBlocks = chunks[ChunkType.CodeBlock];
-        codeBlocks.Should().BeEquivalentTo(expectedCodeBlocks);
+        chunks.Where(x => x.ChunkType == ChunkType.CodeBlock).Should().BeEquivalentTo(expectedCodeBlocks);
     }
 
     [Test]
@@ -571,11 +532,7 @@ MERGE
         var chunks = text.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
-        var chunkList = chunks.SelectMany(x => x.Value).ToArray();
-        chunkList.Should().NotBeEmpty();
-
-        var tables = chunks[ChunkType.Table];
-        tables.Should().BeEquivalentTo(expectedTables);
+        chunks.Where(x => x.ChunkType == ChunkType.Table).Should().BeEquivalentTo(expectedTables);
     }
 
     [Test]
@@ -693,41 +650,17 @@ MERGE
                 Data = y.Data,
             }));
 
+        var expectedResult = expectedCodeBlocks.Concat(expectedTables)
+            .Concat(expectedLinks)
+            .Concat(expectedImageLinks)
+            .Concat(expectedHeaders)
+            .Concat(expectedTextsChunks)
+            .ToArray();
+
         // Act
         var chunks = texts.ExtractSemanticChunksDeeply(200, PrimitivesExtractors.SentencesExtractor, 0.5);
 
         // Assert
-        var chunkList = chunks.SelectMany(x => x.Value).ToArray();
-        chunkList.Should().NotBeEmpty();
-
-        var codeBlocks = chunks.Values.Where(x => x.ContainsKey(ChunkType.CodeBlock))
-            .SelectMany(x => x[ChunkType.CodeBlock])
-            .ToArray();
-        codeBlocks.Should().BeEquivalentTo(expectedCodeBlocks);
-
-        var tables = chunks.Values.Where(x => x.ContainsKey(ChunkType.Table))
-            .SelectMany(x => x[ChunkType.Table])
-            .ToArray();
-        tables.Should().BeEquivalentTo(expectedTables);
-
-        var links = chunks.Values.Where(x => x.ContainsKey(ChunkType.AdditionalLink))
-            .SelectMany(x => x[ChunkType.AdditionalLink])
-            .ToArray();
-        links.Should().BeEquivalentTo(expectedLinks);
-
-        var imageLinks = chunks.Values.Where(x => x.ContainsKey(ChunkType.ImageLink))
-            .SelectMany(x => x[ChunkType.ImageLink])
-            .ToArray();
-        imageLinks.Should().BeEquivalentTo(expectedImageLinks);
-
-        var headers = chunks.Values.Where(x => x.ContainsKey(ChunkType.Topic))
-            .SelectMany(x => x[ChunkType.Topic])
-            .ToArray();
-        headers.Should().BeEquivalentTo(expectedHeaders);
-
-        var textsChunks = chunks.Values.Where(x => x.ContainsKey(ChunkType.TextChunk))
-            .SelectMany(x => x[ChunkType.TextChunk])
-            .ToArray();
-        textsChunks.Should().BeEquivalentTo(expectedTextsChunks);
+        chunks.SelectMany(x => x.Value).Should().BeEquivalentTo(expectedResult);
     }
 }

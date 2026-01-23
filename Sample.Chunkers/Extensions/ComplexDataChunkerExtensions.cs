@@ -58,20 +58,20 @@ public static class ComplexDataChunkerExtensions
     /// <param name="indexesExtractor">Тип семантической единицы: предложение или параграф.</param>
     /// <param name="overlapPercentage">Процент перекрытия между чанками (от 0.0 до 1.0). По умолчанию 0.0.</param>
     /// <returns>Словарь документов → типы чанков → списки чанков. Индексы чанков накапливаются между документами.</returns>
-    public static Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> ExtractSemanticChunksDeeply<T>(this Dictionary<T, string> texts, 
+    public static Dictionary<T, ChunkModel[]> ExtractSemanticChunksDeeply<T>(this Dictionary<T, string> texts, 
         int chunkWordsCount,
         IPrimitivesIndexesExtractor indexesExtractor, 
         double overlapPercentage = 0.0)
         where T : unmanaged
     {
-        var result = new Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>>();
+        var result = new Dictionary<T, ChunkModel[]>();
 
         var lastUsedIndex = 0;
 
         foreach (var text in texts)
         {
             var chunks = text.Value.ExtractSemanticChunksDeeply(chunkWordsCount, indexesExtractor, overlapPercentage, lastUsedIndex);
-            lastUsedIndex += chunks.SelectMany(x => x.Value).Count();
+            lastUsedIndex += chunks.Length;
 
             result[text.Key] = chunks;
         }
@@ -98,7 +98,7 @@ public static class ComplexDataChunkerExtensions
     /// <item>В текстовых чанках обнаруживаются ссылки на извлеченные элементы</item>
     /// </list>
     /// </remarks>
-    public static Dictionary<ChunkType, List<ChunkModel>> ExtractSemanticChunksDeeply(this string text,
+    public static ChunkModel[] ExtractSemanticChunksDeeply(this string text,
         int chunkWordsCount,
         IPrimitivesIndexesExtractor indexesExtractor, 
         double overlapPercentage = 0.0,
@@ -106,58 +106,29 @@ public static class ComplexDataChunkerExtensions
     {
         var textBuilder = new StringBuilder(text);
 
-        var dataChunks = textBuilder.RetrieveChunksFromText(lastUsedIndex);
+        var dataChunks = ChunksExtractorsChain.ExtractChunksFromText(textBuilder, lastUsedIndex);
         var processedText = textBuilder.SquashLabelsIntoWords()
                                        .PreprocessNaturalTextForChunking();
 
         var index = lastUsedIndex;
-        foreach (var pair in dataChunks)
+        foreach (var chunk in dataChunks)
         {
-            foreach (var chunk in pair.Value)
-            {
-                index = Math.Max(index, chunk.Index);
-            }
+            index = Math.Max(index, chunk.Index);
         }
 
-        dataChunks[ChunkType.TextChunk] = processedText.ExtractSemanticChunks(index, chunkWordsCount, indexesExtractor, overlapPercentage);
+        dataChunks.AddRange(processedText.ExtractSemanticChunks(index, chunkWordsCount, indexesExtractor, overlapPercentage));
 
-        return dataChunks;
+        return [.. dataChunks];
     }
 
-    /// <summary>
-    /// Извлекает только структурированные элементы из текста без текстовых чанков.
-    /// </summary>
-    /// <param name="text">Текст для обработки (Markdown или HTML).</param>
-    /// <param name="lastUsedIndex">Последний использованный индекс (для продолжения нумерации). По умолчанию 0.</param>
-    /// <returns>Словарь типов чанков → списки чанков. Текстовые чанки (TextChunk) не извлекаются.</returns>
-    /// <remarks>
-    /// Используется когда нужны только структурированные элементы без текстовых чанков.
-    /// Порядок извлечения: блоки кода → таблицы → info blocks → изображения → ссылки → заголовки.
-    /// </remarks>
-    public static Dictionary<ChunkType, List<ChunkModel>> RetrieveChunksFromText(this string text, int lastUsedIndex = 0)
-    {
-        var currentText = new StringBuilder(text);
-
-        return currentText.RetrieveChunksFromText(lastUsedIndex);
-    }
-
-    private static Dictionary<ChunkType, List<ChunkModel>> RetrieveChunksFromText(this StringBuilder text, int lastUsedIndex = 0)
-    {
-        var result = ChunksExtractorsChain.ExtractChunksFromText(text, lastUsedIndex)
-            .GroupBy(x => x.ChunkType)
-            .ToDictionary(x => x.Key, x => x.ToList());
-
-        return result;
-    }
-
-    private static List<ChunkModel> ExtractSemanticChunks(this string text, int lastUsedIndex, int chunkWordsCount, IPrimitivesIndexesExtractor indexesExtractor, double overlapPercentage = 0.0)
+    private static ChunkModel[] ExtractSemanticChunks(this string text, int lastUsedIndex, int chunkWordsCount, IPrimitivesIndexesExtractor indexesExtractor, double overlapPercentage = 0.0)
     {
         var result = new List<ChunkModel>();
         var textChunks = text.ExtractSemanticChunksFromText(chunkWordsCount, indexesExtractor, overlapPercentage);
 
-        foreach (var item in textChunks)
+        for (var i = 0; i < textChunks.Length; i++)
         {
-            var rawChunkData = new StringBuilder(item);
+            var rawChunkData = new StringBuilder(textChunks[i]);
             var relatedIndexes = ExtractRelatedChunksIndexes(rawChunkData);
 
             result.Add(new ChunkModel
@@ -171,6 +142,11 @@ public static class ComplexDataChunkerExtensions
                 },
                 RelatedChunksIndexes = relatedIndexes,
             });
+
+            if (i < textChunks.Length - 1)
+            {
+                relatedIndexes[RelationshipType.HasNextChunk] = [lastUsedIndex + 1];
+            }
         }
 
         return [.. result];

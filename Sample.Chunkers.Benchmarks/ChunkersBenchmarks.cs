@@ -157,19 +157,6 @@ public class ChunkersBenchmarks
             0.5
         );
     }
-
-    [Benchmark]
-    public void RetrieveChunksFromText_SimpleMarkdown()
-    {
-        _ = _markdownText.RetrieveChunksFromText();
-    }
-
-    [Benchmark]
-    public void RetrieveChunksFromText_ComplexMarkdown()
-    {
-        _ = _complexMarkdownText.RetrieveChunksFromText();
-    }
-
     #endregion
 
     #region ChunksExtensions

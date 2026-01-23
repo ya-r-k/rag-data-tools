@@ -12,7 +12,10 @@ internal static class TextChunkTestData
         {
             Index = 6,
             ChunkType = ChunkType.TextChunk,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextChunk] = [7],
+            },
             Data = new Dictionary<string, object>
             {
                 ["content"] = "This article explains the concept of recursion in programming, where a function calls itself to solve smaller instances of a problem, and its applications in tasks like tree traversal and divide-and-conquer algorithms. It also discusses the benefits of recursion for simplifying complex problems and improving code readability, while highlighting potential issues like stack overflow.\n\n* * *\n\nIn computer science, recursion is an algorithmic technique in which a function calls itself to solve smaller instances of the same problem. In programming, recursion is an amazing technique with the help of which we can reduce the length of our code and make it easier to read and write” (GeeksforGeeks, 2024, p1). Recursion is used in programming to solve complex problems involving repetition and hierarchical structures such as tree traversals, graph algorithms, and divide-and-conquer problems like sorting and searching.\n\nThe basic components found in recursive functions are base cases and recursive cases. A base case is a condition that, when met, ends the recursion process (Ricciardi, 2024). A recursive case is a set of code lines that are executed until a base condition is met.\n\nA classic example where recursion is well suited is in computing the factorial of a number.",
@@ -25,6 +28,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [8],
                 [RelationshipType.RelatedCodeBlock] = [CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[0].Index],
             },
             Data = new Dictionary<string, object>
@@ -39,6 +43,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [9],
                 [RelationshipType.RelatedCodeBlock] = [CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[0].Index],
             },
             Data = new Dictionary<string, object>
@@ -51,7 +56,10 @@ internal static class TextChunkTestData
         {
             Index = 9,
             ChunkType = ChunkType.TextChunk,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextChunk] = [10],
+            },
             Data = new Dictionary<string, object>
             {
                 ["content"] = "This approach is often referred to as the divide-and-conquer approach, it is implemented in algorithms like mergesort, where recursion divides a complex sort problem into smaller problems leading to a more efficient sort solution than the linear sort iterating solution. Additionally, recursion helps with code readability by simplifying and shortening code lines. When using recursion, programmers can write problems involving repetition or hierarchical structures (trees) without the need to implement complex loops. Recursion also simplifies, and it is efficient at handling dynamic and random data structures such as linked lists and tree structures. For instance, when traversing a binary tree, using recursion simplifies the implementation of the process without the need to implement a stack.\n\nAlthough recursion has various advantages, in some scenarios using a stack is preferable over recursion. For example, recursion can generate a stack overflow error, ‘StackOverflowError ’, if the recursive depth (number of recursion calls) becomes too large. This can happen in cases like deep tree traversals or depth-first search algorithms, where the number of recursion calls may exceed the system’s call stack capacity. In Java, the limit of the call stack varies depending on the platform used and the Java Virtual Machine implemented.",
@@ -62,7 +70,10 @@ internal static class TextChunkTestData
         {
             Index = 10,
             ChunkType = ChunkType.TextChunk,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextChunk] = [11],
+            },
             Data = new Dictionary<string, object>
             {
                 ["content"] = "For instance, when traversing a binary tree, using recursion simplifies the implementation of the process without the need to implement a stack.\n\nAlthough recursion has various advantages, in some scenarios using a stack is preferable over recursion. For example, recursion can generate a stack overflow error, ‘StackOverflowError ’, if the recursive depth (number of recursion calls) becomes too large. This can happen in cases like deep tree traversals or depth-first search algorithms, where the number of recursion calls may exceed the system’s call stack capacity. In Java, the limit of the call stack varies depending on the platform used and the Java Virtual Machine implemented. Java stack size can be configured using the JVM argument ‘-Xss’, for example ‘java -Xss1M MyProgram‘ where 1M is the size of the call back for MyProgram (Goodrich, Tamassia, & Goldwasser, 2023). It is best practice to use a stack or tail recursion, if possible, in this scenario.",
@@ -75,6 +86,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [12],
                 [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[1].Index,
@@ -93,6 +105,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [13],
                 [RelationshipType.RelatedCodeBlock] = 
                 [
                     CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[1].Index,
@@ -135,6 +148,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [34],
                 [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[0].Index,
@@ -162,6 +176,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [35],
                 [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[2].Index,
@@ -184,6 +199,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [36],
                 [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[2].Index,
@@ -205,6 +221,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [37],
                 [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[1].Index,
@@ -222,6 +239,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [38],
                 [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[1].Index,
@@ -243,6 +261,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [39],
                 [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[4].Index
@@ -258,7 +277,10 @@ internal static class TextChunkTestData
         {
             Index = 39,
             ChunkType = ChunkType.TextChunk,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new()
+            {
+                [RelationshipType.HasNextChunk] = [40],
+            },
             Data = new Dictionary<string, object>
             {
                 ["content"] = "Data modellers collaborate with stakeholders at each stage of the process to define entities and attributes, establish relationships between data objects, and create models that accurately represent the data in a format that can be consumed by applications. These stakeholders may include developers, database administrators, and other interested parties. Lets discuss the data modelling steps:\n\n1. **Identifying data sources**: The first stage is to identify and investigate the different sources of data both inside and outside the company. It's critical to comprehend the sources of the data and how various sources add to the information as a whole. Determining the sources of data is essential since it guarantees a thorough framework for data modelling. It assists in gathering all pertinent data, setting the stage for a precise and comprehensive depiction of the data landscape.\n2. **Defining Entities and Attributes**: This stage is all on identifying the entities (items or ideas) and the characteristics that go along with them. Entities constitute the subject matter of the data, whereas attributes specify the particular qualities of each entity. The foundation of data modelling is the definition of entities and characteristics.",
@@ -269,7 +291,10 @@ internal static class TextChunkTestData
         {
             Index = 40,
             ChunkType = ChunkType.TextChunk,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new()
+            {
+                [RelationshipType.HasNextChunk] = [41],
+            },
             Data = new Dictionary<string, object>
             {
                 ["content"] = "Determining the sources of data is essential since it guarantees a thorough framework for data modelling. It assists in gathering all pertinent data, setting the stage for a precise and comprehensive depiction of the data landscape.\n2. **Defining Entities and Attributes**: This stage is all on identifying the entities (items or ideas) and the characteristics that go along with them. Entities constitute the subject matter of the data, whereas attributes specify the particular qualities of each entity. The foundation of data modelling is the definition of entities and characteristics. It offers an orderly and transparent framework, which is necessary to comprehend the characteristics of the data and create a useful model.\n3. **Mapping Relationships**: Relationships show the connections or associations between various things. Relationship mapping entails locating and characterising these linkages, indicating the nature and cardinality of every relationship. In order to capture the interdependencies within the data, it is essential to understand relationships. It improves the correctness of the model by capturing the relationships between various data pieces that exist in the real world.\n4. **Choosing a model Type**: The right data model type is selected based on the project needs and data properties.",
@@ -282,6 +307,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [42],
                 [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[2].Index,
@@ -300,6 +326,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [43],
                 [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[2].Index,
@@ -323,6 +350,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [44],
                 [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[3].Index
@@ -349,6 +377,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [45],
                 [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[3].Index
@@ -372,6 +401,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [46],
                 [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[6].Index,
@@ -394,6 +424,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [47],
                 [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[8].Index,
@@ -458,6 +489,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [48],
                 [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[0].Index,
@@ -498,6 +530,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [49],
                 [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[0].Index,
@@ -536,6 +569,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [50],
                 [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[4].Index,
@@ -567,6 +601,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
+                [RelationshipType.HasNextChunk] = [51],
                 [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[6].Index,

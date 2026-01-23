@@ -43,20 +43,18 @@ public static class ChunksExtensions
     /// <item>Остальные индексы добавляет в результат как повторяющиеся</item>
     /// </list>
     /// </remarks>
-    public static Dictionary<int, int> FindRepeatedChunksWithUrls<T>(this Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> chunks)
+    public static Dictionary<int, int> FindRepeatedChunksWithUrls<T>(this Dictionary<T, ChunkModel[]> chunks)
         where T : unmanaged
     {
         var result = new Dictionary<int, int>();
         var urlMap = chunks.SelectMany(x => x.Value)
-                           .Where(x => ChunkTypesWithUrls.Contains(x.Key))
-                           .SelectMany(x => x.Value)
-                           .Select(x => new {
-                               Url = x.Data.TryGetValue("url", out var u) && u is string s ? s : null,
-                               ChunkIndex = x.Index,
-                           })
-                           .Where(x => !string.IsNullOrEmpty(x.Url))
-                           .GroupBy(x => x.Url!)
-                           .ToDictionary(g => g.Key, g => g.Select(x => x.ChunkIndex).ToArray());
+            .Where(x => ChunkTypesWithUrls.Contains(x.ChunkType))
+            .Select(x => new {
+                Url = x.Data.TryGetValue("url", out var u) && u is string s ? s : null,
+                ChunkIndex = x.Index,
+            }).Where(x => !string.IsNullOrEmpty(x.Url))
+            .GroupBy(x => x.Url!)
+            .ToDictionary(g => g.Key, g => g.Select(x => x.ChunkIndex).ToArray());
 
         foreach (var urlItem in urlMap)
         {
@@ -88,7 +86,7 @@ public static class ChunksExtensions
     /// <item>RelatedCodeBlock, RelatedTable, RelatedImage, RelatedInfoBlock, AdditionalLink - связи из RelatedChunksIndexes</item>
     /// </list>
     /// </remarks>
-    public static RelationshipModel[] BuildRelationsGraph<T>(this Dictionary<T, Dictionary<ChunkType, List<ChunkModel>>> chunks)
+    public static RelationshipModel[] BuildRelationsGraph<T>(this Dictionary<T, ChunkModel[]> chunks)
         where T : unmanaged
     {
         var result = new List<RelationshipModel>();
@@ -115,49 +113,16 @@ public static class ChunksExtensions
     /// <item>RelatedCodeBlock, RelatedTable, RelatedImage, RelatedInfoBlock, AdditionalLink, StartsWith - из RelatedChunksIndexes каждого чанка</item>
     /// </list>
     /// </remarks>
-    public static RelationshipModel[] BuildRelationsGraph(this Dictionary<ChunkType, List<ChunkModel>> chunks)
+    public static RelationshipModel[] BuildRelationsGraph(this ChunkModel[] chunks)
     {
         var result = new List<RelationshipModel>();
 
-        if (chunks.TryGetValue(ChunkType.TextChunk, out var headersChunks))
+        foreach (var chunk in chunks)
         {
-            result.AddRange(headersChunks.BuildTextChunkSequenceRelations());
-        }
-
-        foreach (var value in chunks.Values)
-        {
-            foreach (var chunk in value)
-            {
-                result.AddRange(chunk.BuildRelationshipsForRelatedChunks());
-            }
+            result.AddRange(chunk.BuildRelationshipsForRelatedChunks());
         }
 
         return [.. result];
-    }
-
-    private static List<RelationshipModel> BuildTextChunkSequenceRelations(this List<ChunkModel> sequenceChunks)
-    {
-        if (sequenceChunks.Count == 0)
-        {
-            return [];
-        }
-
-        var result = new List<RelationshipModel>();
-
-        for (var i = 1; i < sequenceChunks.Count; i++)
-        {
-            if (sequenceChunks[i].Index - sequenceChunks[i - 1].Index == 1)
-            {
-                result.Add(new RelationshipModel
-                {
-                    FirstChunkIndex = sequenceChunks[i - 1].Index,
-                    SecondChunkIndex = sequenceChunks[i].Index,
-                    RelationshipType = RelationshipType.HasNextChunk,
-                });
-            }
-        }
-
-        return result;
     }
 
     private static List<RelationshipModel> BuildRelationshipsForRelatedChunks(this ChunkModel firstChunk)
