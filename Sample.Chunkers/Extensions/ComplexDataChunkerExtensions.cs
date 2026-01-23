@@ -13,15 +13,15 @@ namespace Sample.Chunkers.Extensions;
 public static class ComplexDataChunkerExtensions
 {
     private static readonly ChunkTypesRegexProvider regexProvider = new();
-    private static readonly Dictionary<string, ChunkType> labelsChunkTypesPairs = new()
+    private static readonly Dictionary<string, RelationshipType> labelsChunkTypesPairs = new()
     {
-        ["Title"] = ChunkType.Topic,
-        ["Table"] = ChunkType.Table,
-        ["Math-Block"] = ChunkType.MathBlock,
-        ["Code-Block"] = ChunkType.CodeBlock,
-        ["Info-Block"] = ChunkType.InfoBlock,
-        ["Image-Link"] = ChunkType.ImageLink,
-        ["External-Link"] = ChunkType.AdditionalLink,
+        ["Title"] = RelationshipType.StartsWith,
+        ["Table"] = RelationshipType.RelatedTable,
+        ["Math-Block"] = RelationshipType.RelatedMathBlock,
+        ["Code-Block"] = RelationshipType.RelatedCodeBlock,
+        ["Info-Block"] = RelationshipType.RelatedInfoBlock,
+        ["Image-Link"] = RelationshipType.RelatedImage,
+        ["External-Link"] = RelationshipType.AdditionalLink,
     };
 
     private static readonly IMarkdownChunksExtractor ChunksExtractorsChain;
@@ -147,14 +147,6 @@ public static class ComplexDataChunkerExtensions
             .GroupBy(x => x.ChunkType)
             .ToDictionary(x => x.Key, x => x.ToList());
 
-        foreach (var pair in labelsChunkTypesPairs)
-        {
-            if (!result.ContainsKey(pair.Value))
-            {
-                result[pair.Value] = [];
-            }
-        }
-
         return result;
     }
 
@@ -198,9 +190,9 @@ public static class ComplexDataChunkerExtensions
         return text.ToString();
     }
 
-    private static Dictionary<ChunkType, List<int>> ExtractRelatedChunksIndexes(this StringBuilder chunkValue)
+    private static Dictionary<RelationshipType, List<int>> ExtractRelatedChunksIndexes(this StringBuilder chunkValue)
     {
-        var result = new Dictionary<ChunkType, List<int>>();
+        var result = new Dictionary<RelationshipType, List<int>>();
         var matches = regexProvider.GetChunkLabelRegex()
             .Matches(chunkValue.ToString())
             .ToArray();

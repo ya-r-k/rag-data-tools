@@ -36,5 +36,5 @@ public record ChunkModel
     /// Словарь, связывающий типы связанных чанков с их индексами.
     /// Ключ - тип связанного чанка, значение - список индексов связанных чанков.
     /// </summary>
-    public required Dictionary<ChunkType, List<int>> RelatedChunksIndexes { get; set; }
+    public required Dictionary<RelationshipType, List<int>> RelatedChunksIndexes { get; set; }
 }

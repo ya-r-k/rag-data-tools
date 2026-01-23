@@ -12,7 +12,10 @@ internal static class HeadersTestData
         {
             Index = 34,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasFirstSubtopic] = [35],
+            },
             RawContent = "# Functions in Discrete Mathematics",
             Data = new Dictionary<string, object>
             {
@@ -24,7 +27,11 @@ internal static class HeadersTestData
         {
             Index = 35,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasFirstSubtopic] = [36],
+                [RelationshipType.HasNextTopic] = [39],
+            },
             RawContent = "## What is Function?",
             Data = new Dictionary<string, object>
             {
@@ -36,7 +43,10 @@ internal static class HeadersTestData
         {
             Index = 36,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [37],
+            },
             RawContent = "### Pre-Image and Image of a Function",
             Data = new Dictionary<string, object>
             {
@@ -48,7 +58,10 @@ internal static class HeadersTestData
         {
             Index = 37,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [38],
+            },
             RawContent = "### Domain of a Function",
             Data = new Dictionary<string, object>
             {
@@ -72,7 +85,11 @@ internal static class HeadersTestData
         {
             Index = 39,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasFirstSubtopic] = [40],
+                [RelationshipType.HasNextTopic] = [48],
+            },
             RawContent = "## Types of Function",
             Data = new Dictionary<string, object>
             {
@@ -84,7 +101,10 @@ internal static class HeadersTestData
         {
             Index = 40,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [41],
+            },
             RawContent = "### One-One Function ( or Injective Function):",
             Data = new Dictionary<string, object>
             {
@@ -96,7 +116,10 @@ internal static class HeadersTestData
         {
             Index = 41,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [42],
+            },
             RawContent = "### Many-One Function",
             Data = new Dictionary<string, object>
             {
@@ -108,7 +131,10 @@ internal static class HeadersTestData
         {
             Index = 42,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [43],
+            },
             RawContent = "### Onto Function( or Surjective Function)",
             Data = new Dictionary<string, object>
             {
@@ -120,7 +146,10 @@ internal static class HeadersTestData
         {
             Index = 43,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [44],
+            },
             RawContent = "### Into Function",
             Data = new Dictionary<string, object>
             {
@@ -132,7 +161,10 @@ internal static class HeadersTestData
         {
             Index = 44,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [45],
+            },
             RawContent = "### One-One Correspondent Function (or Bijective Function or One-One Onto Function)",
             Data = new Dictionary<string, object>
             {
@@ -144,7 +176,10 @@ internal static class HeadersTestData
         {
             Index = 45,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [46],
+            },
             RawContent = "### One-One Into Function",
             Data = new Dictionary<string, object>
             {
@@ -156,7 +191,10 @@ internal static class HeadersTestData
         {
             Index = 46,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [47],
+            },
             RawContent = "### Many-One Onto Function",
             Data = new Dictionary<string, object>
             {
@@ -180,7 +218,10 @@ internal static class HeadersTestData
         {
             Index = 48,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [49],
+            },
             RawContent = "## Inverse of a Function",
             Data = new Dictionary<string, object>
             {
@@ -192,7 +233,10 @@ internal static class HeadersTestData
         {
             Index = 49,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [50],
+            },
             RawContent = "## Composition of Functions",
             Data = new Dictionary<string, object>
             {
@@ -204,7 +248,10 @@ internal static class HeadersTestData
         {
             Index = 50,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [51],
+            },
             RawContent = "## Summary: Functions in Discrete Mathematics",
             Data = new Dictionary<string, object>
             {
@@ -216,7 +263,10 @@ internal static class HeadersTestData
         {
             Index = 51,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasFirstSubtopic] = [52],
+            },
             RawContent = "## Sample Questions on Functions in Discrete Mathematics",
             Data = new Dictionary<string, object>
             {
@@ -245,7 +295,10 @@ internal static class HeadersTestData
         {
             Index = 25,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasFirstSubtopic] = [26]
+            },
             RawContent = "# Data Modeling: A Comprehensive Guide for Analysts",
             Data = new Dictionary<string, object>
             {
@@ -257,7 +310,11 @@ internal static class HeadersTestData
         {
             Index = 26,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasFirstSubtopic] = [27],
+                [RelationshipType.HasNextTopic] = [28]
+            },
             RawContent = "## **What is Data Modeling?**",
             Data = new Dictionary<string, object>
             {
@@ -281,7 +338,10 @@ internal static class HeadersTestData
         {
             Index = 28,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [29]
+            },
             RawContent = "## Types of Data Models",
             Data = new Dictionary<string, object>
             {
@@ -293,7 +353,10 @@ internal static class HeadersTestData
         {
             Index = 29,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [30]
+            },
             RawContent = "## Data Modeling Process",
             Data = new Dictionary<string, object>
             {
@@ -305,7 +368,10 @@ internal static class HeadersTestData
         {
             Index = 30,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [31]
+            },
             RawContent = "## Types of Data Modeling",
             Data = new Dictionary<string, object>
             {
@@ -317,7 +383,10 @@ internal static class HeadersTestData
         {
             Index = 31,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [32]
+            },
             RawContent = "## Benefits of Data Modeling",
             Data = new Dictionary<string, object>
             {
@@ -346,7 +415,10 @@ internal static class HeadersTestData
         {
             Index = 38,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasFirstSubtopic] = [39]
+            },
             RawContent = "# Basic Operators in Relational Algebra",
             Data = new Dictionary<string, object>
             {
@@ -358,7 +430,10 @@ internal static class HeadersTestData
         {
             Index = 39,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [40]
+            },
             RawContent = "## ***1. Selection operator (*****σ*****)***",
             Data = new Dictionary<string, object>
             {
@@ -370,7 +445,10 @@ internal static class HeadersTestData
         {
             Index = 40,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [41]
+            },
             RawContent = "## ***2. Projection Operator (*****∏*****)***",
             Data = new Dictionary<string, object>
             {
@@ -382,7 +460,10 @@ internal static class HeadersTestData
         {
             Index = 41,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [42]
+            },
             RawContent = "## ***3. Cross Product(X)***",
             Data = new Dictionary<string, object>
             {
@@ -394,7 +475,10 @@ internal static class HeadersTestData
         {
             Index = 42,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [43]
+            },
             RawContent = "## ***4. Union (U)***",
             Data = new Dictionary<string, object>
             {
@@ -406,7 +490,10 @@ internal static class HeadersTestData
         {
             Index = 43,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasNextTopic] = [44]
+            },
             RawContent = "## ***5. Minus (-) or Set Difference***",
             Data = new Dictionary<string, object>
             {
@@ -418,7 +505,11 @@ internal static class HeadersTestData
         {
             Index = 44,
             ChunkType = ChunkType.Topic,
-            RelatedChunksIndexes = [],
+            RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+            {
+                [RelationshipType.HasFirstSubtopic] = [45],
+                [RelationshipType.HasNextTopic] = [46]
+            },
             RawContent = "## ***6. Rename(*****ρ*****)***",
             Data = new Dictionary<string, object>
             {

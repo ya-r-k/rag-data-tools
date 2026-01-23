@@ -6,7 +6,7 @@ namespace Sample.Chunkers.Extensions;
 /// <summary>
 /// Предоставляет методы расширения для работы с простым текстом без структурированных элементов.
 /// </summary>
-public static class SimpleTextChunkerExtensions
+public static class NaiveTextChunkerExtensions
 {
     private static readonly TextChunksRegexProvider regexProvider = new();
 
@@ -15,6 +15,8 @@ public static class SimpleTextChunkerExtensions
     /// </summary>
     /// <param name="text">Текст для разбиения на слова.</param>
     /// <returns>Span массива слов без пустых элементов.</returns>
+    /// 
+    // TODO сделать индексы чтобы были по символам в тексте а не словам. и чтобы не нужно было дробить текст на слова
     public static Span<string> GetWords(this string text)
     {
         return new Span<string>(text.Split([' '], StringSplitOptions.RemoveEmptyEntries));
@@ -64,7 +66,7 @@ public static class SimpleTextChunkerExtensions
     /// </summary>
     /// <param name="text">Текст для разбиения на чанки.</param>
     /// <param name="chunkWordsCount">Максимальное количество слов в одном чанке.</param>
-    /// <param name="semanticsType">Тип семантической единицы: предложение или параграф.</param>
+    /// <param name="indexesExtractor">Тип семантической единицы: предложение или параграф.</param>
     /// <param name="overlapPercentage">Процент перекрытия между чанками (от 0.0 до 1.0). По умолчанию 0.0 (без перекрытия).</param>
     /// <returns>Массив текстовых чанков.</returns>
     /// <remarks>

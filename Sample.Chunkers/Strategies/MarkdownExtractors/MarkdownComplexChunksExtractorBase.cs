@@ -7,24 +7,24 @@ namespace Sample.Chunkers.Strategies.MarkdownExtractors;
 
 public abstract class MarkdownComplexChunksExtractorBase(IChunkTypesRegexProvider regexProvider) : MarkdownChunksExtractor
 {
-    private static readonly Dictionary<string, ChunkType> labelsChunkTypesPairs = new()
+    private static readonly Dictionary<string, RelationshipType> labelsChunkTypesPairs = new()
     {
-        ["Title"] = ChunkType.Topic,
-        ["Table"] = ChunkType.Table,
-        ["Math-Block"] = ChunkType.MathBlock,
-        ["Code-Block"] = ChunkType.CodeBlock,
-        ["Info-Block"] = ChunkType.InfoBlock,
-        ["Image-Link"] = ChunkType.ImageLink,
-        ["External-Link"] = ChunkType.AdditionalLink,
+        ["Title"] = RelationshipType.StartsWith,
+        ["Table"] = RelationshipType.RelatedTable,
+        ["Math-Block"] = RelationshipType.RelatedMathBlock,
+        ["Code-Block"] = RelationshipType.RelatedCodeBlock,
+        ["Info-Block"] = RelationshipType.RelatedInfoBlock,
+        ["Image-Link"] = RelationshipType.RelatedImage,
+        ["External-Link"] = RelationshipType.AdditionalLink,
     };
 
     protected readonly IChunkTypesRegexProvider regexProvider = regexProvider;
 
     public override abstract List<ChunkModel> ExtractChunksFromText(StringBuilder builder, int lastUsedIndex = 0);
 
-    protected Dictionary<ChunkType, List<int>> ExtractRelatedChunksIndexes(StringBuilder chunkValue)
+    protected Dictionary<RelationshipType, List<int>> ExtractRelatedChunksIndexes(StringBuilder chunkValue)
     {
-        var result = new Dictionary<ChunkType, List<int>>();
+        var result = new Dictionary<RelationshipType, List<int>>();
         var matches = regexProvider.GetChunkLabelRegex()
             .Matches(chunkValue.ToString())
             .ToArray();

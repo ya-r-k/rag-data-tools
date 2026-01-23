@@ -25,7 +25,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.CodeBlock] = [CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[0].Index],
+                [RelationshipType.RelatedCodeBlock] = [CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[0].Index],
             },
             Data = new Dictionary<string, object>
             {
@@ -39,7 +39,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.CodeBlock] = [CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[0].Index],
+                [RelationshipType.RelatedCodeBlock] = [CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[0].Index],
             },
             Data = new Dictionary<string, object>
             {
@@ -75,7 +75,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.CodeBlock] =
+                [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[1].Index,
                     CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[2].Index,
@@ -93,7 +93,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.CodeBlock] = 
+                [RelationshipType.RelatedCodeBlock] = 
                 [
                     CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[1].Index,
                     CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[2].Index,
@@ -112,11 +112,11 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.CodeBlock] =
+                [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.DevToRealWorldArticleCodeBlocks[3].Index,
                 ],
-                [ChunkType.AdditionalLink] = [LinksTestData.DevToRealWorldArticleLinks[0].Index],
+                [RelationshipType.AdditionalLink] = [LinksTestData.DevToRealWorldArticleLinks[0].Index],
             },
             Data = new Dictionary<string, object>
             {
@@ -135,16 +135,16 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ImageLink] =
+                [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[0].Index,
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[1].Index,
                 ],
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[0].Index,
                 ],
-                [ChunkType.Topic] = 
+                [RelationshipType.StartsWith] = 
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[0].Index,
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[1].Index
@@ -162,11 +162,11 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ImageLink] =
+                [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[2].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[2].Index,
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[3].Index
@@ -184,11 +184,11 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ImageLink] =
+                [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[2].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[3].Index
                 ],
@@ -205,7 +205,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[1].Index,
                 ],
@@ -222,11 +222,11 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[1].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[4].Index,
                 ],
@@ -243,7 +243,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[4].Index
                 ],
@@ -282,7 +282,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[2].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[3].Index,
@@ -300,13 +300,13 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[2].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[3].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[4].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[5].Index,
                 ],
@@ -323,16 +323,16 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ImageLink] =
+                [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[3].Index
                 ],
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[4].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[5].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[5].Index,
                 ],
@@ -349,11 +349,11 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ImageLink] =
+                [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[3].Index
                 ],
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[5].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[6].Index,
@@ -372,12 +372,12 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[6].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[7].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[6].Index,
                 ],
@@ -394,13 +394,13 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[8].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[9].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[10].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[6].Index,
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[7].Index,
@@ -418,11 +418,11 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.ImageLink] =
+                [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks[0].Index,
                 ],
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[8].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[9].Index,
@@ -436,7 +436,7 @@ internal static class TextChunkTestData
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[17].Index,
                     LinksTestData.GeeksForGeeksAboutDataModelingLinks[18].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutDataModelingHeaders[7].Index,
                 ],
@@ -458,28 +458,28 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.CodeBlock] =
+                [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[0].Index,
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[1].Index,
                 ],
-                [ChunkType.Table] =
+                [RelationshipType.RelatedTable] =
                 [
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[0].Index,
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[1].Index,
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[2].Index,
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[3].Index,
                 ],
-                [ChunkType.ImageLink] =
+                [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[0].Index,
                 ],
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[0].Index,
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[1].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[0].Index,
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[1].Index,
@@ -498,14 +498,14 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.CodeBlock] =
+                [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[0].Index,
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[1].Index,
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[2].Index,
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[3].Index,
                 ],
-                [ChunkType.Table] =
+                [RelationshipType.RelatedTable] = 
                 [
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[0].Index,
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[1].Index,
@@ -513,11 +513,11 @@ internal static class TextChunkTestData
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[3].Index,
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[4].Index,
                 ],
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[1].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[1].Index,
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[2].Index,
@@ -536,19 +536,19 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.CodeBlock] =
+                [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[4].Index,
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[5].Index,
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[6].Index,
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[7].Index,
                 ],
-                [ChunkType.Table] =
+                [RelationshipType.RelatedTable] = 
                 [
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[5].Index,
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[6].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[3].Index,
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[4].Index,
@@ -567,7 +567,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.CodeBlock] =
+                [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[6].Index,
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[7].Index,
@@ -577,17 +577,17 @@ internal static class TextChunkTestData
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[11].Index,
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[12].Index,
                 ],
-                [ChunkType.Table] =
+                [RelationshipType.RelatedTable] = 
                 [
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[6].Index,
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[7].Index,
                 ],
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[2].Index,
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[3].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[5].Index,
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[6].Index,
@@ -606,7 +606,7 @@ internal static class TextChunkTestData
             ChunkType = ChunkType.TextChunk,
             RelatedChunksIndexes = new()
             {
-                [ChunkType.CodeBlock] =
+                [RelationshipType.RelatedCodeBlock] =
                 [
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[8].Index,
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[9].Index,
@@ -614,16 +614,16 @@ internal static class TextChunkTestData
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[11].Index,
                     CodeBlocksTestData.GeeksForGeeksAboutRelationalAlgebraCodeBlocks[12].Index,
                 ],
-                [ChunkType.Table] =
+                [RelationshipType.RelatedTable] = 
                 [
                     TablesTestData.GeeksForGeeksAboutRelationalAlgebraTables[7].Index,
                 ],
-                [ChunkType.ImageLink] =
+                [RelationshipType.RelatedImage] =
                 [
                     ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[0].Index,
                     ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks[1].Index,
                 ],
-                [ChunkType.AdditionalLink] =
+                [RelationshipType.AdditionalLink] =
                 [
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[2].Index,
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[3].Index,
@@ -637,7 +637,7 @@ internal static class TextChunkTestData
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[11].Index,
                     LinksTestData.GeeksForGeeksAboutRelationalAlgebraLinks[12].Index,
                 ],
-                [ChunkType.Topic] =
+                [RelationshipType.StartsWith] =
                 [
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[6].Index,
                     HeadersTestData.GeeksForGeeksAboutRelationalAlgebraHeaders[7].Index,

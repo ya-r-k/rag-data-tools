@@ -9,7 +9,7 @@ namespace Sample.Chunkers.UnitTests.Extensions;
 
 public class ComplexDataChunkerExtensionsTests
 {
-    // TODO: Need to add tests which chunks text without codeblocks, tables, links and other related chunks only plain text
+    // TODO: Need to add tests where chunks text without codeblocks, tables, links and other related chunks only plain text
 
     [Test]
     public void RetrieveChunksFromText_WithMixedContent_ShouldExtractAllChunks()
@@ -53,8 +53,12 @@ More text here.";
         {
             new ChunkModel
             {
+                Index = 4,
                 ChunkType = ChunkType.Topic,
-                RelatedChunksIndexes = [],
+                RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+                {
+                    [RelationshipType.HasFirstSubtopic] = [5],
+                },
                 RawContent = @"# Main Title",
                 Data = new Dictionary<string, object>()
                 {
@@ -64,8 +68,12 @@ More text here.";
             },
             new ChunkModel
             {
+                Index = 5,
                 ChunkType = ChunkType.Topic,
-                RelatedChunksIndexes = [],
+                RelatedChunksIndexes = new Dictionary<RelationshipType, List<int>>
+                {
+                    [RelationshipType.HasNextTopic] = [6],
+                },
                 RawContent = @"## Subtitle",
                 Data = new Dictionary<string, object>()
                 {
@@ -75,6 +83,7 @@ More text here.";
             },
             new ChunkModel
             {
+                Index = 6,
                 ChunkType = ChunkType.Topic,
                 RelatedChunksIndexes = [],
                 RawContent = @"## Another Subtitle",
@@ -171,8 +180,7 @@ public class Test
         chunksList.Should().HaveCount(6); // 3 headers, 1 code block, 1 table, 1 image
 
         var headers = chunks[ChunkType.Topic];
-        headers.Should().BeEquivalentTo(expectedHeaders, options => options
-            .Excluding(x => x.Index));
+        headers.Should().BeEquivalentTo(expectedHeaders);
 
         var codeBlocks = chunks[ChunkType.CodeBlock];
         codeBlocks.Should().BeEquivalentTo(expectedCodeBlocks, options => options
@@ -432,8 +440,12 @@ MERGE
         {
             new ChunkModel
             {
+                Index = 5,
                 ChunkType = ChunkType.Topic,
-                RelatedChunksIndexes = [],
+                RelatedChunksIndexes = new()
+                {
+                    [RelationshipType.HasFirstSubtopic] = [6],
+                },
                 RawContent = @"# Title with `inline code`",
                 Data = new Dictionary<string, object>()
                 {
@@ -443,10 +455,11 @@ MERGE
             },
             new ChunkModel
             {
+                Index = 6,
                 ChunkType = ChunkType.Topic,
                 RelatedChunksIndexes = new()
                 {
-                    [expectedLinks[0].ChunkType] = [expectedLinks[0].Index],
+                    [RelationshipType.AdditionalLink] = [expectedLinks[0].Index],
                 },
                 RawContent = @$"## Subtitle with link[RELATEDCHUNK]External-Link-{expectedLinks[0].Index}[/RELATEDCHUNK]",
                 Data = new Dictionary<string, object>()
@@ -466,8 +479,7 @@ MERGE
         chunksList.Should().HaveCount(6); // 2 headers, 2 code block, 1 table, 1 link
 
         var headers = chunks[ChunkType.Topic];
-        headers.Should().BeEquivalentTo(expectedHeaders, options => options
-            .Excluding(x => x.Index));
+        headers.Should().BeEquivalentTo(expectedHeaders);
 
         var codeBlocks = chunks[ChunkType.CodeBlock];
         codeBlocks.Should().BeEquivalentTo(expectedCodeBlocks, options => options
@@ -688,28 +700,34 @@ MERGE
         var chunkList = chunks.SelectMany(x => x.Value).ToArray();
         chunkList.Should().NotBeEmpty();
 
-        var codeBlocks = chunks.Values.SelectMany(x => x[ChunkType.CodeBlock])
-                                      .ToArray();
+        var codeBlocks = chunks.Values.Where(x => x.ContainsKey(ChunkType.CodeBlock))
+            .SelectMany(x => x[ChunkType.CodeBlock])
+            .ToArray();
         codeBlocks.Should().BeEquivalentTo(expectedCodeBlocks);
 
-        var tables = chunks.Values.SelectMany(x => x[ChunkType.Table])
-                                  .ToArray();
+        var tables = chunks.Values.Where(x => x.ContainsKey(ChunkType.Table))
+            .SelectMany(x => x[ChunkType.Table])
+            .ToArray();
         tables.Should().BeEquivalentTo(expectedTables);
 
-        var links = chunks.Values.SelectMany(x => x[ChunkType.AdditionalLink])
-                                 .ToArray();
+        var links = chunks.Values.Where(x => x.ContainsKey(ChunkType.AdditionalLink))
+            .SelectMany(x => x[ChunkType.AdditionalLink])
+            .ToArray();
         links.Should().BeEquivalentTo(expectedLinks);
 
-        var imageLinks = chunks.Values.SelectMany(x => x[ChunkType.ImageLink])
-                                      .ToArray();
+        var imageLinks = chunks.Values.Where(x => x.ContainsKey(ChunkType.ImageLink))
+            .SelectMany(x => x[ChunkType.ImageLink])
+            .ToArray();
         imageLinks.Should().BeEquivalentTo(expectedImageLinks);
 
-        var headers = chunks.Values.SelectMany(x => x[ChunkType.Topic])
-                                   .ToArray();
+        var headers = chunks.Values.Where(x => x.ContainsKey(ChunkType.Topic))
+            .SelectMany(x => x[ChunkType.Topic])
+            .ToArray();
         headers.Should().BeEquivalentTo(expectedHeaders);
 
-        var textsChunks = chunks.Values.SelectMany(x => x[ChunkType.TextChunk])
-                                       .ToArray();
+        var textsChunks = chunks.Values.Where(x => x.ContainsKey(ChunkType.TextChunk))
+            .SelectMany(x => x[ChunkType.TextChunk])
+            .ToArray();
         textsChunks.Should().BeEquivalentTo(expectedTextsChunks);
     }
 }
