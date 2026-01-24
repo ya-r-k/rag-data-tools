@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using RagDataTools.Chunkers.Infrastructure;
 using RagDataTools.Chunkers.Strategies.IndexesExtractors;
 
 namespace RagDataTools.UnitTests.Chunkers.Strategies.IndexesExtractors;
@@ -20,10 +21,12 @@ public class ParagraphIndexesExtractorTests
 
         var expectedResult = new[]
         {
-            0, 34, 58, 93
+            //0, 34, 58, 93
+            0, 227, 382,
         };
 
-        var extractor = new ParagraphIndexesExtractor();
+        var regexProvider = new TextChunksRegexProvider();
+        var extractor = new ParagraphIndexesExtractor(regexProvider);
 
         // Act
         var actualResult = extractor.ExtractIndexes(text);

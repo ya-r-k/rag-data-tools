@@ -10,17 +10,7 @@ public static class NaiveTextChunkerExtensions
 {
     private static readonly TextChunksRegexProvider regexProvider = new();
 
-    /// <summary>
-    /// Разбивает текст на слова, используя пробелы как разделитель.
-    /// </summary>
-    /// <param name="text">Текст для разбиения на слова.</param>
-    /// <returns>Span массива слов без пустых элементов.</returns>
-    /// 
-    // TODO сделать индексы чтобы были по символам в тексте а не словам. и чтобы не нужно было дробить текст на слова
-    public static Span<string> GetWords(this string text)
-    {
-        return new Span<string>(text.Split([' '], StringSplitOptions.RemoveEmptyEntries));
-    }
+    private static readonly WordsIndexesExtractor wordsIndexesExtractor = new(regexProvider);
 
     /// <summary>
     /// Подготавливает текст для разбиения на чанки: удаляет лишние пробелы, нормализует переводы строк и специальные символы.
@@ -39,26 +29,16 @@ public static class NaiveTextChunkerExtensions
     /// </remarks>
     public static string PreprocessNaturalTextForChunking(this string text)
     {
-        var cleaned = text.Trim()
+        var cleaned = regexProvider.GetMultipleSpacesRegex()
+            .Replace(text.Trim(), " ");
+
+        return cleaned
                           .Replace('\u00A0', ' ')
                           .Replace(" \r\n", "\r\n")
                           .Replace(" \n", "\n")
                           .Replace("\r\n\r\n", "\n\n ")
                           .Replace("\r\n", "\n ")
                           .Replace("\u2014", "-");
-
-        return regexProvider.GetMultipleSpacesRegex()
-            .Replace(cleaned, " ");
-    }
-
-    /// <summary>
-    /// Предобрабатывает массив текстов для разбиения на чанки.
-    /// </summary>
-    /// <param name="texts">Массив текстов для предобработки.</param>
-    /// <returns>Массив очищенных и нормализованных текстов.</returns>
-    public static string[] PreprocessNaturalTextsForChunking(this string[] texts)
-    {
-        return [.. texts.Select(PreprocessNaturalTextForChunking)];
     }
 
     /// <summary>
@@ -83,33 +63,35 @@ public static class NaiveTextChunkerExtensions
     public static string[] ExtractSemanticChunksFromText(this string text, int chunkWordsCount, IPrimitivesIndexesExtractor indexesExtractor, double overlapPercentage = 0.0)
     {
         var preprocessedText = PreprocessNaturalTextForChunking(text);
-        var words = GetWords(preprocessedText);
+
+        var wordsIndexes = wordsIndexesExtractor.ExtractIndexes(preprocessedText);
         var semanticsIndexes = indexesExtractor.ExtractIndexes(preprocessedText);
 
-        return GetChunks(words, semanticsIndexes, chunkWordsCount, text, overlapPercentage);
+        return GetChunks(wordsIndexes, semanticsIndexes, chunkWordsCount, preprocessedText, overlapPercentage);
     }
 
-    private static string[] GetChunks(this Span<string> words, int[] semanticsIndexes, int chunkWordsCount, string text, double overlapPercentage = 0.0)
+    private static string[] GetChunks(this int[] wordsIndexes, int[] semanticsIndexes, int chunkWordsCount, string text, double overlapPercentage = 0.0)
     {
         var chunks = new List<string>();
         var currentStartIndex = 0;
-        int overlap = (int)(chunkWordsCount * overlapPercentage);
+        var wordsOverlap = (int)(chunkWordsCount * overlapPercentage);
 
-        while (currentStartIndex < words.Length)
+        while (currentStartIndex < text.Length)
         {
-            var maxEndIndex = currentStartIndex + chunkWordsCount;
+            var wordStartIndex = wordsIndexes.IndexOf(currentStartIndex);
+            var wordMaxEndIndex = wordStartIndex + chunkWordsCount;
+            //var currentOverlap = wordsIndexes[wordMaxEndIndex] - wordsIndexes[wordMaxEndIndex - wordsOverlap];
 
-            var currentEndIndex = words.Length - currentStartIndex <= chunkWordsCount
-                ? words.Length
-                : semanticsIndexes.Where(x => x <= maxEndIndex).Max();
+            var currentEndIndex = wordsIndexes.Length - wordStartIndex <= chunkWordsCount
+                ? text.Length
+                : semanticsIndexes.Where(x => x <= wordsIndexes[wordMaxEndIndex]).Max();
 
-            var chunk = string.Join(" ", words[currentStartIndex..currentEndIndex].ToArray())
-                              .Replace("\n ", "\n");
+            var chunk = text[currentStartIndex..currentEndIndex];
             chunks.Add(chunk);
 
-            if (currentEndIndex == words.Length) break;
+            if (currentEndIndex == text.Length) break;
 
-            currentStartIndex = CalculateChunkStartIndex(semanticsIndexes, chunkWordsCount, currentEndIndex, overlap, currentStartIndex);
+            currentStartIndex = CalculateChunkStartIndex(semanticsIndexes, chunkWordsCount, currentEndIndex, wordsOverlap, currentStartIndex);
         }
 
         return [.. chunks];

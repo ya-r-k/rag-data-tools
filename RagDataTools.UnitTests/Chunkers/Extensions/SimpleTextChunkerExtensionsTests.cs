@@ -7,47 +7,6 @@ namespace RagDataTools.UnitTests.Chunkers.Extensions;
 public class SimpleTextChunkerExtensionsTests
 {
     [Test]
-    public void GetWords_WhenTextContainsSingleParagraph()
-    {
-        // Arrange
-        var text = @"Now you know how Qdrant works. Getting started with Qdrant Cloud is just as easy.";
-        var expectedResult = new string[]
-        {
-            "Now", "you", "know", "how", "Qdrant", "works.",
-            "Getting", "started", "with", "Qdrant", "Cloud",
-            "is", "just", "as", "easy."
-        };
-
-        // Act
-        var actualResult = text.PreprocessNaturalTextForChunking().GetWords();
-
-        // Assert
-        actualResult.ToArray().Should().BeEquivalentTo(expectedResult);
-    }
-
-    [Test]
-    public void GetWords_WhenTextContainsMultipleParagraphs()
-    {
-        // Arrange
-        var text = @"We will take care of infrastructure maintenance and software updates.
-
-                     To move onto some more complex examples of vector search, read our Tutorials and create your own app with the help of our Examples.";
-        var expectedResult = new string[]
-        {
-            "We", "will", "take", "care", "of", "infrastructure", "maintenance", "and", "software", "updates.\n\n",
-            "To", "move", "onto", "some", "more", "complex", "examples", "of", "vector", "search,",
-            "read", "our", "Tutorials", "and", "create", "your", "own", "app", "with", "the",
-            "help", "of", "our", "Examples."
-        };
-
-        // Act
-        var actualResult = text.PreprocessNaturalTextForChunking().GetWords();
-
-        // Assert
-        actualResult.ToArray().Should().BeEquivalentTo(expectedResult);
-    }
-
-    [Test]
     public void ExtractSemanticChunksFromText_WhenSemanticTypeIsParagraphAndWithoutOverlap()
     {
         // Arrange
@@ -90,8 +49,8 @@ public class SimpleTextChunkerExtensionsTests
 
         var expectedChunks = new[]
         {
-            "Now you know how Qdrant works. Getting started with Qdrant Cloud is just as easy. Create an account and use our SaaS completely free. We will take care of infrastructure maintenance and software updates.\n\n",
-            "To move onto some more complex examples of vector search, read our Tutorials and create your own app with the help of our Examples.\n\nNote: There is another way of running Qdrant locally.",
+            "Now you know how Qdrant works. Getting started with Qdrant Cloud is just as easy. Create an account and use our SaaS completely free. We will take care of infrastructure maintenance and software updates.\n\n  ",
+            "To move onto some more complex examples of vector search, read our Tutorials and create your own app with the help of our Examples.\n\n  Note: There is another way of running Qdrant locally. ",
             "If you are a Python developer, we recommend that you try Local Mode in Qdrant Client, as it only takes a few moments to get setup."
         };
 

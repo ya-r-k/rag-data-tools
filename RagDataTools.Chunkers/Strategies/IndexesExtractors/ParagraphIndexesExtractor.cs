@@ -1,16 +1,18 @@
-﻿namespace RagDataTools.Chunkers.Strategies.IndexesExtractors;
+﻿using RagDataTools.Chunkers.Interfaces;
 
-public class ParagraphIndexesExtractor : IPrimitivesIndexesExtractor
+namespace RagDataTools.Chunkers.Strategies.IndexesExtractors;
+
+public class ParagraphIndexesExtractor(ITextChunksRegexProvider regexProvider) : IPrimitivesIndexesExtractor
 {
     /// <summary>
-    /// Находит индексы начала параграфов в массиве слов.
+    /// Находит индексы начала абзацов в массиве слов.
     /// Параграфы определяются по разделителю "\n " (новая строка с пробелом).
     /// </summary>
     /// <param name="text">Текст для анализа.</param>
-    /// <returns>Массив индексов слов, с которых начинаются параграфы.</returns>
+    /// <returns>Массив индексов, с которых начинаются абзацы.</returns>
     public int[] ExtractIndexes(string text)
     {
-        var indexes = new List<int>();
+        /*
         int wordIndex = 0;
 
         var paragraphs = text.Split("\n ", StringSplitOptions.RemoveEmptyEntries);
@@ -20,7 +22,10 @@ public class ParagraphIndexesExtractor : IPrimitivesIndexesExtractor
             indexes.Add(wordIndex);
             wordIndex += paragraph.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
         }
+         */
 
-        return [.. indexes];
+        return [.. regexProvider.GetForExtractingParagraphsBeginning()
+            .Matches(text.Trim())
+            .Select(x => x.Index)];
     }
 }

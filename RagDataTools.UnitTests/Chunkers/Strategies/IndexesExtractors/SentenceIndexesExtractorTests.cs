@@ -21,7 +21,8 @@ public class SentenceIndexesExtractorTests
 
         var expectedResult = new[]
         {
-            0, 6, 15, 24, 34, 58, 67, 93
+            //0, 6, 15, 24, 34, 58, 67, 93
+            0, 31, 82, 134, 227, 382, 436
         };
 
         var regexProvider = new TextChunksRegexProvider();

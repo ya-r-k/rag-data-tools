@@ -12,17 +12,8 @@ public class SentenceIndexesExtractor(ITextChunksRegexProvider regexProvider) : 
     /// <returns>Массив индексов слов, с которых начинаются предложения.</returns>
     public int[] ExtractIndexes(string text)
     {
-        var indexes = new List<int>();
-        int wordIndex = 0;
-        var sentences = regexProvider.GetForExtractingSentencesBeginning()
-            .Split(text);
-
-        foreach (var sentence in sentences)
-        {
-            indexes.Add(wordIndex);
-            wordIndex += sentence.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
-        }
-
-        return [.. indexes];
+        return [.. regexProvider.GetForExtractingSentencesBeginning()
+            .Matches(text.Trim())
+            .Select(x => x.Index)];
     }
 }

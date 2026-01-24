@@ -103,13 +103,13 @@ public class ChunkersBenchmarks
     [Benchmark]
     public void GetWords_Small()
     {
-        _ = _smallText.GetWords();
+        _ = PrimitivesExtractors.WordsExtractor.ExtractIndexes(_smallText);
     }
 
     [Benchmark]
     public void GetWords_Large()
     {
-        _ = _largeText.GetWords();
+        _ = PrimitivesExtractors.WordsExtractor.ExtractIndexes(_largeText);
     }
 
     [Benchmark]
