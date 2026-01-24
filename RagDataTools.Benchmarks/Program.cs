@@ -1,4 +1,8 @@
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 using RagDataTools.Benchmarks;
 
-var summary = BenchmarkRunner.Run<ChunkersBenchmarks>();
+var summary = BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly)
+    .Run(args, new DebugInProcessConfig());
+
+//BenchmarkRunner.Run<ChunkersBenchmarks>();
