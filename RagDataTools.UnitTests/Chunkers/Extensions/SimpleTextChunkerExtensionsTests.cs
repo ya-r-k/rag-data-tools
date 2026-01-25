@@ -49,8 +49,8 @@ public class SimpleTextChunkerExtensionsTests
 
         var expectedChunks = new[]
         {
-            "Now you know how Qdrant works. Getting started with Qdrant Cloud is just as easy. Create an account and use our SaaS completely free. We will take care of infrastructure maintenance and software updates.\n\n  ",
-            "To move onto some more complex examples of vector search, read our Tutorials and create your own app with the help of our Examples.\n\n  Note: There is another way of running Qdrant locally. ",
+            "Now you know how Qdrant works. Getting started with Qdrant Cloud is just as easy. Create an account and use our SaaS completely free. We will take care of infrastructure maintenance and software updates.\n\n ",
+            "To move onto some more complex examples of vector search, read our Tutorials and create your own app with the help of our Examples.\n\n Note: There is another way of running Qdrant locally. ",
             "If you are a Python developer, we recommend that you try Local Mode in Qdrant Client, as it only takes a few moments to get setup."
         };
 
@@ -58,8 +58,6 @@ public class SimpleTextChunkerExtensionsTests
         var actualChunks = text.ExtractSemanticChunksFromText(chunkSize, type);
 
         // Assert
-        actualChunks.Should().NotBeEmpty();
-        actualChunks.Length.Should().BeGreaterThan(1);
         actualChunks.Should().BeEquivalentTo(expectedChunks, options => options.WithStrictOrdering());
     }
 
@@ -96,10 +94,10 @@ This is about what elite developers do mentally and emotionally — and how to i
 
         var expectedChunks = new[]
         {
-            "When you write code, you're not just typing logic.\nYou're creating rituals. Repeating patterns.\nModern-day incantations that manipulate machines.\n\nAnd every master developer eventually learns:\n\nProgramming is about mindset, rituals, and transformation - not just knowledge.\n\n",
-            "And every master developer eventually learns:\n\nProgramming is about mindset, rituals, and transformation - not just knowledge.\n\n",
-            "In this article, you'll learn how to turn your programming into a craft, build mental rituals, and transform debugging, learning, and building into something far more powerful.\n\nThere are thousands of articles on:\n\n",
-            "There are thousands of articles on:\n\n- Best IDEs\n- Fastest frameworks\n- Which language to learn in 2025\n\nThis isn't that.\n\n",
+            "When you write code, you're not just typing logic.\n You're creating rituals. Repeating patterns.\n Modern-day incantations that manipulate machines.\n\n And every master developer eventually learns:\n\n Programming is about mindset, rituals, and transformation - not just knowledge.\n\n ",
+            "And every master developer eventually learns:\n\n Programming is about mindset, rituals, and transformation - not just knowledge.\n\n ",
+            "In this article, you'll learn how to turn your programming into a craft, build mental rituals, and transform debugging, learning, and building into something far more powerful.\n\n There are thousands of articles on:\n\n ",
+            "There are thousands of articles on:\n\n - Best IDEs\n - Fastest frameworks\n - Which language to learn in 2025\n\n This isn't that.\n\n ",
             "This is about what elite developers do mentally and emotionally - and how to install those behaviors into your workflow, no matter what tools you use.",
         };
 
@@ -145,11 +143,11 @@ This is about what elite developers do mentally and emotionally — and how to i
 
         var expectedChunks = new[]
         {
-            "When you write code, you're not just typing logic.\nYou're creating rituals. Repeating patterns.\nModern-day incantations that manipulate machines.\n\nAnd every master developer eventually learns:\n\nProgramming is about mindset, rituals, and transformation - not just knowledge.\n\n",
-            "And every master developer eventually learns:\n\nProgramming is about mindset, rituals, and transformation - not just knowledge.\n\n",
-            "In this article, you'll learn how to turn your programming into a craft, build mental rituals, and transform debugging, learning, and building into something far more powerful.\n\nThere are thousands of articles on:\n\n- Best IDEs\n- Fastest frameworks\n",
-            "There are thousands of articles on:\n\n- Best IDEs\n- Fastest frameworks\n- Which language to learn in 2025\n\nThis isn't that.\n\n",
-            "This isn't that.\n\nThis is about what elite developers do mentally and emotionally - and how to install those behaviors into your workflow, no matter what tools you use.",
+            "When you write code, you're not just typing logic.\n You're creating rituals. Repeating patterns.\n Modern-day incantations that manipulate machines.\n\n And every master developer eventually learns:\n\n Programming is about mindset, rituals, and transformation - not just knowledge.\n\n ",
+            "And every master developer eventually learns:\n\n Programming is about mindset, rituals, and transformation - not just knowledge.\n\n ",
+            "In this article, you'll learn how to turn your programming into a craft, build mental rituals, and transform debugging, learning, and building into something far more powerful.\n\n There are thousands of articles on:\n\n - Best IDEs\n - Fastest frameworks\n ",
+            "There are thousands of articles on:\n\n - Best IDEs\n - Fastest frameworks\n - Which language to learn in 2025\n\n This isn't that.\n\n ",
+            "This is about what elite developers do mentally and emotionally - and how to install those behaviors into your workflow, no matter what tools you use.",
         };
 
         // Act

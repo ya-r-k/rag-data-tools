@@ -22,23 +22,26 @@ public static class NaiveTextChunkerExtensions
     /// <list type="bullet">
     /// <item>Удаляет пробелы в начале и конце</item>
     /// <item>Заменяет неразрывные пробелы (\u00A0) на обычные пробелы</item>
-    /// <item>Нормализует переводы строк (\r\n → \n)</item>
     /// <item>Заменяет длинное тире (\u2014) на дефис</item>
     /// <item>Удаляет множественные пробелы</item>
     /// </list>
     /// </remarks>
     public static string PreprocessNaturalTextForChunking(this string text)
     {
-        var cleaned = regexProvider.GetMultipleSpacesRegex()
-            .Replace(text.Trim(), " ");
-
-        return cleaned
+        var cleaned = text.Trim()
                           .Replace('\u00A0', ' ')
                           .Replace(" \r\n", "\r\n")
                           .Replace(" \n", "\n")
                           .Replace("\r\n\r\n", "\n\n ")
                           .Replace("\r\n", "\n ")
+                          .Replace('\u2018', '\'')
+                          .Replace('\u2019', '\'')
+                          .Replace('\u201C', '"')
+                          .Replace('\u201D', '"')
                           .Replace("\u2014", "-");
+
+        return regexProvider.GetMultipleSpacesRegex()
+            .Replace(cleaned, " ");
     }
 
     /// <summary>
@@ -80,8 +83,7 @@ public static class NaiveTextChunkerExtensions
         {
             var wordStartIndex = wordsIndexes.IndexOf(currentStartIndex);
             var wordMaxEndIndex = wordStartIndex + chunkWordsCount;
-            //var currentOverlap = wordsIndexes[wordMaxEndIndex] - wordsIndexes[wordMaxEndIndex - wordsOverlap];
-
+            
             var currentEndIndex = wordsIndexes.Length - wordStartIndex <= chunkWordsCount
                 ? text.Length
                 : semanticsIndexes.Where(x => x <= wordsIndexes[wordMaxEndIndex]).Max();
@@ -91,37 +93,38 @@ public static class NaiveTextChunkerExtensions
 
             if (currentEndIndex == text.Length) break;
 
-            currentStartIndex = CalculateChunkStartIndex(semanticsIndexes, chunkWordsCount, currentEndIndex, wordsOverlap, currentStartIndex);
+            currentStartIndex = CalculateChunkStartIndex(semanticsIndexes, wordsIndexes, chunkWordsCount, wordsIndexes.IndexOf(currentEndIndex), wordsOverlap, wordStartIndex);
         }
 
         return [.. chunks];
     }
 
-    private static int CalculateChunkStartIndex(int[] semanticsIndexes, int maxChunkLength, int currentEndIndex, int overlap, int currentStartIndex)
+    private static int CalculateChunkStartIndex(int[] semanticsIndexes, int[] wordsIndexes, int chunkWordsCount, int wordEndIndex, int overlap, int wordStartIndex)
     {
         if (overlap <= 0)
         {
-            return currentEndIndex;
+            return wordsIndexes[wordEndIndex];
         }
 
-        var veryEndIndex = currentStartIndex + maxChunkLength;
-        var target = veryEndIndex - overlap;
+        var wordVeryEndIndex = wordStartIndex + chunkWordsCount;
+        var target = wordVeryEndIndex - overlap;
 
-        var bestIndex = currentEndIndex;
+        var bestIndex = wordEndIndex;
         var bestDistance = int.MaxValue;
 
         foreach (var index in semanticsIndexes)
         {
-            if (index <= currentStartIndex) continue;
+            var wordIndex = wordsIndexes.IndexOf(index);
+            if (wordIndex <= wordStartIndex) continue;
 
-            int distance = Math.Abs(index - target);
+            int distance = Math.Abs(wordIndex - target);
             if (distance < bestDistance)
             {
                 bestDistance = distance;
-                bestIndex = index;
+                bestIndex = wordIndex;
             }
         }
 
-        return bestIndex;
+        return wordsIndexes[bestIndex];
     }
 }
