@@ -60,12 +60,6 @@ public class WordIndexesExtractorTests
                      To move onto some more complex examples of vector search, read our Tutorials and create your own app with the help of our Examples.";
         var expectedResult = new[]
         {
-            /*0, 3, 8, 13, 18, 21,
-            36, 48, 52, 61, 74, 77,
-            82, 87, 92, 97, 105, 114,
-            117, 124, 132, 137, 141, 151,
-            155, 162, 167, 171, 175, 180,
-            184, 189, 192, 196*/ // should be
             0, 3, 8, 13, 18, 21,
             36, 48, 52, 61, 72, 75,
             80, 85, 90, 95, 103, 112,
@@ -93,12 +87,6 @@ public class WordIndexesExtractorTests
                      To move onto some more complex examples of vector search, read our Tutorials and create your own app with the help of our Examples.";
         var expectedResult = new[]
         {
-            /*0, 3, 8, 13, 18, 21,
-            36, 48, 52, 61, 74, 77,
-            82, 87, 92, 97, 105, 114,
-            117, 124, 132, 137, 141, 151,
-            155, 162, 167, 171, 175, 180,
-            184, 189, 192, 196*/ // should be
             0, 3, 8, 13, 18, 21,
             36, 48, 52, 61, 94, 97,
             102, 107, 112, 117, 125, 134,
@@ -117,31 +105,71 @@ public class WordIndexesExtractorTests
         actualResult.Should().BeEquivalentTo(expectedResult);
     }
 
-    [Test]
-    public void ExtractIndexes_WhenTextWithListItemsAndUnnamedHeadingsAndTextIsNotPreprocessed()
+    [TestCase("* * *", 1)]
+    [TestCase("* * *\r\n\r\n* * *", 1)]
+    [TestCase("The implementation is", 3)]
+    [TestCase("The       implementation         is", 3)]
+    [TestCase("model ,The", 2)]
+    [TestCase("model, The", 2)]
+    [TestCase("model , The", 2)]
+    [TestCase("model          ,    The", 2)]
+    [TestCase("model      \t\n\n\n\n\r\n    ,  \n\r\n  The", 2)]
+    [TestCase("later.T he", 3)]
+    [TestCase("database system. It outlines", 4)]
+    [TestCase("updates.\r\n\r\n                     To move", 3)]
+    [TestCase("database system! It outlines", 4)]
+    [TestCase("database system? It outlines", 4)]
+    [TestCase("database system!? It outlines", 4)]
+    [TestCase("database system: It outlines", 4)]
+    [TestCase("database system; It outlines", 4)]
+    [TestCase("database system... It outlines", 4)]
+    [TestCase("database system!.. It outlines", 4)]
+    [TestCase("database system?.. It outlines", 4)]
+    [TestCase("database system - It outlines", 4)]
+    [TestCase("database system - - - -  - It outlines", 4)]
+    [TestCase(" - **Logical Data Model**:", 3)]
+    [TestCase("- \r\n - \r\n - **Logical Data Model**:", 3)]
+    [TestCase("- [ ] \r\n - \r\n - **Logical Data Model**:", 3)]
+    [TestCase("- [x] \r\n - \r\n - **Logical Data Model**:", 3)]
+    public void ExtractIndexes_WhenTextsWithDiverseCases_ShouldHaveExpectedIndexesCount(string text, int indexesCount)
     {
         // Arrange
-        var text = @"* * *
+        var regexProvider = new TextChunksRegexProvider();
+        var extractor = new WordsIndexesExtractor(regexProvider);
 
-* * * They are typically developed as alternatives or preludes to the logical data models that come later.T he main purpose of this data model is to organize, define business problems , rules and concepts.
- - **Logical Data Model**: In the logical data model, By offering a thorough representation of the data at a logical level, the logical data model expands on the conceptual model.It outlines the tables, columns, connections, and constraints that make up thedata structure.
- - **Physical Data Model**: In Physical Data model ,The implementation is explained with reference to a particular database system. It outlines every part and service needed to construct a database.
+        // Act
+        var actualResult = extractor.ExtractIndexes(text);
 
-";
-        var expectedResult = new[]
-        {
-            0, 20, 24, 34, 44, 47, 60, 63, 72, 75,
-            79, 87, 92, 99, 104, /**/ 109, 115, 117, /* later.T he */ 120, 125, 
-            133, 136, 141, 146, 152, 155, 158, 168, 175, 184,
-            195, 201, 205, 217, 229, 234, 243, 246, 250, 258,
-            263, 270, 273, 282, 284, 293, 308, 311, 315, 320,
-            323, 325, 333, 340, 344, 352, 357, 363, 371, 374,
-            378, 389, 395, 398, 407, 411, 419, 428, 441, 445,
-            457, 462, 467, 470, 478, 491, 504, 509, 518, 521,
-            530, 535, 542, 546, 561, 564, 574, 579, 589, 592,
-            594, 605, 614, 622, 625, 634, 640, 645, 649, 657,
-            664, 667, 677, 679,
-        };
+        // Assert
+        actualResult.Should().HaveCount(indexesCount);
+    }
+
+    [TestCase("* * *", new int[] { 0 })]
+    [TestCase("* * *\r\n\r\n* * *", new int[] { 0 })]
+    [TestCase("The implementation is", new int[] { 0, 4, 19 })]
+    [TestCase("model ,The", new int[] { 0, 7 })]
+    [TestCase("model          ,    The", new int[] { 0, 20 })]
+    [TestCase("model      \t\n\n\n\n\r\n    ,  \n\r\n  The", new int[] { 0, 30 })]
+    [TestCase("later.T he", new int[] { 0, 6, 8 })]
+    [TestCase("database system. It outlines", new int[] { 0, 9, 17, 20 })]
+    [TestCase("updates.\r\n\r\n                     To move", new int[] { 0, 33, 36 })]
+    [TestCase("database system! It outlines", new int[] { 0, 9, 17, 20 })]
+    [TestCase("database system? It outlines", new int[] { 0, 9, 17, 20 })]
+    [TestCase("database system!? It outlines", new int[] { 0, 9, 18, 21 })]
+    [TestCase("database system: It outlines", new int[] { 0, 9, 17, 20 })]
+    [TestCase("database system; It outlines", new int[] { 0, 9, 17, 20 })]
+    [TestCase("database system... It outlines", new int[] { 0, 9, 19, 22 })]
+    [TestCase("database system!.. It outlines", new int[] { 0, 9, 19, 22 })]
+    [TestCase("database system?.. It outlines", new int[] { 0, 9, 19, 22 })]
+    [TestCase("database system - It outlines", new int[] { 0, 9, 16, 21 })]
+    [TestCase("database system - - - -  - It outlines", new int[] { 0, 9, 16, 30})]
+    [TestCase(" - **Logical Data Model**:", new int[] { 0, 12, 17 })]
+    [TestCase("- \r\n - \r\n - **Logical Data Model**:", new int[] { 0, 22, 27 })]
+    [TestCase("- [ ] \r\n - \r\n - **Logical Data Model**:", new int[] { 0, 26, 31 })]
+    [TestCase("- [x] \r\n - \r\n - **Logical Data Model**:", new int[] { 0, 26, 31 })]
+    public void ExtractIndexes_WhenTextsWithDiverseCases_ShouldHaveExpectedIndexesCollection(string text, int[] indexes)
+    {
+        // Arrange
 
         var regexProvider = new TextChunksRegexProvider();
         var extractor = new WordsIndexesExtractor(regexProvider);
@@ -150,6 +178,6 @@ public class WordIndexesExtractorTests
         var actualResult = extractor.ExtractIndexes(text);
 
         // Assert
-        actualResult.Should().BeEquivalentTo(expectedResult);
+        actualResult.Should().BeEquivalentTo(indexes);
     }
 }

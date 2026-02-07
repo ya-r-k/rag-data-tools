@@ -66,22 +66,44 @@ public class SentenceIndexesExtractorTests
         actualResult.Should().BeEquivalentTo(expectedResult);
     }
 
-    [Test]
-    public void ExtractIndexes_WhenTextWithListItemsAndUnnamedHeadingsAndTextIsNotPreprocessed()
+    [TestCase("* * *", 1)]
+    [TestCase("* * *\r\n\r\n* * *", 1)]
+    [TestCase("The implementation is", 1)]
+    [TestCase("The       implementation         is", 1)]
+    [TestCase("model ,The", 1)]
+    [TestCase("model, The", 1)]
+    [TestCase("model , The", 1)]
+    [TestCase("model          ,    The", 1)]
+    [TestCase("model      \t\n\n\n\n\r\n    ,  \n\r\n  The", 1)]
+    [TestCase("later.T he", 2)]
+    [TestCase("later!T he", 2)]
+    [TestCase("later?T he", 2)]
+    [TestCase("later!?T he", 2)]
+    [TestCase("later...T he", 2)]
+    [TestCase("later!..T he", 2)]
+    [TestCase("later?..T he", 2)]
+    [TestCase("database system. It outlines", 2)]
+    [TestCase("updates.\r\n\r\n                     To move", 2)]
+    [TestCase("database system! It outlines", 2)]
+    [TestCase("database system? It outlines", 2)]
+    [TestCase("database system!? It outlines", 2)]
+    [TestCase("database system: It outlines", 1)]
+    [TestCase("database system:\nIt outlines", 2)]
+    [TestCase("database system:\r\nIt outlines", 2)]
+    [TestCase("database system:\r\n\r\n\r\n\r\n\r\nIt outlines", 2)]
+    [TestCase("database system; It outlines", 1)]
+    [TestCase("database system... It outlines", 2)]
+    [TestCase("database system!.. It outlines", 2)]
+    [TestCase("database system?.. It outlines", 2)]
+    [TestCase("database system - It outlines", 1)]
+    [TestCase("database system - - - -  - It outlines", 1)]
+    [TestCase(" - **Logical Data Model**:", 1)]
+    [TestCase("- \r\n - \r\n - **Logical Data Model**:", 1)]
+    [TestCase("- [ ] \r\n - \r\n - **Logical Data Model**:", 1)]
+    [TestCase("- [x] \r\n - \r\n - **Logical Data Model**:", 1)]
+    public void ExtractIndexes_WhenTextsWithDiverseCases_ShouldHaveExpectedIndexesCount(string text, int indexesCount)
     {
         // Arrange
-        var text = @"* * *
-
-* * * They are typically developed as alternatives or preludes to the logical data models that come later.T he main purpose of this data model is to organize, define business problems , rules and concepts.
- - **Logical Data Model**: In the logical data model, By offering a thorough representation of the data at a logical level, the logical data model expands on the conceptual model.It outlines the tables, columns, connections, and constraints that make up thedata structure.
- - **Physical Data Model**: In Physical Data model ,The implementation is explained with reference to a particular database system. It outlines every part and service needed to construct a database.
-
-";
-        var expectedResult = new[]
-        {
-            0, 115, 217, 395, 491, 622,
-        };
-
         var regexProvider = new TextChunksRegexProvider();
         var extractor = new SentenceIndexesExtractor(regexProvider);
 
@@ -89,6 +111,50 @@ public class SentenceIndexesExtractorTests
         var actualResult = extractor.ExtractIndexes(text);
 
         // Assert
-        actualResult.Should().BeEquivalentTo(expectedResult);
+        actualResult.Should().HaveCount(indexesCount);
+    }
+
+    [TestCase("* * *", new int[] { 0 })]
+    [TestCase("* * *\r\n\r\n* * *", new int[] { 0 })]
+    [TestCase("The implementation is", new int[] { 0 })]
+    [TestCase("model ,The", new int[] { 0 })]
+    [TestCase("model          ,    The", new int[] { 0 })]
+    [TestCase("model      \t\n\n\n\n\r\n    ,  \n\r\n  The", new int[] { 0 })]
+    [TestCase("later.T he", new int[] { 0, 6 })]
+    [TestCase("later?T he", new int[] { 0, 6 })]
+    [TestCase("later!?T he", new int[] { 0, 7 })]
+    [TestCase("later...T he", new int[] { 0, 8 })]
+    [TestCase("later!..T he", new int[] { 0, 8 })]
+    [TestCase("later?..T he", new int[] { 0, 8 })]
+    [TestCase("database system. It outlines", new int[] { 0, 17 })]
+    [TestCase("updates.\r\n\r\n                     To move", new int[] { 0, 33 })]
+    [TestCase("database system! It outlines", new int[] { 0, 17 })]
+    [TestCase("database system? It outlines", new int[] { 0, 17 })]
+    [TestCase("database system!? It outlines", new int[] { 0, 18 })]
+    [TestCase("database system: It outlines", new int[] { 0 })]
+    [TestCase("database system:\nIt outlines", new int[] { 0, 17 })]
+    [TestCase("database system:\r\nIt outlines", new int[] { 0, 18 })]
+    [TestCase("database system:\r\n\r\n\r\n\r\n\r\nIt outlines", new int[] { 0, 26 })]
+    [TestCase("database system; It outlines", new int[] { 0 })]
+    [TestCase("database system... It outlines", new int[] { 0, 19 })]
+    [TestCase("database system!.. It outlines", new int[] { 0, 19 })]
+    [TestCase("database system?.. It outlines", new int[] { 0, 19 })]
+    [TestCase("database system - It outlines", new int[] { 0 })]
+    [TestCase("database system - - - -  - It outlines", new int[] { 0 })]
+    [TestCase(" - **Logical Data Model**:", new int[] { 0 })]
+    [TestCase("- \r\n - \r\n - **Logical Data Model**:", new int[] { 0 })]
+    [TestCase("- [ ] \r\n - \r\n - **Logical Data Model**:", new int[] { 0 })]
+    [TestCase("- [x] \r\n - \r\n - **Logical Data Model**:", new int[] { 0 })]
+    public void ExtractIndexes_WhenTextsWithDiverseCases_ShouldHaveExpectedIndexesCollection(string text, int[] indexes)
+    {
+        // Arrange
+        var regexProvider = new TextChunksRegexProvider();
+        var extractor = new SentenceIndexesExtractor(regexProvider);
+
+        // Act
+        var actualResult = extractor.ExtractIndexes(text);
+
+        // Assert
+        actualResult.Should().BeEquivalentTo(indexes);
     }
 }
