@@ -1,0 +1,10 @@
+description: Regex provider factory naming - must use GetForRetrieving...
+globs:
+  - RagDataTools.Chunkers/Infrastructure/TextChunksRegexProvider.cs
+  - RagDataTools.Chunkers/Infrastructure/ChunkTypesRegexProvider.cs
+alwaysApply: false
+---
+
+## Rule
+- Any regex provider factory method you call (the method name on the `regexProvider` instance) must start with `GetForRetrieving...`.
+- Do not introduce or use regex provider factory methods with other prefixes (for example `Build...`, `Create...`, `Get...`, `Make...`, etc.).

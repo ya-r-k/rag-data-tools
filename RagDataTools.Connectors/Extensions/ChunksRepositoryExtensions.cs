@@ -11,6 +11,7 @@ public static class ChunksRepositoryExtensions
     /// <summary>
     /// Saves chunks under a caller-provided scope id.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public static Task SaveAsync(this IChunksRepository<string, string> repository, string scopeId, params ChunkModel[] chunks)
         => repository.AddAsync(scopeId, chunks);
 }

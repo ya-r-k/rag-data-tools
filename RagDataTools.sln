@@ -5,8 +5,12 @@ VisualStudioVersion = 18.0.11123.170
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{72E3898D-8592-4FFB-9F9E-BE2E7FE91EE1}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		project.md = project.md
 		README.md = README.md
+		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
@@ -32,6 +36,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagDataTools.Ingest", "RagDataTools.Ingest\RagDataTools.Ingest.csproj", "{A8EE2519-D7BD-4B47-B28F-C80BB260E246}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagDataTools.KeywordExtraction", "RagDataTools.KeywordExtraction\RagDataTools.KeywordExtraction.csproj", "{D2C5B5C9-2A3E-4F7A-9D80-0E1B8A4D4C31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RagDataTools.FakeInfrastructure", "RagDataTools.FakeInfrastructure\RagDataTools.FakeInfrastructure.csproj", "{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -163,6 +169,18 @@ Global
 		{D2C5B5C9-2A3E-4F7A-9D80-0E1B8A4D4C31}.Release|x64.Build.0 = Release|Any CPU
 		{D2C5B5C9-2A3E-4F7A-9D80-0E1B8A4D4C31}.Release|x86.ActiveCfg = Release|Any CPU
 		{D2C5B5C9-2A3E-4F7A-9D80-0E1B8A4D4C31}.Release|x86.Build.0 = Release|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Debug|x64.Build.0 = Debug|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Debug|x86.Build.0 = Debug|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Release|x64.ActiveCfg = Release|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Release|x64.Build.0 = Release|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Release|x86.ActiveCfg = Release|Any CPU
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -176,7 +194,9 @@ Global
 		{0ACEA997-FACA-4D8F-A968-417D013AB8F2} = {58B1D929-138C-4F09-AB1D-9464E579F44A}
 		{EED3394F-635D-4C84-B5F9-68EE619502CE} = {58B1D929-138C-4F09-AB1D-9464E579F44A}
 		{2EA9EBA6-1083-4DBB-9F78-267CA9DB5910} = {58B1D929-138C-4F09-AB1D-9464E579F44A}
+		{A8EE2519-D7BD-4B47-B28F-C80BB260E246} = {58B1D929-138C-4F09-AB1D-9464E579F44A}
 		{D2C5B5C9-2A3E-4F7A-9D80-0E1B8A4D4C31} = {58B1D929-138C-4F09-AB1D-9464E579F44A}
+		{A95D96BD-E2CE-1510-AFD1-1DDBD9B3E821} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4EB803D-7EF3-4DBA-A14E-E86075D28499}

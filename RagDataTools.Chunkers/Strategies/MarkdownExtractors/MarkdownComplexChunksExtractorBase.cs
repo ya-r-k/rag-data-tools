@@ -1,13 +1,13 @@
-﻿using RagDataTools.Chunkers.Interfaces;
+using System.Text;
+using RagDataTools.Chunkers.Interfaces;
 using RagDataTools.Chunkers.Models;
 using RagDataTools.Chunkers.Models.Enums;
-using System.Text;
 
 namespace RagDataTools.Chunkers.Strategies.MarkdownExtractors;
 
 public abstract class MarkdownComplexChunksExtractorBase(IChunkTypesRegexProvider regexProvider) : MarkdownChunksExtractor
 {
-    private static readonly Dictionary<string, RelationshipType> labelsChunkTypesPairs = new()
+    private static readonly Dictionary<string, RelationshipType> LabelsChunkTypesPairs = new ()
     {
         ["Title"] = RelationshipType.StartsWith,
         ["Table"] = RelationshipType.RelatedTable,
@@ -31,7 +31,7 @@ public abstract class MarkdownComplexChunksExtractorBase(IChunkTypesRegexProvide
 
         foreach (var match in matches)
         {
-            if (labelsChunkTypesPairs.TryGetValue(match.Groups[1].Value, out var type))
+            if (LabelsChunkTypesPairs.TryGetValue(match.Groups[1].Value, out var type))
             {
                 if (!result.TryGetValue(type, out var value))
                 {

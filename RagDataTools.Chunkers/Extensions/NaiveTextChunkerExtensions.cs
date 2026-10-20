@@ -8,9 +8,9 @@ namespace RagDataTools.Chunkers.Extensions;
 /// </summary>
 public static class NaiveTextChunkerExtensions
 {
-    private static readonly TextChunksRegexProvider regexProvider = new();
+    private static readonly TextChunksRegexProvider RegexProvider = new ();
 
-    private static readonly WordsIndexesExtractor wordsIndexesExtractor = new(regexProvider);
+    private static readonly WordsIndexesExtractor WordsIndexesExtractor = new (RegexProvider);
 
     /// <summary>
     /// Подготавливает текст для разбиения на чанки: удаляет лишние пробелы, нормализует переводы строк и специальные символы.
@@ -40,7 +40,7 @@ public static class NaiveTextChunkerExtensions
                           .Replace('\u201D', '"')
                           .Replace("\u2014", "-");
 
-        return regexProvider.GetMultipleSpacesRegex()
+        return RegexProvider.GetMultipleSpacesRegex()
             .Replace(cleaned, " ");
     }
 
@@ -67,7 +67,7 @@ public static class NaiveTextChunkerExtensions
     {
         var preprocessedText = PreprocessNaturalTextForChunking(text);
 
-        var wordsIndexes = wordsIndexesExtractor.ExtractIndexes(preprocessedText);
+        var wordsIndexes = WordsIndexesExtractor.ExtractIndexes(preprocessedText);
         var semanticsIndexes = indexesExtractor.ExtractIndexes(preprocessedText);
 
         return GetChunks(wordsIndexes, semanticsIndexes, chunkWordsCount, preprocessedText, overlapPercentage);
@@ -83,7 +83,7 @@ public static class NaiveTextChunkerExtensions
         {
             var wordStartIndex = wordsIndexes.IndexOf(currentStartIndex);
             var wordMaxEndIndex = wordStartIndex + chunkWordsCount;
-            
+
             var currentEndIndex = wordsIndexes.Length - wordStartIndex <= chunkWordsCount
                 ? text.Length
                 : semanticsIndexes.Where(x => x <= wordsIndexes[wordMaxEndIndex]).Max();
@@ -91,7 +91,10 @@ public static class NaiveTextChunkerExtensions
             var chunk = text[currentStartIndex..currentEndIndex];
             chunks.Add(chunk);
 
-            if (currentEndIndex == text.Length) break;
+            if (currentEndIndex == text.Length)
+            {
+                break;
+            }
 
             currentStartIndex = CalculateChunkStartIndex(semanticsIndexes, wordsIndexes, chunkWordsCount, wordsIndexes.IndexOf(currentEndIndex), wordsOverlap, wordStartIndex);
         }
@@ -115,7 +118,10 @@ public static class NaiveTextChunkerExtensions
         foreach (var index in semanticsIndexes)
         {
             var wordIndex = wordsIndexes.IndexOf(index);
-            if (wordIndex <= wordStartIndex) continue;
+            if (wordIndex <= wordStartIndex)
+            {
+                continue;
+            }
 
             int distance = Math.Abs(wordIndex - target);
             if (distance < bestDistance)

@@ -14,9 +14,10 @@ public sealed class DocumentIngestService
     /// <summary>
     /// Gets the default service instance with built-in converters.
     /// </summary>
-    public static DocumentIngestService Default { get; } = new();
+    public static DocumentIngestService Default { get; } = new ();
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="DocumentIngestService"/> class.
     /// Creates a service with the built-in PDF, Word, and HTML converters.
     /// </summary>
     public DocumentIngestService()
@@ -25,6 +26,7 @@ public sealed class DocumentIngestService
     }
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="DocumentIngestService"/> class.
     /// Creates a service with custom converters.
     /// </summary>
     public DocumentIngestService(IEnumerable<IDocumentToMarkdownConverter> converters)
@@ -54,6 +56,7 @@ public sealed class DocumentIngestService
     /// <summary>
     /// Ingests a single document at the provided path.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task<ChunkModel[]> IngestAsync(string path, DocumentFormat format, DocumentIngestOptions? options = null, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
@@ -65,6 +68,7 @@ public sealed class DocumentIngestService
     /// <summary>
     /// Ingests a single document from the provided stream.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task<ChunkModel[]> IngestAsync(Stream source, DocumentFormat format, DocumentIngestOptions? options = null, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(source);
@@ -95,22 +99,22 @@ public sealed class DocumentIngestService
 
         foreach (var segment in segments)
         {
-            if (string.IsNullOrWhiteSpace(segment.Markdown))
+            if (string.IsNullOrWhiteSpace(segment.markdown))
             {
                 continue;
             }
 
-            var pageChunks = segment.Markdown.ExtractSemanticChunksDeeply(
+            var pageChunks = segment.markdown.ExtractSemanticChunksDeeply(
                 options.ChunkWordsCount,
                 options.IndexesExtractor,
                 options.OverlapPercentage,
                 lastUsedIndex);
 
-            if (segment.PageNumber is not null)
+            if (segment.pageNumber is not null)
             {
                 foreach (var chunk in pageChunks)
                 {
-                    chunk.SetPageNumber(segment.PageNumber);
+                    chunk.SetPageNumber(segment.pageNumber);
                 }
             }
 

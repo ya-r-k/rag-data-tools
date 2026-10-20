@@ -16,6 +16,8 @@
 
 # AI IDEs
 **/.cursor/commands/speckit.*.*
+**/.claude/commands/speckit.*.*
+**/.cursor/plans
 
 # Bencharks artifacts
 **/BenchmarkDotNet.Artifacts

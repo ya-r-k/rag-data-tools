@@ -24,32 +24,32 @@ public sealed record DocumentIngestOptions
     public const long DefaultMaxHtmlBytes = 10L * 1024 * 1024;
 
     /// <summary>
-    /// Maximum words per chunk passed to the chunking pipeline.
+    /// Gets maximum words per chunk passed to the chunking pipeline.
     /// </summary>
     public int ChunkWordsCount { get; init; } = 120;
 
     /// <summary>
-    /// Primitive extractor used by the chunking pipeline.
+    /// Gets primitive extractor used by the chunking pipeline.
     /// </summary>
     public IPrimitivesIndexesExtractor IndexesExtractor { get; init; } = PrimitivesExtractors.SentencesExtractor;
 
     /// <summary>
-    /// Chunk overlap percentage in the range 0.0 to 1.0.
+    /// Gets chunk overlap percentage in the range 0.0 to 1.0.
     /// </summary>
     public double OverlapPercentage { get; init; } = 0.0;
 
     /// <summary>
-    /// Maximum allowed PDF size in bytes.
+    /// Gets maximum allowed PDF size in bytes.
     /// </summary>
     public long MaxPdfBytes { get; init; } = DefaultMaxPdfBytes;
 
     /// <summary>
-    /// Maximum allowed Word size in bytes.
+    /// Gets maximum allowed Word size in bytes.
     /// </summary>
     public long MaxWordBytes { get; init; } = DefaultMaxWordBytes;
 
     /// <summary>
-    /// Maximum allowed HTML size in bytes.
+    /// Gets maximum allowed HTML size in bytes.
     /// </summary>
     public long MaxHtmlBytes { get; init; } = DefaultMaxHtmlBytes;
 

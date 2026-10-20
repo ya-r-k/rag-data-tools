@@ -1,4 +1,4 @@
-﻿using RagDataTools.Chunkers.Models;
+using RagDataTools.Chunkers.Models;
 
 namespace RagDataTools.Connectors.Interfaces;
 

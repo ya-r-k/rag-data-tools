@@ -1,4 +1,4 @@
-﻿namespace RagDataTools.Chunkers.Models.Enums;
+namespace RagDataTools.Chunkers.Models.Enums;
 
 public enum RelationshipType
 {

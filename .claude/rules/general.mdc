@@ -1,0 +1,14 @@
+---
+alwaysApply: true
+---
+
+- Always answer briefly and to the point. No unnecessary explanations unless I ask!
+- All your answers should be in English.
+
+
+## Repository context (for agents)
+
+- **Stack:** C# on **.NET 10**, **`net10.0`** SDK-style projects, nullable reference types, implicit usings; chunking is built around Markdown parsing, regex providers, and chunk model helpers, while tests use fluent builders/helpers for chunking fixtures in `RagDataTools.UnitTests` and keep the actual strategies in production assemblies.
+- **Assemblies:** **`RagDataTools.Chunkers`** — chunking strategies, markdown extractors, regex providers, chunk models, and chunking helpers; **`RagDataTools.Ingest`** — document conversion and ingest orchestration; **`RagDataTools.Connectors`** / **`RagDataTools.Connectors.Neo4j`** / **`RagDataTools.Connectors.Qdrant`** — repository implementations; **`RagDataTools.KeywordExtraction`** — keyword extraction; **`RagDataTools.Di`** — composition root and service registration; **`RagDataTools.UnitTests`** — unit tests plus fluent chunking test-data builders/helpers.
+- **Composition:** Prefer **fluent builders** and **`IExecutor` / `INoteReadHandler` / `INoteProcessor`** chains wired explicitly (library stays usable from scripts without a mandatory **`Microsoft.Extensions.DependencyInjection`** host). Every class in the solution must live in its own file.
+- **Division of docs:** This block is **short, always-on context**. **`.specify/memory/constitution.md`** remains **authoritative** for governance, principles, and speckit compliance; **`project.md`** is the technical deep-dive. Open the constitution when a change might affect principles (dual assembly, naive vs non-naive chains, duplicate-handling policy, testing discipline).

@@ -1,9 +1,9 @@
-﻿using RagDataTools.Chunkers.Infrastructure;
-using RagDataTools.Chunkers.Strategies.IndexesExtractors;
-using RagDataTools.Chunkers.Strategies.MarkdownExtractors;
+using System.Text;
+using RagDataTools.Chunkers.Infrastructure;
 using RagDataTools.Chunkers.Models;
 using RagDataTools.Chunkers.Models.Enums;
-using System.Text;
+using RagDataTools.Chunkers.Strategies.IndexesExtractors;
+using RagDataTools.Chunkers.Strategies.MarkdownExtractors;
 
 namespace RagDataTools.Chunkers.Extensions;
 
@@ -12,8 +12,8 @@ namespace RagDataTools.Chunkers.Extensions;
 /// </summary>
 public static class ComplexDataChunkerExtensions
 {
-    private static readonly ChunkTypesRegexProvider regexProvider = new();
-    private static readonly Dictionary<string, RelationshipType> labelsChunkTypesPairs = new()
+    private static readonly ChunkTypesRegexProvider RegexProvider = new ();
+    private static readonly Dictionary<string, RelationshipType> LabelsChunkTypesPairs = new ()
     {
         ["Title"] = RelationshipType.StartsWith,
         ["Table"] = RelationshipType.RelatedTable,
@@ -26,15 +26,15 @@ public static class ComplexDataChunkerExtensions
 
     private static readonly IMarkdownChunksExtractor ChunksExtractorsChain;
 
-    private static readonly Dictionary<string, IMarkdownChunksExtractor> ChunkTypesExtractorsPairs = new()
+    private static readonly Dictionary<string, IMarkdownChunksExtractor> ChunkTypesExtractorsPairs = new ()
     {
-        ["Heading"] = new MarkdownHeadingExtractor(regexProvider),
-        ["HtmlTable"] = new MarkdownHtmlTableExtractor(regexProvider),
-        ["CodeBlock"] = new MarkdownCodeBlockExtractor(regexProvider),
-        ["UnusualBlock"] = new MarkdownUnusualCodeBlockExtractor(regexProvider),
-        ["InfoBlock"] = new MarkdownInfoBlockExtractor(regexProvider),
-        ["ExternalLink"] = new MarkdownExternalLinksExtractor(regexProvider),
-        ["ImageLink"] = new MarkdownImageLinksExtractor(regexProvider),
+        ["Heading"] = new MarkdownHeadingExtractor(RegexProvider),
+        ["HtmlTable"] = new MarkdownHtmlTableExtractor(RegexProvider),
+        ["CodeBlock"] = new MarkdownCodeBlockExtractor(RegexProvider),
+        ["UnusualBlock"] = new MarkdownUnusualCodeBlockExtractor(RegexProvider),
+        ["InfoBlock"] = new MarkdownInfoBlockExtractor(RegexProvider),
+        ["ExternalLink"] = new MarkdownExternalLinksExtractor(RegexProvider),
+        ["ImageLink"] = new MarkdownImageLinksExtractor(RegexProvider),
     };
 
     static ComplexDataChunkerExtensions()
@@ -59,9 +59,9 @@ public static class ComplexDataChunkerExtensions
     /// <param name="indexesExtractor">Тип семантической единицы: предложение или параграф.</param>
     /// <param name="overlapPercentage">Процент перекрытия между чанками (от 0.0 до 1.0). По умолчанию 0.0.</param>
     /// <returns>Словарь документов → типы чанков → списки чанков. Индексы чанков накапливаются между документами.</returns>
-    public static Dictionary<T, ChunkModel[]> ExtractSemanticChunksDeeply<T>(this Dictionary<T, string> texts, 
+    public static Dictionary<T, ChunkModel[]> ExtractSemanticChunksDeeply<T>(this Dictionary<T, string> texts,
         int chunkWordsCount,
-        IPrimitivesIndexesExtractor indexesExtractor, 
+        IPrimitivesIndexesExtractor indexesExtractor,
         double overlapPercentage = 0.0)
         where T : unmanaged
     {
@@ -101,7 +101,7 @@ public static class ComplexDataChunkerExtensions
     /// </remarks>
     public static ChunkModel[] ExtractSemanticChunksDeeply(this string text,
         int chunkWordsCount,
-        IPrimitivesIndexesExtractor indexesExtractor, 
+        IPrimitivesIndexesExtractor indexesExtractor,
         double overlapPercentage = 0.0,
         int lastUsedIndex = 0)
     {
@@ -155,7 +155,7 @@ public static class ComplexDataChunkerExtensions
 
     private static string SquashLabelsIntoWords(this StringBuilder text)
     {
-        var matches = regexProvider.GetChunkLabelWithWhitespacesRegex()
+        var matches = RegexProvider.GetChunkLabelWithWhitespacesRegex()
             .Matches(text.ToString())
             .ToArray();
 
@@ -170,13 +170,13 @@ public static class ComplexDataChunkerExtensions
     private static Dictionary<RelationshipType, List<int>> ExtractRelatedChunksIndexes(this StringBuilder chunkValue)
     {
         var result = new Dictionary<RelationshipType, List<int>>();
-        var matches = regexProvider.GetChunkLabelRegex()
+        var matches = RegexProvider.GetChunkLabelRegex()
             .Matches(chunkValue.ToString())
             .ToArray();
 
-        foreach (var match in matches) 
+        foreach (var match in matches)
         {
-            if (labelsChunkTypesPairs.TryGetValue(match.Groups[1].Value, out var type))
+            if (LabelsChunkTypesPairs.TryGetValue(match.Groups[1].Value, out var type))
             {
                 if (!result.TryGetValue(type, out var value))
                 {

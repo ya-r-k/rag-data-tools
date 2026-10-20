@@ -1,5 +1,5 @@
-﻿using RagDataTools.Chunkers.Interfaces;
 using System.Text.RegularExpressions;
+using RagDataTools.Chunkers.Interfaces;
 
 namespace RagDataTools.Chunkers.Infrastructure;
 

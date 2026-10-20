@@ -1,0 +1,26 @@
+---
+description: RagDataTools unit test authoring (AAA, no loops, chunking fixtures)
+globs:
+  - RagDataTools.UnitTests/**/*.cs
+alwaysApply: false
+---
+
+# Test project (`RagDataTools.UnitTests`)
+
+## Scope
+
+- Use unit tests for chunking strategies, regex providers, connector helpers, ingest helpers, and other leaf components.
+- Keep end-to-end behavior in production code and test-data builders separate from strategy classes.
+- Prefer fluent builders/helpers for chunking fixtures when a scenario needs code blocks, tables, images, info blocks, strange-word text, topic hierarchies, or code block count ranges.
+
+## Test style
+
+- Use `NUnit`, `FluentAssertions`, `Microsoft.NET.Test.Sdk`, `AutoFixture`, and `Moq.AutoMock`.
+- Every test method must use `// Arrange`, `// Act`, `// Assert` in that order.
+- Do not use imperative loops in test bodies.
+- Test names must follow `<methodname>_When<conditionbeingchecked>_Should<expectedresult>`.
+
+## Test data
+
+- Keep reusable chunking fixtures under `RagDataTools.UnitTests/TestData` and `RagDataTools.UnitTests/Chunkers/TestData`.
+- Prefer canonical fixture shapes for `ChunkModel`, `RelationshipType`, and related test data types.

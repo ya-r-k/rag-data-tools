@@ -1,0 +1,35 @@
+---
+description: Project Development Guidelines
+globs: ["**/*"]
+alwaysApply: true
+---
+# rag-data-tools Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2026-03-14
+
+## Active Technologies
+
+- C#, .NET 10.0 (net10.0) + Markdig (existing), Neo4j.Driver (existing), Qdrant client (to add), PDF/Word/HTML conversion libraries (see research.md), optional LLM backend for keyword extraction (pluggable) (001-connectors-file-ingest-keywords)
+
+## Project Structure
+
+```text
+backend/
+frontend/
+tests/
+```
+
+## Commands
+
+# Add commands for C#, .NET 10.0 (net10.0)
+
+## Code Style
+
+C#, .NET 10.0 (net10.0): Follow standard conventions
+
+## Recent Changes
+
+- 001-connectors-file-ingest-keywords: Added C#, .NET 10.0 (net10.0) + Markdig (existing), Neo4j.Driver (existing), Qdrant client (to add), PDF/Word/HTML conversion libraries (see research.md), optional LLM backend for keyword extraction (pluggable)
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->

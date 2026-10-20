@@ -1,5 +1,5 @@
-﻿using RagDataTools.Chunkers.Models;
 using System.Text;
+using RagDataTools.Chunkers.Models;
 
 namespace RagDataTools.Chunkers.Strategies.MarkdownExtractors;
 

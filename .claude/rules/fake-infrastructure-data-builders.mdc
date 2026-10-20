@@ -1,0 +1,34 @@
+---
+description: Chunking fixture builders contract for RagDataTools tests
+globs:
+  - RagDataTools.UnitTests/TestData/**/*.cs
+  - RagDataTools.UnitTests/Chunkers/TestData/**/*.cs
+alwaysApply: false
+---
+
+When you add or extend a chunking fixture builder, keep the test data reusable and stable.
+
+## 1) Keep fluent chaining with the derived builder type
+
+If a builder exposes a derived fluent API, keep returning the concrete builder type so tests can chain scenario setup.
+
+## 2) Cover the chunking fixture families
+
+Provide reusable fixture builders/helpers for these data shapes:
+
+1. Code blocks
+2. Tables
+3. Images
+4. Info blocks
+5. Strange-word / odd-markup text
+6. Topics / headings
+7. Code block count ranges
+
+Prefer explicit builder parameters over hard-coded single scenarios when a test needs variation.
+
+## 3) Keep fixture output canonical
+
+- Build markdown and chunk inputs from the same reusable helpers.
+- Keep fixture data focused on content shape, not on strategy implementation details.
+- Avoid mixing unrelated chunking concerns into one helper unless the test data is intentionally mixed.
+

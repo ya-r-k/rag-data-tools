@@ -1,0 +1,23 @@
+---
+description: Chunking fixture model field contract for RagDataTools
+globs:
+  - RagDataTools.UnitTests/Chunkers/TestData/**/*.cs
+alwaysApply: false
+---
+
+## Canonical chunk fixture shape
+
+Keep chunking-related fixture data canonical and model-driven.
+
+### Use the existing chunk model shape
+
+- Represent topics, code blocks, tables, images, info blocks, and text chunks with the existing chunk model fields.
+- Keep chunk content in `RawContent` / `Data` / `RelatedChunksIndexes` instead of adding parallel raw variants.
+- Do not add helper properties that duplicate the same chunk meaning in another form.
+
+### Keep fixture fields minimal
+
+- Add only the fields needed for the scenario under test.
+- Prefer explicit fixture builders for code block counts, topic depth, and mixed-content layouts instead of baking those into a model.
+- If a scenario needs a strange or malformed text sample, keep that as input text rather than a new model type.
+

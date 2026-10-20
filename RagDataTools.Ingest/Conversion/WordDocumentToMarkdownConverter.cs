@@ -1,7 +1,7 @@
 using System.Text;
-using RagDataTools.Ingest;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using RagDataTools.Ingest;
 
 namespace RagDataTools.Ingest.Conversion;
 
@@ -54,35 +54,36 @@ public sealed class WordDocumentToMarkdownConverter : IDocumentToMarkdownConvert
                 switch (element)
                 {
                     case Paragraph paragraph:
-                    {
-                        if (paragraph.ParagraphProperties?.PageBreakBefore is not null)
                         {
-                            FlushPage();
+                            if (paragraph.ParagraphProperties?.PageBreakBefore is not null)
+                            {
+                                FlushPage();
+                            }
+
+                            var paragraphText = NormalizeMarkdown(paragraph.InnerText);
+                            if (!string.IsNullOrWhiteSpace(paragraphText))
+                            {
+                                AppendBlock(paragraphText);
+                            }
+
+                            if (paragraph.Descendants<Break>().Any(b => b.Type?.Value == BreakValues.Page))
+                            {
+                                FlushPage();
+                            }
+
+                            break;
                         }
 
-                        var paragraphText = NormalizeMarkdown(paragraph.InnerText);
-                        if (!string.IsNullOrWhiteSpace(paragraphText))
-                        {
-                            AppendBlock(paragraphText);
-                        }
-
-                        if (paragraph.Descendants<Break>().Any(b => b.Type?.Value == BreakValues.Page))
-                        {
-                            FlushPage();
-                        }
-
-                        break;
-                    }
                     case Table table:
-                    {
-                        var tableText = NormalizeMarkdown(table.InnerText);
-                        if (!string.IsNullOrWhiteSpace(tableText))
                         {
-                            AppendBlock(tableText);
-                        }
+                            var tableText = NormalizeMarkdown(table.InnerText);
+                            if (!string.IsNullOrWhiteSpace(tableText))
+                            {
+                                AppendBlock(tableText);
+                            }
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
 

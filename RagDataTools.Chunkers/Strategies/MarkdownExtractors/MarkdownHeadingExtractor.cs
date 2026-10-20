@@ -1,7 +1,7 @@
-﻿using RagDataTools.Chunkers.Interfaces;
+using System.Text;
+using RagDataTools.Chunkers.Interfaces;
 using RagDataTools.Chunkers.Models;
 using RagDataTools.Chunkers.Models.Enums;
-using System.Text;
 
 namespace RagDataTools.Chunkers.Strategies.MarkdownExtractors;
 
@@ -44,7 +44,10 @@ public class MarkdownHeadingExtractor(
 
                 builder.Replace(match.Value, string.Format(ChunksConsts.HeaderTemplate, lastUsedIndex));
 
-                if (i >= matches.Length - 1) continue;
+                if (i >= matches.Length - 1)
+                {
+                    continue;
+                }
 
                 var nextLevel = matches[i + 1].Groups[1].Length;
                 var relType = nextLevel > currentLevel

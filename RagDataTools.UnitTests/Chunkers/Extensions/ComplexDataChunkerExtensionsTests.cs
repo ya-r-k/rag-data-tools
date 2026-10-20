@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using RagDataTools.Chunkers.Extensions;
 using RagDataTools.Chunkers.Infrastructure;
 using RagDataTools.Chunkers.Models;
@@ -10,7 +10,6 @@ namespace RagDataTools.UnitTests.Chunkers.Extensions;
 public class ComplexDataChunkerExtensionsTests
 {
     // TODO: Need to add tests where chunks text without codeblocks, tables, links and other related chunks only plain text
-
     [Test]
     public void ExtractSemanticChunksDeeply_WithMixedContent_ShouldExtractAllChunks()
     {
@@ -588,7 +587,7 @@ MERGE
                 Data = y.Data,
             })).ToArray();
         var expectedImageLinks = new Dictionary<int, ChunkModel[]>
-        {
+        {  
             [1] = ImageLinksTestData.GeeksForGeeksAboutDataModelingImageLinks,
             [2] = ImageLinksTestData.GeeksForGeeksAboutRelationalAlgebraImageLinks,
         }.SelectMany(x => x.Value.Select(y => new ChunkModel

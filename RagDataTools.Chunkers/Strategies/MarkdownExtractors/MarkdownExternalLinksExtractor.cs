@@ -1,7 +1,7 @@
-﻿using RagDataTools.Chunkers.Interfaces;
+using System.Text;
+using RagDataTools.Chunkers.Interfaces;
 using RagDataTools.Chunkers.Models;
 using RagDataTools.Chunkers.Models.Enums;
-using System.Text;
 
 namespace RagDataTools.Chunkers.Strategies.MarkdownExtractors;
 

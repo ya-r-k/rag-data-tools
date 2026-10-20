@@ -1,4 +1,4 @@
-﻿using RagDataTools.Chunkers.Models;
+using RagDataTools.Chunkers.Models;
 using RagDataTools.Chunkers.Models.Enums;
 
 namespace RagDataTools.Chunkers.Extensions;
@@ -49,7 +49,8 @@ public static class ChunksExtensions
         var result = new Dictionary<int, int>();
         var urlMap = chunks.SelectMany(x => x.Value)
             .Where(x => ChunkTypesWithUrls.Contains(x.ChunkType))
-            .Select(x => new {
+            .Select(x => new
+            {
                 Url = x.Data.TryGetValue("url", out var u) && u is string s ? s : null,
                 ChunkIndex = x.Index,
             }).Where(x => !string.IsNullOrEmpty(x.Url))

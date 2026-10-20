@@ -8,8 +8,8 @@ namespace RagDataTools.KeywordExtraction;
 /// </summary>
 public sealed class HeuristicKeywordExtractionBackend : IKeywordExtractionBackend
 {
-    private static readonly Regex TokenRegex = new(@"[\p{L}\p{N}][\p{L}\p{N}\p{Mn}'-]*", RegexOptions.Compiled | RegexOptions.CultureInvariant);
-    private static readonly HashSet<string> StopWords = new(StringComparer.OrdinalIgnoreCase)
+    private static readonly Regex TokenRegex = new (@"[\p{L}\p{N}][\p{L}\p{N}\p{Mn}'-]*", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+    private static readonly HashSet<string> StopWords = new (StringComparer.OrdinalIgnoreCase)
     {
         "a", "an", "and", "are", "as", "at", "be", "been", "but", "by", "for", "from", "has",
         "have", "he", "her", "hers", "him", "his", "i", "if", "in", "into", "is", "it", "its",

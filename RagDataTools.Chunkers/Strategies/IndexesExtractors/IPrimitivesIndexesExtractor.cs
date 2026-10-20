@@ -1,4 +1,4 @@
-﻿namespace RagDataTools.Chunkers.Strategies.IndexesExtractors;
+namespace RagDataTools.Chunkers.Strategies.IndexesExtractors;
 
 public interface IPrimitivesIndexesExtractor
 {

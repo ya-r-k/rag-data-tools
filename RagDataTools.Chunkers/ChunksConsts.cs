@@ -1,4 +1,4 @@
-﻿namespace RagDataTools.Chunkers;
+namespace RagDataTools.Chunkers;
 
 internal static class ChunksConsts
 {

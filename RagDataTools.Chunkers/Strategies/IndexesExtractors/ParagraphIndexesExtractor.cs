@@ -1,4 +1,4 @@
-﻿using RagDataTools.Chunkers.Interfaces;
+using RagDataTools.Chunkers.Interfaces;
 
 namespace RagDataTools.Chunkers.Strategies.IndexesExtractors;
 

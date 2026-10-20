@@ -1,4 +1,4 @@
-﻿using RagDataTools.Chunkers.Models.Enums;
+using RagDataTools.Chunkers.Models.Enums;
 
 namespace RagDataTools.Chunkers.Models;
 
@@ -8,17 +8,17 @@ namespace RagDataTools.Chunkers.Models;
 public record RelationshipModel
 {
     /// <summary>
-    /// Индекс первого чанка в связи.
+    /// Gets or sets индекс первого чанка в связи.
     /// </summary>
     public int FirstChunkIndex { get; set; }
 
     /// <summary>
-    /// Индекс второго чанка в связи.
+    /// Gets or sets индекс второго чанка в связи.
     /// </summary>
     public int SecondChunkIndex { get; set; }
 
     /// <summary>
-    /// Тип связи между чанками: следующий, подзаголовок, связанный код и т.д.
+    /// Gets or sets тип связи между чанками: следующий, подзаголовок, связанный код и т.д.
     /// </summary>
     public RelationshipType RelationshipType { get; set; }
 }

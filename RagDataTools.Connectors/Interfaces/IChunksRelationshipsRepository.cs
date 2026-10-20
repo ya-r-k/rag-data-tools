@@ -1,4 +1,4 @@
-﻿namespace RagDataTools.Connectors.Interfaces;
+namespace RagDataTools.Connectors.Interfaces;
 
 public interface IChunksRelationshipsRepository<TData>
 {

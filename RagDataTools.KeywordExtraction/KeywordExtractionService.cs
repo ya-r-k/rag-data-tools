@@ -12,9 +12,10 @@ public sealed class KeywordExtractionService : IKeywordExtractor
     /// <summary>
     /// Gets the default service instance that uses the built-in heuristic backend.
     /// </summary>
-    public static KeywordExtractionService Default { get; } = new();
+    public static KeywordExtractionService Default { get; } = new ();
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="KeywordExtractionService"/> class.
     /// Creates a service using the built-in heuristic backend.
     /// </summary>
     public KeywordExtractionService()
@@ -23,6 +24,7 @@ public sealed class KeywordExtractionService : IKeywordExtractor
     }
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="KeywordExtractionService"/> class.
     /// Creates a service using the specified backend.
     /// </summary>
     public KeywordExtractionService(IKeywordExtractionBackend backend)
