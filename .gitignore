@@ -12,10 +12,19 @@
 
 # Spec Driven Development
 **/.specify/templates
-**/.specify/scripts/powershell
+**/.specify/scripts/powershell/check-prerequisites.ps1
+**/.specify/scripts/powershell/common.ps1
+**/.specify/scripts/powershell/create-new-feature.ps1
+**/.specify/scripts/powershell/setup-plan.ps1
+**/.specify/scripts/powershell/setup-tasks.ps1
+**/.specify/scripts/powershell/update-agent-context.ps1
+**/.specify/extensions
+**/.specify/integrations
+**/.specify/workflows
 
 # AI IDEs
 **/.cursor/commands/speckit.*.*
+**/.claude/**/speckit-*
 **/.claude/commands/speckit.*.*
 **/.cursor/plans
 

@@ -148,3 +148,8 @@ Claude Code commands are stored in `.claude/commands/`:
 - Before edits, state the intended scope briefly and read the target files.
 - After edits, run the narrowest relevant tests, then the full solution build/test when practical.
 - Report exact command failures and remaining test gaps. Do not claim validation that was not run.
+
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
+<!-- SPECKIT END -->
